@@ -15,7 +15,7 @@ function Hero() {
             ]},
         { category: "Web Technologies", items: [
                 { name: "JavaScript", level: "Intermediate" },
-                { name: "TypeScript", level: "Beginner" },
+                { name: "TypeScript", level: "Intermediate" },
                 { name: "HTML", level: "Advanced" },
                 { name: "CSS", level: "Advanced" },
             ]},
