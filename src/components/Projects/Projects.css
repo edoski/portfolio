@@ -104,12 +104,20 @@
     text-align: justify;
 }
 
+.tech-bubble {
+    display: inline-flex;
+    background: #ffffff;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: 5px;
+}
+
 .tech-stack {
     font-size: 0.8rem;
-    padding: 0.5rem;
-    border-radius: 5px;
-    background-color: #3b3b3b;
-    color: #ffffff;
+    font-family: var(--oxygen), monospace;
+    background: linear-gradient(4deg, #ff9ff3, var(--nav-background-color) 99%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     width: fit-content;
 }
 
@@ -151,6 +159,42 @@
     linear-gradient(90deg, #3a3a3a 2px, #2a2a2a 2px) -1px 0;
     background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
     z-index: 0;
-    opacity: 0.1;
+    opacity: 0.2;
     pointer-events: none;
+}
+
+@keyframes moveGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.project-card:hover .project-header h3,
+.project-card:hover::before {
+    animation: moveGradient 2.5s linear infinite;
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: radial-gradient(circle, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+    z-index: 1;
+    background-size: 200% 100%;
+}
+
+.project-header h3 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin: 0 auto 0 0;
+    background: radial-gradient(circle, var(--accent-color), var(--primary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
 }

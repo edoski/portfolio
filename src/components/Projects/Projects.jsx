@@ -10,37 +10,37 @@ function Projects() {
     {
       title: 'pub-sub',
       description: "(OS course project, temp. private upon prof's request) a client-server, terminal-based, pub-sub application leveraging java's multithreading capabilities.",
-      techStack: 'java, multithreading',
+      techStack: 'java client-server multithreading',
       link: '',
     },
     {
       title: 'web-chat',
       description: 'a web-based chat interface, where users can register themselves, and interact with other users either in a general chat, or individually.',
-      techStack: 'javascript, css, html',
+      techStack: 'javascript css html',
       link: 'https://github.com/edoski/web-chat/',
     },
     {
       title: 'fantasy-cards',
       description: 'a javafx application (university project), where users can save, load, and play a turn-based fantasy card game.',
-      techStack: 'java, javafx, scenebuilder',
+      techStack: 'java javafx scenebuilder',
       link: 'https://github.com/edoski/scontroElementale',
     },
     {
       title: 'md-notes-app',
       description: 'a web-based note-taking application, where users can create, edit, and preview markdown notes, stored on firebase.',
-      techStack: 'react, firebase',
+      techStack: 'react firebase',
       link: 'https://github.com/edoski/mde-notes-app/',
     },
     {
       title: 'youtube-clone',
       description: 'a web-based application where users can authenticate via their google account, and upload or watch videos on the platform.',
-      techStack: 'react, typescript, google api',
+      techStack: 'react typescript google-api',
       link: 'https://github.com/edoski/youtube-clone',
     },
     {
       title: 'portfolio-v2',
       description: "the very website you're currently on; originally in vanilla js, now in react; everything you see here is freely available on my github.",
-      techStack: 'javascript, css, html',
+      techStack: 'javascript css html',
       link: 'https://github.com/edoski/portfolio-v1',
     },
   ];
@@ -63,7 +63,11 @@ function Projects() {
                       <FontAwesomeIcon icon={['fab', 'github']}/>
                     </div>
                     <p>{project.description}</p>
-                    <p className="tech-stack bold">tech-stack: {project.techStack}</p>
+                    <div className={"tech-stack-container"}>
+                      {project.techStack.split(' ').map((tech, i) => (
+                          <div className={"tech-bubble"}><span key={i} className="tech-stack bold">{tech}</span></div>
+                      ))}
+                    </div>
                   </a>
                 </div>
               </div>
