@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@400;700&family=Oxygen+Mono&display=swap');
+
+:root {
+    --oxygen: 'Oxygen', sans-serif;
+    --oxygen-mono: 'Oxygen Mono', monospace;
+    --primary-color: #FFFCF2;
+    --accent-color: #ff672b;
+    --background-color: #1f1f1f;
+}
+
+.hero-container {
+    margin-top: -1rem;
+    padding: 2rem;
+    background: linear-gradient(200deg, var(--accent-color), var(--background-color) 50%);
+}
+
+.hero-title-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.hero-title {
+    width: fit-content;
+    font-size: 6rem;
+    margin: 0 0 0 -0.5rem;
+    font-weight: bold;
+    background: linear-gradient(240deg, var(--accent-color) 20%, var(--primary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: var(--oxygen), sans-serif;
+    text-shadow: 0 0 10px rgba(250, 150, 100, 0.20);
+}
+
+.hero-text {
+    font-family: var(--oxygen-mono), monospace;
+    font-size: 1rem;
+    line-height: 2;
+    background: linear-gradient(-200deg, var(--primary-color), var(--accent-color) 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-text-top {
+    font-family: var(--oxygen-mono), monospace;
+    margin-bottom: -0.5rem;
+    background: linear-gradient(120deg, var(--primary-color), var(--accent-color) 7%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bold {
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(250, 150, 100, 5%);
+}
+
+@media (max-width: 768px) {
+    .hero-container {
+        padding: 1rem;
+        background: linear-gradient(200deg, var(--accent-color), var(--background-color) 20%);
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        margin: 0.5rem 0 0 -0.2rem;
+    }
+
+    .hero-text {
+        font-size: 0.875rem;
+    }
+}
+
+/*about*/
+
+.about-me-container {
+    font-family: var(--oxygen), sans-serif;
+    margin: 0 auto;
+    padding: 2rem;
+    color: #ffffff;
+}
+
+.skills-container {
+    display: flex;
+    /*flex-wrap: wrap;*/
+    gap: 2rem;
+    justify-content: center;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    background: linear-gradient(190deg, var(--accent-color) 0%, var(--primary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.skill-bubbles {
+    font-family: var(--oxygen-mono), monospace;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.skill-bubble {
+    background-color: #2a2a2a;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
+}
+
+.skill-bubble:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+}
+
+.skill-name {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.skill-level {
+    font-size: 0.8rem;
+    color: #ff9ff3;
+}
+
+@media (max-width: 768px) {
+    .skills-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    .skill-bubble {
+        padding: 0.5rem;
+    }
+
+    .skill-name {
+        font-size: 0.875rem;
+    }
+
+    .skill-level {
+        font-size: 0.75rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .skill-category {
+        flex-basis: calc(50% - 1rem);
+    }
+}
+
+@media (min-width: 1024px) {
+    .skill-category {
+        flex-basis: calc(33.333% - 1.333rem);
+    }
+}
