@@ -17,7 +17,6 @@ function Hero() {
                 { name: "JavaScript", level: "Intermediate" },
                 { name: "TypeScript", level: "Intermediate" },
                 { name: "PHP", level: "Intermediate" },
-                { name: "HTML", level: "Intermediate" },
                 { name: "CSS", level: "Intermediate" },
             ]},
         { category: "Frameworks & Libraries", items: [
