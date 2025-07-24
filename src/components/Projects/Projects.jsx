@@ -1,7 +1,6 @@
-import {library} from '@fortawesome/fontawesome-svg-core';
-import {fab, faGithub} from '@fortawesome/free-brands-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import './Projects.css';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 library.add(fab, faGithub);
 
@@ -46,36 +45,28 @@ function Projects() {
     ];
 
     return (
-        <div className="projects-body">
-            <hr className="nav-hr"/>
-            <div className="hero-subtitle-container-flex">
-                <div className="hero-subtitle-container">
-                    <h1 className="hero-subtitle">...here&#39;s some of my projects.</h1>
-                </div>
-            </div>
-            <div id="projects" className="projects-container">
+        <section className="px-4 py-8" id="projects">
+            <h2 className="text-xl font-bold text-green-400 font-mono mb-4">projects</h2>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {projectList.map((project, index) => (
-                    <div key={index} className="project-card">
-                        <div className="project-content">
-                            <a href={project.link} target="_blank" rel="noreferrer" className="project-link">
-                                <div className="project-header">
-                                    <h3>{project.title}</h3>
-                                    <FontAwesomeIcon icon={['fab', 'github']}/>
-                                </div>
-                                <p>{project.description}</p>
-                                <div className={"tech-stack-container"}>
-                                    {project.techStack.split(' ').map((tech, i) => (
-                                        <div className={"tech-bubble"}>
-                                            <span key={i} className="tech-stack bold">{tech}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </a>
+                    <a key={index} href={project.link} target="_blank" rel="noreferrer"
+                       className="border border-neutral-700 rounded-lg p-4 hover:bg-neutral-800 transition-colors">
+                        <div className="flex items-center justify-between mb-2">
+                            <h3 className="text-white font-mono">{project.title}</h3>
+                            <FontAwesomeIcon icon={[ 'fab', 'github' ]} className="text-green-400" />
                         </div>
-                    </div>
+                        <p className="text-neutral-300 text-sm mb-2">{project.description}</p>
+                        <div className="flex flex-wrap gap-1">
+                            {project.techStack.split(' ').map((tech, i) => (
+                                <span key={i} className="bg-neutral-700 text-neutral-200 text-xs px-2 py-1 rounded">
+                                    {tech}
+                                </span>
+                            ))}
+                        </div>
+                    </a>
                 ))}
             </div>
-        </div>
+        </section>
     );
 }
 
