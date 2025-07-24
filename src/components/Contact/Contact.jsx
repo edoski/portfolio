@@ -1,5 +1,3 @@
-import './Contact.css';
-
 // Contact Component
 function Contact() {
     const EmailIcon = () => (
@@ -16,19 +14,16 @@ function Contact() {
     };
 
     return (
-        <div id="contact" className="contact-banner-container">
-            <div className="contact-banner">
-                <div className="gradient-line"></div>
-                <div className="content">
-                    <h2>reach out.</h2>
-                    <p>for any inquiries, or collaboration.</p>
-                </div>
-                <button onClick={handleContactClick} className="contact-button">
-                    <EmailIcon/>
+        <section id="contact" className="px-4 py-8">
+            <div className="border border-neutral-700 rounded-lg p-6 flex flex-col items-center gap-4 bg-neutral-900">
+                <h2 className="text-green-400 font-mono text-xl">reach out</h2>
+                <p className="text-neutral-300 text-center">for any inquiries or collaboration.</p>
+                <button onClick={handleContactClick} className="flex items-center gap-2 bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded">
+                    <EmailIcon />
                     <span>Contact</span>
                 </button>
             </div>
-        </div>
+        </section>
     );
 }
 

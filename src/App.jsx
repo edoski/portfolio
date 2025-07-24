@@ -3,14 +3,13 @@ import Hero from './components/Hero/Hero';
 import Projects from './components/Projects/Projects';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
-import './App.css';
 
 // Main App Component
 function App() {
     return (
-        <div id="top" className="bottom-shine-container">
+        <div id="top" className="min-h-screen bg-neutral-900 text-neutral-100">
             <Nav />
-            <main>
+            <main className="container mx-auto py-8 space-y-12">
                 <Hero />
                 <Projects />
                 <Contact />
