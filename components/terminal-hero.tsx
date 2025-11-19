@@ -1,0 +1,110 @@
+"use client"
+
+import { useState, useEffect, useMemo } from "react"
+import dynamic from "next/dynamic"
+import { TerminalChrome } from "@/components/ui/terminal-chrome"
+import { TerminalPrompt } from "@/components/ui/terminal-prompt"
+import { ChevronRight } from "lucide-react"
+
+const FaultyTerminal = dynamic(
+  () => import("@/src/Backgrounds/FaultyTerminal/FaultyTerminal"),
+  { ssr: false }
+)
+
+const ASCIITextDynamic = dynamic(
+  () => import("@/src/TextAnimations/ASCIIText/ASCIIText"),
+  { ssr: false }
+)
+
+export function TerminalHero() {
+  const [showCursor, setShowCursor] = useState(true)
+  const [showName, setShowName] = useState(false)
+
+  // ASCII art name animation
+  useEffect(() => {
+    const nameTimer = setTimeout(() => {
+      setShowName(true)
+    }, 300)
+
+    return () => clearTimeout(nameTimer)
+  }, [])
+
+  useEffect(() => {
+    const cursorTimer = setInterval(() => {
+      setShowCursor((prev) => !prev)
+    }, 500)
+
+    return () => clearInterval(cursorTimer)
+  }, [])
+
+  // Memoize FaultyTerminal to prevent re-renders (required for WebGL performance)
+  const faultyTerminalBackground = useMemo(
+    () => (
+      <div className="absolute inset-0 z-0">
+        <FaultyTerminal
+          tint="#00ff88"
+          scanlineIntensity={0.4}
+          flickerAmount={0.8}
+          glitchAmount={0}
+          curvature={0.1}
+          brightness={0.4}
+          mouseReact={true}
+          mouseStrength={0.2}
+          dpr={typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 2) : 1}
+          className=""
+          style={{}}
+        />
+      </div>
+    ),
+    [] // Empty deps is correct - FaultyTerminal should only mount once
+  )
+
+  return (
+    <section className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
+      {/* FaultyTerminal Background */}
+      {faultyTerminalBackground}
+
+      <div className="max-w-5xl mx-auto w-full space-y-8 relative z-10">
+        {/* Main terminal window */}
+        <TerminalChrome title="zsh" className="p-0 min-h-[380px]">
+          <div className="space-y-6 p-0 md:px-2">
+            {/* Name display with ASCII-style effect */}
+            <div className="space-y-2">
+              <TerminalPrompt path="~" command="whoami" className="text-sm" />
+              {showName && (
+                <div className="relative w-full h-48 md:h-64">
+                  <ASCIITextDynamic
+                    text="edo."
+                    asciiFontSize={6}
+                    textFontSize={200}
+                    textColor="#ff9d3d"
+                    planeBaseHeight={16}
+                    enableWaves={false}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Bio text with typewriter */}
+            <div className="space-y-2">
+              <TerminalPrompt
+                path="~"
+                command={
+                  <>
+                    <span>echo &quot;an ambitious software engineer, studying </span>
+                    <span className="font-bold">Computer Science</span>
+                    <span> at the </span>
+                    <span className="font-bold">University of Bologna</span>
+                    <span>.&quot;</span>
+                  </>
+                }
+                showCursor={showCursor}
+                className="text-sm"
+              />
+            </div>
+          </div>
+        </TerminalChrome>
+      </div>
+    </section>
+  )
+}
