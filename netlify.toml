@@ -1,0 +1,22 @@
+# Netlify configuration for Next.js portfolio
+
+[build]
+  command = "pnpm run build"
+  # The Next.js plugin automatically handles the publish directory
+
+# Environment variables
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--version" # Suppress npm warnings when pnpm is used
+
+# Next.js Runtime (Essential Next.js plugin is automatically enabled for Next.js projects)
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Optional: Custom headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
