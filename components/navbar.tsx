@@ -11,7 +11,7 @@ export function Navbar() {
         {/* Subtle top glow */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--color-terminal-green)]/20 to-transparent pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-6 py-5">
+        <div className="px-5 mx-auto py-4">
           <div className="flex items-center justify-between">
             {/* Logo/Brand */}
             <a href="#" className="flex items-center gap-2.5 group">

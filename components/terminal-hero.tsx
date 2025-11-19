@@ -5,6 +5,7 @@ import dynamic from "next/dynamic"
 import { TerminalChrome } from "@/components/ui/terminal-chrome"
 import { TerminalPrompt } from "@/components/ui/terminal-prompt"
 import { ChevronRight } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 const FaultyTerminal = dynamic(
   () => import("@/src/Backgrounds/FaultyTerminal/FaultyTerminal"),
@@ -60,7 +61,7 @@ export function TerminalHero() {
   )
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
+    <section id="about" className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
       {/* FaultyTerminal Background */}
       {faultyTerminalBackground}
 
@@ -71,18 +72,19 @@ export function TerminalHero() {
             {/* Name display with ASCII-style effect */}
             <div className="space-y-2">
               <TerminalPrompt path="~" command="whoami" className="text-sm" />
-              {showName && (
-                <div className="relative w-full h-48 md:h-64">
-                  <ASCIITextDynamic
-                    text="edo."
-                    asciiFontSize={6}
-                    textFontSize={200}
-                    textColor="#ff9d3d"
-                    planeBaseHeight={16}
-                    enableWaves={false}
-                  />
-                </div>
-              )}
+              <div className={cn(
+                "relative w-full h-48 md:h-64 transition-opacity duration-300",
+                showName ? "opacity-100" : "opacity-0"
+              )}>
+                <ASCIITextDynamic
+                  text="edo."
+                  asciiFontSize={6}
+                  textFontSize={200}
+                  textColor="#ff9d3d"
+                  planeBaseHeight={16}
+                  enableWaves={false}
+                />
+              </div>
             </div>
 
             {/* Bio text with typewriter */}

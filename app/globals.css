@@ -35,6 +35,7 @@
 @theme inline {
   --font-sans: 'Geist Sans', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Geist Mono', monospace;
+  --font-ibm-plex-mono: 'IBM Plex Mono', 'Courier New', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -73,43 +74,12 @@
     @apply bg-background text-foreground;
     position: relative;
   }
+}
 
-  /* Terminal screen glow effect */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(115, 210, 222, 0.03) 0%,
-      transparent 70%
-    );
-    pointer-events: none;
-    z-index: 9998;
-  }
-
-  /* Subtle scanlines overlay */
-  body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.05) 0px,
-      rgba(0, 0, 0, 0.05) 1px,
-      transparent 1px,
-      transparent 2px
-    );
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.3;
-  }
+/* Smooth scrolling must be outside @layer to have proper cascade priority */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 /* Terminal-specific animations and styles */
@@ -152,5 +122,38 @@
   );
   border-bottom: 1px solid oklch(0.35 0 0);
   border-radius: 0.5rem 0.5rem 0 0;
+}
+
+/* ASCII Text component styles */
+.ascii-text-container canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+.ascii-text-container pre {
+  margin: 0;
+  user-select: none;
+  padding: 0;
+  line-height: 1em;
+  text-align: left;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-image: radial-gradient(circle, #ff6188 0%, #fc9867 50%, #ffd866 100%);
+  background-attachment: fixed;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  z-index: 9;
+  mix-blend-mode: difference;
 }
 
