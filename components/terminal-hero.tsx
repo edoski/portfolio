@@ -8,12 +8,12 @@ import { ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const FaultyTerminal = dynamic(
-  () => import("@/src/Backgrounds/FaultyTerminal/FaultyTerminal"),
+  () => import("@/components/FaultyTerminal"),
   { ssr: false }
 )
 
 const ASCIITextDynamic = dynamic(
-  () => import("@/src/TextAnimations/ASCIIText/ASCIIText"),
+  () => import("@/components/ASCIIText"),
   { ssr: false }
 )
 
@@ -67,7 +67,7 @@ export function TerminalHero() {
 
       <div className="max-w-5xl mx-auto w-full space-y-8 relative z-10">
         {/* Main terminal window */}
-        <TerminalChrome title="zsh" className="p-0 min-h-[380px]">
+        <TerminalChrome title="~/about" className="p-0 min-h-[380px]">
           <div className="space-y-6 p-0 md:px-2">
             {/* Name display with ASCII-style effect */}
             <div className="space-y-2">

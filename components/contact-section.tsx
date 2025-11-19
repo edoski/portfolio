@@ -130,13 +130,6 @@ export function ContactSection() {
               />
             </div>
         </TerminalChrome>
-
-        {/* Footer message */}
-        <div className="mt-8 text-center">
-          <p className="font-mono text-sm text-muted-foreground">
-            <span className="text-[color:var(--color-terminal-green)]">✓</span> All systems operational • Ready to connect
-          </p>
-        </div>
       </div>
     </section>
   )
