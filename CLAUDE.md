@@ -101,12 +101,14 @@ Components sourced from ReactBits (https://reactbits.dev) are managed via jsrepo
 **Installed Components:**
 - FaultyTerminal - WebGL terminal background effect
 - ASCIIText - Three.js ASCII art text renderer
+- TiltedCard - 3D perspective tilt card with mouse-reactive rotation
 
 **Installation Method:**
 Components were installed using shadcn CLI with ReactBits registry:
 ```bash
 npx shadcn@latest add https://reactbits.dev/r/FaultyTerminal-TS-TW.json
 npx shadcn@latest add https://reactbits.dev/r/ASCIIText-TS-TW.json
+npx shadcn@latest add https://reactbits.dev/r/TiltedCard-TS-TW.json
 ```
 
 **Configuration:**
@@ -117,6 +119,19 @@ The `jsrepo.json` file exists for legacy compatibility but components are now in
 - LANG: JS (JavaScript) or TS (TypeScript)
 - STYLE: CSS (separate CSS) or TW (Tailwind CSS)
 - This project uses: TS-TW (TypeScript + Tailwind CSS)
+
+**TiltedCard Component** (`components/TiltedCard.tsx`):
+- 3D perspective tilt effect with mouse-reactive rotation
+- Spring-based physics for smooth, natural motion
+- Wraps the ~/about terminal section for interactive hover effect
+- Modified to accept `children` prop in addition to image content
+- Uses Framer Motion (`motion` library) for animations
+- Configuration: subtle scale (1.02x), 8-degree rotation amplitude
+
+**Implementation Notes:**
+- Motion values initialized with `useSpring(0, springValues)` for proper animation state
+- Children wrapper uses relative positioning for correct layout flow
+- Applied to terminal-hero component for 3D tilt effect on ~/about section
 
 ### Key Implementation Details
 - **Terminal aesthetic**: Components use terminal-style prompts (`$`, `>`), monospace fonts, and terminal color palette

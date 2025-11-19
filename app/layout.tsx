@@ -16,8 +16,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: "edo's portfolio",
-  description: 'Portfolio of edo, a software engineer',
-  generator: 'v0.app',
+  description: "edo's developer portfolio; a collection of projects.",
 }
 
 export default function RootLayout({

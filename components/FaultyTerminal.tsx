@@ -1,5 +1,5 @@
 import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
-import React, { useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useEffect, useRef, useMemo, useCallback, useState } from 'react';
 
 type Vec2 = [number, number];
 
@@ -272,7 +272,8 @@ export default function FaultyTerminal({
   const frozenTimeRef = useRef(0);
   const rafRef = useRef<number>(0);
   const loadAnimationStartRef = useRef<number>(0);
-  const timeOffsetRef = useRef<number>(Math.random() * 100);
+  const [timeOffset] = useState(() => Math.random() * 100);
+  const timeOffsetRef = useRef<number>(timeOffset);
 
   const tintVec = useMemo(() => hexToRgb(tint), [tint]);
 
