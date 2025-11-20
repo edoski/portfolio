@@ -4,11 +4,17 @@ interface TerminalChromeProps {
   title?: string
   children: ReactNode
   className?: string
+  allowContentOverflow?: boolean
 }
 
-export function TerminalChrome({ title, children, className = "" }: TerminalChromeProps) {
+export function TerminalChrome({
+  title,
+  children,
+  className = "",
+  allowContentOverflow = false
+}: TerminalChromeProps) {
   return (
-    <div className={`terminal-window p-0 relative overflow-hidden ${className}`}>
+    <div className={`terminal-window p-0 relative ${allowContentOverflow ? 'overflow-visible' : 'overflow-hidden'} ${className}`}>
       {/* Terminal header */}
       <div className="relative z-10 flex items-center justify-between px-4 h-10 border-b border-border/50">
         <div className="flex items-center gap-2">
@@ -24,7 +30,7 @@ export function TerminalChrome({ title, children, className = "" }: TerminalChro
         <div className="w-16" />
       </div>
       {/* Terminal content */}
-      <div className="relative z-10 p-6 space-y-6">
+      <div className="relative p-6 space-y-6">
         {children}
       </div>
     </div>

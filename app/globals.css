@@ -64,6 +64,10 @@
   --color-terminal-green: var(--terminal-green);
   --color-terminal-orange: var(--terminal-orange);
   --color-terminal-cursor: var(--terminal-cursor);
+
+  /* Star border animations */
+  --animate-star-movement-bottom: star-movement-bottom linear infinite alternate;
+  --animate-star-movement-top: star-movement-top linear infinite alternate;
 }
 
 @layer base {
@@ -91,6 +95,36 @@ html {
   51%,
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes star-movement-bottom {
+  0% {
+    transform: translate(0%, 0%);
+  }
+  60% {
+    transform: translate(-60%, 0%);
+  }
+  85% {
+    transform: translate(-85%, 0%);
+  }
+  100% {
+    transform: translate(-100%, 0%);
+  }
+}
+
+@keyframes star-movement-top {
+  0% {
+    transform: translate(0%, 0%);
+  }
+  60% {
+    transform: translate(60%, 0%);
+  }
+  85% {
+    transform: translate(85%, 0%);
+  }
+  100% {
+    transform: translate(100%, 0%);
   }
 }
 
@@ -167,3 +201,12 @@ html {
   mix-blend-mode: difference;
 }
 
+/* StarBorder hover effects */
+.star-border-wrapper {
+  overflow: hidden;
+}
+
+.star-border-wrapper:hover .star-border-effect-bottom,
+.star-border-wrapper:hover .star-border-effect-top {
+  opacity: 0.7;
+}

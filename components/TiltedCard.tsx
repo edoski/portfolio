@@ -16,6 +16,7 @@ interface TiltedCardProps {
   showTooltip?: boolean;
   overlayContent?: React.ReactNode;
   displayOverlayContent?: boolean;
+  invertTilt?: boolean;
   children?: React.ReactNode;
 }
 
@@ -39,6 +40,7 @@ export default function TiltedCard({
   showTooltip = true,
   overlayContent = null,
   displayOverlayContent = false,
+  invertTilt = false,
   children
 }: TiltedCardProps) {
   const ref = useRef<HTMLElement>(null);
@@ -63,8 +65,13 @@ export default function TiltedCard({
     const offsetX = e.clientX - rect.left - rect.width / 2;
     const offsetY = e.clientY - rect.top - rect.height / 2;
 
-    const rotationX = (offsetY / (rect.height / 2)) * -rotateAmplitude;
-    const rotationY = (offsetX / (rect.width / 2)) * rotateAmplitude;
+    const rotationX = invertTilt
+      ? (offsetY / (rect.height / 2)) * rotateAmplitude
+      : (offsetY / (rect.height / 2)) * -rotateAmplitude;
+
+    const rotationY = invertTilt
+      ? (offsetX / (rect.width / 2)) * -rotateAmplitude
+      : (offsetX / (rect.width / 2)) * rotateAmplitude;
 
     rotateX.set(rotationX);
     rotateY.set(rotationY);
@@ -93,7 +100,7 @@ export default function TiltedCard({
   return (
     <figure
       ref={ref}
-      className="relative w-full h-full [perspective:800px] flex flex-col items-center justify-center"
+      className="relative w-full h-full [perspective:800px] flex flex-col items-center justify-center z-0 hover:z-10"
       style={{
         height: containerHeight,
         width: containerWidth

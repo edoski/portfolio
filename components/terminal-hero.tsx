@@ -1,11 +1,11 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useMemo } from "react"
 import dynamic from "next/dynamic"
 import { TerminalChrome } from "@/components/ui/terminal-chrome"
 import { TerminalPrompt } from "@/components/ui/terminal-prompt"
-import { cn } from "@/lib/utils"
 import TiltedCard from "@/components/TiltedCard"
+import FadeContent from "@/components/FadeContent"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { TERMINAL_BIO } from "@/lib/constants"
 
@@ -25,7 +25,6 @@ const TextType = dynamic(
 )
 
 export function TerminalHero() {
-  const [showName, setShowName] = useState(false)
   const isMobile = useMediaQuery('(max-width: 768px)')
 
   // Convert TERMINAL_BIO segments to a single string
@@ -33,15 +32,6 @@ export function TerminalHero() {
     TERMINAL_BIO.segments.map(segment => segment.text).join(''),
     []
   )
-
-  // ASCII art name animation
-  useEffect(() => {
-    const nameTimer = setTimeout(() => {
-      setShowName(true)
-    }, 300)
-
-    return () => clearTimeout(nameTimer)
-  }, [])
 
   // Memoize FaultyTerminal to prevent re-renders (required for WebGL performance)
   const faultyTerminalBackground = useMemo(
@@ -72,6 +62,9 @@ export function TerminalHero() {
       {/* FaultyTerminal Background */}
       {faultyTerminalBackground}
 
+      {/* Gradient overlay for smooth transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent to-[rgb(10_10_10)] z-[5] pointer-events-none" />
+
       <div className="max-w-6xl mx-auto w-full space-y-8 relative z-10">
         {/* Main terminal window */}
         <TiltedCard
@@ -89,19 +82,18 @@ export function TerminalHero() {
               {/* Name display with ASCII-style effect */}
               <div className="space-y-2">
                 <TerminalPrompt path="~/about" command="whoami" className="text-sm" />
-                <div className={cn(
-                  "relative w-full h-48 md:h-64 transition-opacity duration-300",
-                  showName ? "opacity-100" : "opacity-0"
-                )}>
-                  <ASCIITextDynamic
-                    text="edo."
-                    asciiFontSize={isMobile ? 4 : 6}
-                    textFontSize={200}
-                    planeBaseHeight={isMobile ? 11 : 16}
-                    textColor="#ff9d3d"
-                    enableWaves={false}
-                  />
-                </div>
+                <FadeContent delay={150} duration={500}>
+                  <div className="relative w-full h-48 md:h-64">
+                    <ASCIITextDynamic
+                      text="edo."
+                      asciiFontSize={isMobile ? 4 : 6}
+                      textFontSize={200}
+                      planeBaseHeight={isMobile ? 11 : 16}
+                      textColor="#ff9d3d"
+                      enableWaves={false}
+                    />
+                  </div>
+                </FadeContent>
               </div>
 
               {/* Bio text with typewriter */}
@@ -135,15 +127,22 @@ export function TerminalHero() {
                     command="echo"
                     className="text-sm"
                   />
-                  <div className="font-mono text-sm text-foreground">
-                    <TextType
-                      text={bioText}
-                      as="span"
-                      loop={false}
-                      showCursor={true}
-                      variableSpeed={{ min: 50, max: 75 }}
-                      className="inline"
-                    />
+                  <div className="relative font-mono text-sm text-foreground">
+                    {/* Invisible placeholder for height reservation */}
+                    <div className="invisible" aria-hidden="true">
+                      {bioText}
+                    </div>
+                    {/* Actual typing animation positioned absolutely */}
+                    <div className="absolute inset-0">
+                      <TextType
+                        text={bioText}
+                        as="span"
+                        loop={false}
+                        showCursor={true}
+                        variableSpeed={{ min: 50, max: 75 }}
+                        className="inline"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

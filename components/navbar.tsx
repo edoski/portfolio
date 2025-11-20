@@ -26,13 +26,6 @@ export function Navbar() {
             <div className="flex items-center gap-5">
               <div className="hidden md:flex items-center gap-1 font-mono text-sm">
                 <a
-                  href="#about"
-                  className="px-2.5 py-2 text-muted-foreground/80 hover:text-foreground hover:bg-white/5 rounded-md transition-all duration-200 group"
-                >
-                  <span className="text-[color:var(--color-terminal-green)]/60 group-hover:text-[color:var(--color-terminal-green)] mr-1.5 transition-colors">$</span>
-                  <span className="group-hover:translate-x-0.5 inline-block transition-transform">about</span>
-                </a>
-                <a
                   href="#projects"
                   className="px-2.5 py-2 text-muted-foreground/80 hover:text-foreground hover:bg-white/5 rounded-md transition-all duration-200 group"
                 >
@@ -45,6 +38,15 @@ export function Navbar() {
                 >
                   <span className="text-[color:var(--color-terminal-green)]/60 group-hover:text-[color:var(--color-terminal-green)] mr-1.5 transition-colors">$</span>
                   <span className="group-hover:translate-x-0.5 inline-block transition-transform">contact</span>
+                </a>
+                <a
+                  href="/CV_Edoardo_Galli.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-2.5 py-2 text-muted-foreground/80 hover:text-foreground hover:bg-white/5 rounded-md transition-all duration-200 group"
+                >
+                  <span className="text-[color:var(--color-terminal-green)]/60 group-hover:text-[color:var(--color-terminal-green)] mr-1.5 transition-colors">$</span>
+                  <span className="group-hover:translate-x-0.5 inline-block transition-transform">resume</span>
                 </a>
               </div>
 

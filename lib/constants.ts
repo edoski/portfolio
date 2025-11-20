@@ -41,28 +41,36 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
-    title: "AI-Powered Task Manager",
-    description: "A smart productivity app that uses machine learning to prioritize tasks and optimize workflows.",
-    tech: ["React", "Node.js", "TensorFlow", "MongoDB"],
-    github: "#",
-    demo: "#",
-    directory: "ai-task-manager",
+    title: "sweng-notes",
+    description: "a real-time collaborative note editor.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Liveblocks", "Convex"],
+    github: "https://github.com/edoski/sweng-notes",
+    demo: "https://sweng-notes.vercel.app",
+    directory: "sweng-notes",
   },
   {
-    title: "Blockchain Voting System",
-    description: "Secure and transparent voting platform built on Ethereum with smart contracts.",
-    tech: ["Solidity", "Web3.js", "React", "IPFS"],
-    github: "#",
-    demo: "#",
-    directory: "blockchain-voting",
+    title: "portfolio",
+    description: "edo's developer portfolio.",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Three.js", "WebGL"],
+    github: "https://github.com/edoski/portfolio",
+    demo: "https://edoski.com",
+    directory: "portfolio",
   },
   {
-    title: "Real-time Collaboration Tool",
-    description: "WebRTC-based platform for seamless team collaboration with live document editing.",
-    tech: ["WebRTC", "Socket.io", "Vue.js", "Express"],
-    github: "#",
+    title: "bostarter",
+    description: "a kickstarter-like platform for managing projects.",
+    tech: ["PHP", "MySQL", "MongoDB", "Docker", "Apache"],
+    github: "https://github.com/edoski/bostarter",
     demo: "#",
-    directory: "realtime-collab",
+    directory: "bostarter",
+  },
+  {
+    title: "pubsub",
+    description: "a terminal-based, publish-subscribe protocol for texts.",
+    tech: ["Java", "Sockets", "Multithreaded", "ExecutorService"],
+    github: "https://github.com/edoski/pubsub",
+    demo: "#",
+    directory: "pubsub",
   },
 ]
 
@@ -78,7 +86,7 @@ export interface TerminalBio {
 
 export const TERMINAL_BIO: TerminalBio = {
   segments: [
-    { text: "\"software engineer, studying " },
+    { text: "\"aspiring software engineer, studying " },
     { text: "Computer Science (BSc)", bold: true },
     { text: " at the " },
     { text: "University of Bologna", bold: true },
