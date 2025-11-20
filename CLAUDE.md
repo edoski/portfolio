@@ -111,8 +111,8 @@ npx shadcn@latest add https://reactbits.dev/r/ASCIIText-TS-TW.json
 npx shadcn@latest add https://reactbits.dev/r/TiltedCard-TS-TW.json
 ```
 
-**Configuration:**
-The `jsrepo.json` file exists for legacy compatibility but components are now installed via shadcn CLI.
+**Installation Method:**
+All ReactBits components are installed via shadcn CLI using the registry URLs above.
 
 **Component Variants:**
 - Format: `ComponentName-LANG-STYLE.json`
@@ -205,3 +205,4 @@ This automatically installs TypeScript + Tailwind variants of ReactBits componen
 - Use `"use client"` directive only when component requires client-side features
 - WebGL components (FaultyTerminal, ASCIIText) use default exports for dynamic import compatibility
 - Browser-only components must be imported with `dynamic(..., { ssr: false })` pattern
+- Do not run pnpm dev manually, assume I already am, if it is not, then ask me to do it for you

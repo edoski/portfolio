@@ -98,6 +98,16 @@ html {
   animation: blink 1s infinite;
 }
 
+/* Cursor that only blinks on parent group hover */
+.terminal-cursor-hover {
+  opacity: 0;
+  transition: none;
+}
+
+.group:hover .terminal-cursor-hover {
+  animation: blink 1s infinite;
+}
+
 /* Terminal window chrome styling */
 .terminal-window {
   position: relative;

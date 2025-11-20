@@ -18,12 +18,12 @@ export function Navbar() {
               <Terminal size={18} className="text-foreground/80" />
               <div className="font-mono text-base font-medium text-foreground flex items-center">
                 <span>edo@portfolio</span>
-                <span className="inline-block w-[2px] h-[14px] bg-current ml-0.5 opacity-0 group-hover:opacity-100 terminal-cursor transition-opacity"></span>
+                <span className="inline-block w-[2px] h-[14px] bg-current ml-0.5 terminal-cursor-hover"></span>
               </div>
             </a>
 
             {/* Navigation Links */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-5">
               <div className="hidden md:flex items-center gap-1 font-mono text-sm">
                 <a
                   href="#about"

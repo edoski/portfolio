@@ -1,11 +1,12 @@
-import { Github, Linkedin, Twitter, Mail } from "lucide-react"
-import type { LucideIcon } from "lucide-react"
+import { SiGithub, SiLinkedin } from "react-icons/si"
+import { LuMail } from "react-icons/lu"
+import type { IconType } from "react-icons"
 
 export interface SocialLink {
   platform: string
   label: string
   url: string
-  icon: LucideIcon
+  icon: IconType
 }
 
 export const SOCIAL_LINKS: SocialLink[] = [
@@ -13,25 +14,19 @@ export const SOCIAL_LINKS: SocialLink[] = [
     platform: "github",
     label: "GitHub",
     url: "https://github.com/edoski",
-    icon: Github,
+    icon: SiGithub,
   },
   {
     platform: "linkedin",
     label: "LinkedIn",
     url: "https://www.linkedin.com/in/edoardo-galli-5074321b9/",
-    icon: Linkedin,
-  },
-  {
-    platform: "twitter",
-    label: "Twitter",
-    url: "https://twitter.com",
-    icon: Twitter,
+    icon: SiLinkedin,
   },
   {
     platform: "email",
     label: "Email",
-    url: "mailto:contact@example.com",
-    icon: Mail,
+    url: "mailto:edoski.dev@gmail.com",
+    icon: LuMail,
   },
 ]
 
@@ -83,11 +78,11 @@ export interface TerminalBio {
 
 export const TERMINAL_BIO: TerminalBio = {
   segments: [
-    { text: "software engineer, studying " },
+    { text: "\"software engineer, studying " },
     { text: "Computer Science (BSc)", bold: true },
     { text: " at the " },
     { text: "University of Bologna", bold: true },
-    { text: "." },
+    { text: ".\"" },
   ],
   mobileBreakAfter: [0, 2],
 }

@@ -3,7 +3,8 @@
 import { Button } from "@/components/ui/button"
 import { TerminalChrome } from "@/components/ui/terminal-chrome"
 import { TerminalPrompt } from "@/components/ui/terminal-prompt"
-import { ExternalLink, Github, Folder, FileCode } from "lucide-react"
+import { ExternalLink, Folder, FileCode } from "lucide-react"
+import { SiGithub } from "react-icons/si"
 import { PROJECTS } from "@/lib/constants"
 
 export function ProjectsSection() {
@@ -15,9 +16,6 @@ export function ProjectsSection() {
             {/* Command prompt */}
             <div className="space-y-2">
               <TerminalPrompt path="~/projects" command="ls -la" />
-              <div className="font-mono text-xs text-muted-foreground">
-                total {PROJECTS.length} projects
-              </div>
             </div>
 
             {/* Project listings */}
@@ -71,7 +69,7 @@ export function ProjectsSection() {
                           variant="outline"
                           className="border-[color:var(--color-terminal-green)] text-[color:var(--color-terminal-green)] hover:bg-[color:var(--color-terminal-green)]/10 bg-transparent group/btn"
                         >
-                          <Github className="w-3 h-3 mr-2" />
+                          <SiGithub className="w-3 h-3 mr-2" />
                           <span className="group-hover/btn:mr-1 transition-all">git clone</span>
                         </Button>
                         <Button

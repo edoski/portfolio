@@ -19,10 +19,20 @@ const ASCIITextDynamic = dynamic(
   { ssr: false }
 )
 
+const TextType = dynamic(
+  () => import("@/components/TextType"),
+  { ssr: false }
+)
+
 export function TerminalHero() {
-  const [showCursor, setShowCursor] = useState(true)
   const [showName, setShowName] = useState(false)
   const isMobile = useMediaQuery('(max-width: 768px)')
+
+  // Convert TERMINAL_BIO segments to a single string
+  const bioText = useMemo(() =>
+    TERMINAL_BIO.segments.map(segment => segment.text).join(''),
+    []
+  )
 
   // ASCII art name animation
   useEffect(() => {
@@ -31,14 +41,6 @@ export function TerminalHero() {
     }, 300)
 
     return () => clearTimeout(nameTimer)
-  }, [])
-
-  useEffect(() => {
-    const cursorTimer = setInterval(() => {
-      setShowCursor((prev) => !prev)
-    }, 500)
-
-    return () => clearInterval(cursorTimer)
   }, [])
 
   // Memoize FaultyTerminal to prevent re-renders (required for WebGL performance)
@@ -70,7 +72,7 @@ export function TerminalHero() {
       {/* FaultyTerminal Background */}
       {faultyTerminalBackground}
 
-      <div className="max-w-5xl mx-auto w-full space-y-8 relative z-10">
+      <div className="max-w-6xl mx-auto w-full space-y-8 relative z-10">
         {/* Main terminal window */}
         <TiltedCard
           containerHeight="auto"
@@ -103,23 +105,25 @@ export function TerminalHero() {
               </div>
 
               {/* Bio text with typewriter */}
-              <div className="space-y-2">
+              <div className="pt-4 border-t border-border/30">
                 {/* Desktop version - inline with cursor */}
                 <div className="hidden md:block">
                   <TerminalPrompt
                     path="~/about"
                     command={
                       <>
-                        <span>echo &quot;</span>
-                        {TERMINAL_BIO.segments.map((segment, i) => (
-                          <span key={i} className={segment.bold ? "font-bold" : ""}>
-                            {segment.text}
-                          </span>
-                        ))}
-                        <span>&quot;</span>
+                        <TextType
+                          text={`echo ${bioText}`}
+                          as="span"
+                          loop={false}
+                          showCursor={true}
+                          variableSpeed={{ min: 30, max: 60 }}
+                          className="inline"
+                          cursorCharacter={"▋"}
+                        />
                       </>
                     }
-                    showCursor={showCursor}
+                    showCursor={false}
                     className="text-sm"
                   />
                 </div>
@@ -131,31 +135,15 @@ export function TerminalHero() {
                     command="echo"
                     className="text-sm"
                   />
-                  <div className="font-mono text-sm text-foreground space-y-0">
-                    <div>
-                      <span>&quot;</span>
-                      {TERMINAL_BIO.segments.slice(0, 1).map((segment, i) => (
-                        <span key={i} className={segment.bold ? "font-bold" : ""}>
-                          {segment.text}
-                        </span>
-                      ))}
-                    </div>
-                    <div>
-                      {TERMINAL_BIO.segments.slice(1, 3).map((segment, i) => (
-                        <span key={i + 1} className={segment.bold ? "font-bold" : ""}>
-                          {segment.text}
-                        </span>
-                      ))}
-                    </div>
-                    <div>
-                      {TERMINAL_BIO.segments.slice(3).map((segment, i) => (
-                        <span key={i + 3} className={segment.bold ? "font-bold" : ""}>
-                          {segment.text}
-                        </span>
-                      ))}
-                      <span>&quot;</span>
-                      <span className={cn("ml-1", showCursor ? "opacity-100" : "opacity-0")}>▋</span>
-                    </div>
+                  <div className="font-mono text-sm text-foreground">
+                    <TextType
+                      text={bioText}
+                      as="span"
+                      loop={false}
+                      showCursor={true}
+                      variableSpeed={{ min: 50, max: 75 }}
+                      className="inline"
+                    />
                   </div>
                 </div>
               </div>
