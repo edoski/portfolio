@@ -6,6 +6,8 @@ import { TerminalChrome } from "@/components/ui/terminal-chrome"
 import { TerminalPrompt } from "@/components/ui/terminal-prompt"
 import { cn } from "@/lib/utils"
 import TiltedCard from "@/components/TiltedCard"
+import { useMediaQuery } from "@/hooks/use-media-query"
+import { TERMINAL_BIO } from "@/lib/constants"
 
 const FaultyTerminal = dynamic(
   () => import("@/components/FaultyTerminal"),
@@ -20,6 +22,7 @@ const ASCIITextDynamic = dynamic(
 export function TerminalHero() {
   const [showCursor, setShowCursor] = useState(true)
   const [showName, setShowName] = useState(false)
+  const isMobile = useMediaQuery('(max-width: 768px)')
 
   // ASCII art name animation
   useEffect(() => {
@@ -44,21 +47,22 @@ export function TerminalHero() {
       <div className="absolute inset-0 z-0">
         <FaultyTerminal
           tint="#9bed82"
+          gridMul={isMobile ? [1, 1.8] : [1.2, 0.6]}
+          scale={isMobile ? 0.5 : 1}
           scanlineIntensity={0.4}
           flickerAmount={0.6}
           glitchAmount={0}
-          curvature={0.1}
+          curvature={isMobile ? 0 : 0.08}
           brightness={0.6}
           dither={1}
           mouseReact={true}
           mouseStrength={0.15}
-          dpr={typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 2) : 1}
           className=""
           style={{}}
         />
       </div>
     ),
-    [] // Empty deps is correct - FaultyTerminal should only mount once
+    []
   )
 
   return (
@@ -82,17 +86,17 @@ export function TerminalHero() {
             <div className="space-y-6 p-0 md:px-2">
               {/* Name display with ASCII-style effect */}
               <div className="space-y-2">
-                <TerminalPrompt path="~" command="whoami" className="text-sm" />
+                <TerminalPrompt path="~/about" command="whoami" className="text-sm" />
                 <div className={cn(
                   "relative w-full h-48 md:h-64 transition-opacity duration-300",
                   showName ? "opacity-100" : "opacity-0"
                 )}>
                   <ASCIITextDynamic
                     text="edo."
-                    asciiFontSize={6}
+                    asciiFontSize={isMobile ? 4 : 6}
                     textFontSize={200}
+                    planeBaseHeight={isMobile ? 11 : 16}
                     textColor="#ff9d3d"
-                    planeBaseHeight={16}
                     enableWaves={false}
                   />
                 </div>
@@ -100,20 +104,60 @@ export function TerminalHero() {
 
               {/* Bio text with typewriter */}
               <div className="space-y-2">
-                <TerminalPrompt
-                  path="~"
-                  command={
-                    <>
-                      <span>echo &quot;an ambitious software engineer, studying </span>
-                      <span className="font-bold">Computer Science</span>
-                      <span> at the </span>
-                      <span className="font-bold">University of Bologna</span>
-                      <span>.&quot;</span>
-                    </>
-                  }
-                  showCursor={showCursor}
-                  className="text-sm"
-                />
+                {/* Desktop version - inline with cursor */}
+                <div className="hidden md:block">
+                  <TerminalPrompt
+                    path="~/about"
+                    command={
+                      <>
+                        <span>echo &quot;</span>
+                        {TERMINAL_BIO.segments.map((segment, i) => (
+                          <span key={i} className={segment.bold ? "font-bold" : ""}>
+                            {segment.text}
+                          </span>
+                        ))}
+                        <span>&quot;</span>
+                      </>
+                    }
+                    showCursor={showCursor}
+                    className="text-sm"
+                  />
+                </div>
+
+                {/* Mobile version - separated with line breaks */}
+                <div className="md:hidden space-y-2">
+                  <TerminalPrompt
+                    path="~/about"
+                    command="echo"
+                    className="text-sm"
+                  />
+                  <div className="font-mono text-sm text-foreground space-y-0">
+                    <div>
+                      <span>&quot;</span>
+                      {TERMINAL_BIO.segments.slice(0, 1).map((segment, i) => (
+                        <span key={i} className={segment.bold ? "font-bold" : ""}>
+                          {segment.text}
+                        </span>
+                      ))}
+                    </div>
+                    <div>
+                      {TERMINAL_BIO.segments.slice(1, 3).map((segment, i) => (
+                        <span key={i + 1} className={segment.bold ? "font-bold" : ""}>
+                          {segment.text}
+                        </span>
+                      ))}
+                    </div>
+                    <div>
+                      {TERMINAL_BIO.segments.slice(3).map((segment, i) => (
+                        <span key={i + 3} className={segment.bold ? "font-bold" : ""}>
+                          {segment.text}
+                        </span>
+                      ))}
+                      <span>&quot;</span>
+                      <span className={cn("ml-1", showCursor ? "opacity-100" : "opacity-0")}>▋</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </TerminalChrome>

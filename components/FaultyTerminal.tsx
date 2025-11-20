@@ -208,7 +208,7 @@ void main() {
     if(uCurvature != 0.0){
       uv = barrel(uv);
     }
-    
+
     vec2 p = uv * uScale;
     vec3 col = getColor(p);
 

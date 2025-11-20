@@ -70,3 +70,24 @@ export const PROJECTS: Project[] = [
     directory: "realtime-collab",
   },
 ]
+
+export interface BioSegment {
+  text: string
+  bold?: boolean
+}
+
+export interface TerminalBio {
+  segments: BioSegment[]
+  mobileBreakAfter: number[]
+}
+
+export const TERMINAL_BIO: TerminalBio = {
+  segments: [
+    { text: "software engineer, studying " },
+    { text: "Computer Science (BSc)", bold: true },
+    { text: " at the " },
+    { text: "University of Bologna", bold: true },
+    { text: "." },
+  ],
+  mobileBreakAfter: [0, 2],
+}
