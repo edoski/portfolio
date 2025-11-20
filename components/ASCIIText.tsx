@@ -284,14 +284,12 @@ class CanvAscii {
   textColor: string;
   planeBaseHeight: number;
   container: HTMLElement;
-  trackingElement: HTMLElement;
   width: number;
   height: number;
   enableWaves: boolean;
   camera: THREE.PerspectiveCamera;
   scene: THREE.Scene;
   mouse: { x: number; y: number };
-  isHovering: boolean;
   textCanvas!: CanvasTxt;
   texture!: THREE.CanvasTexture;
   geometry!: THREE.PlaneGeometry;
@@ -323,10 +321,8 @@ class CanvAscii {
 
     this.scene = new THREE.Scene();
     this.mouse = { x: 0, y: 0 };
-    this.isHovering = false;
 
     this.onMouseMove = this.onMouseMove.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
 
     this.setMesh();
     this.setRenderer();
@@ -380,13 +376,8 @@ class CanvAscii {
     this.container.appendChild(this.filter.domElement);
     this.setSize(this.width, this.height);
 
-    // Find the terminal-window parent to track mouse across entire terminal
-    this.trackingElement = this.container.closest('.terminal-window') as HTMLElement || this.container;
-
-    this.trackingElement.addEventListener('mousemove', this.onMouseMove);
-    this.trackingElement.addEventListener('touchmove', this.onMouseMove);
-    this.trackingElement.addEventListener('mouseleave', this.onMouseLeave);
-    this.trackingElement.addEventListener('touchend', this.onMouseLeave);
+    this.container.addEventListener('mousemove', this.onMouseMove);
+    this.container.addEventListener('touchmove', this.onMouseMove);
   }
 
   setSize(w: number, h: number) {
@@ -411,11 +402,6 @@ class CanvAscii {
     const x = e.clientX - bounds.left;
     const y = e.clientY - bounds.top;
     this.mouse = { x, y };
-    this.isHovering = true;
-  }
-
-  onMouseLeave() {
-    this.isHovering = false;
   }
 
   animate() {
@@ -439,18 +425,11 @@ class CanvAscii {
   }
 
   updateRotation() {
-    const targetX = this.isHovering
-      ? map(this.mouse.y, 0, this.height, 0.5, -0.5)
-      : 0;
-    const targetY = this.isHovering
-      ? map(this.mouse.x, 0, this.width, -0.5, 0.5)
-      : 0;
+    const x = map(this.mouse.y, 0, this.height, 0.5, -0.5);
+    const y = map(this.mouse.x, 0, this.width, -0.5, 0.5);
 
-    // Use slower lerp when returning to neutral for smoother animation
-    const lerpFactor = this.isHovering ? 0.05 : 0.025;
-
-    this.mesh.rotation.x += (targetX - this.mesh.rotation.x) * lerpFactor;
-    this.mesh.rotation.y += (targetY - this.mesh.rotation.y) * lerpFactor;
+    this.mesh.rotation.x += (x - this.mesh.rotation.x) * 0.05;
+    this.mesh.rotation.y += (y - this.mesh.rotation.y) * 0.05;
   }
 
   clear() {
@@ -475,10 +454,8 @@ class CanvAscii {
     cancelAnimationFrame(this.animationFrameId);
     this.filter.dispose();
     this.container.removeChild(this.filter.domElement);
-    this.trackingElement.removeEventListener('mousemove', this.onMouseMove);
-    this.trackingElement.removeEventListener('touchmove', this.onMouseMove);
-    this.trackingElement.removeEventListener('mouseleave', this.onMouseLeave);
-    this.trackingElement.removeEventListener('touchend', this.onMouseLeave);
+    this.container.removeEventListener('mousemove', this.onMouseMove);
+    this.container.removeEventListener('touchmove', this.onMouseMove);
     this.clear();
     this.renderer.dispose();
   }

@@ -17,6 +17,12 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "edo's portfolio",
   description: "edo's developer portfolio; a collection of projects.",
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/icon.png',
+    apple: '/apple-icon.png',
+  },
+  themeColor: '#00ff41',
 }
 
 export default function RootLayout({
