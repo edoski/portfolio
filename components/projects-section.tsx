@@ -10,13 +10,15 @@ import TiltedCard from "@/components/TiltedCard"
 import { ExternalLink } from "lucide-react"
 import { SiGithub } from "react-icons/si"
 import { PROJECTS } from "@/lib/constants"
+import {useMediaQuery} from "@/hooks/use-media-query";
 
 export function ProjectsSection() {
+  const isMobile = useMediaQuery('(max-width: 768px)')
   return (
-    <section id="projects" className="pt-12 pb-20 px-6 overflow-visible">
+    <section id="projects" className="pt-12 pb-20 px-2 md:px-6 overflow-visible">
       <div className="max-w-6xl mx-auto overflow-visible">
         {/* Section header */}
-        <div className="font-mono text-lg">
+        <div className="font-mono text-lg ml-12 mt-15 mb-[-95]">
           <DecryptedText
             text="# projects"
             animateOn="view"
@@ -30,12 +32,12 @@ export function ProjectsSection() {
         <ScrollStack
           useWindowScroll={true}
           className="min-h-0 overflow-visible"
-          itemDistance={20}
+          itemDistance={40}
           itemStackDistance={20}
           stackPosition="20%"
           baseScale={0.9}
           rotationAmount={0}
-          blurAmount={1.5}
+          blurAmount={0.5}
         >
           {PROJECTS.map((project, index) => (
             <ScrollStackItem key={index} itemClassName="p-0 h-auto shadow-none rounded-none my-0">

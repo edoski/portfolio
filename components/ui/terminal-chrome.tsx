@@ -18,22 +18,21 @@ export function TerminalChrome({
   return (
     <div className={`terminal-window p-0 relative ${allowContentOverflow ? 'overflow-visible' : 'overflow-hidden'} ${className}`}>
       {/* Terminal header */}
-      <div className="relative z-10 flex items-center justify-between px-4 h-10 border-b border-border/50">
-        {!hideTrafficLights ? (
+      <div className="relative z-10 flex items-center px-4 h-10 border-b border-border/50">
+        {!hideTrafficLights && (
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]"></div>
             <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]"></div>
             <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]"></div>
           </div>
-        ) : (
-          <div className="w-16" />
         )}
         {title && (
-          <div className="text-xs font-mono text-muted-foreground">
-            {title}
+          <div className="absolute inset-x-0 flex justify-center pointer-events-none">
+            <span className="text-xs font-mono text-muted-foreground whitespace-nowrap">
+              {title}
+            </span>
           </div>
         )}
-        <div className="w-16" />
       </div>
       {/* Terminal content */}
       <div className="relative p-6 space-y-6">

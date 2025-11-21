@@ -51,7 +51,7 @@ export function ContactSection() {
     <section id="contact" className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
-        <div className="mb-4 font-mono text-lg">
+        <div className={`mb-4 font-mono text-lg ${isMobile ? 'mt-16' : ''}`}>
           <DecryptedText
             text="# contact"
             animateOn="view"
