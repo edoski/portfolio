@@ -106,17 +106,23 @@ export function ContactSection() {
                     // Mobile layout: Stack description on top, command below
                     <div className="flex flex-col gap-1 font-mono text-sm">
                       {/* Description on top */}
-                      <TextType
-                        text={`# ${link.description}`}
-                        as="div"
-                        typingSpeed={20}
-                        loop={false}
-                        startOnVisible={true}
-                        showCursor={false}
-                        initialDelay={200}
-                        variableSpeed={{min: 50, max: 75}}
-                        className="text-muted-foreground text-xs"
-                      />
+                      <div className="relative text-muted-foreground text-xs whitespace-nowrap">
+                        <div className="invisible" aria-hidden="true">
+                          {`# ${link.description}`}
+                        </div>
+                        <div className="absolute inset-0">
+                          <TextType
+                            text={`# ${link.description}`}
+                            as="span"
+                            typingSpeed={20}
+                            loop={false}
+                            startOnVisible={true}
+                            showCursor={false}
+                            initialDelay={200}
+                            variableSpeed={{min: 50, max: 75}}
+                          />
+                        </div>
+                      </div>
                       {/* Icon + Command below (static, no typing animation) */}
                       <div className="flex items-center gap-2">
                         <link.icon className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-200" />
@@ -127,7 +133,7 @@ export function ContactSection() {
                     </div>
                   ) : (
                     // Desktop layout: Horizontal with icon, permissions, command, and description
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-sm">
+                    <div className="flex items-center gap-2 sm:gap-3 font-mono text-sm">
                       {/* Icon */}
                       <link.icon className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-200" />
 
@@ -137,17 +143,24 @@ export function ContactSection() {
                       </span>
 
                       {/* Command + Description - TYPING */}
-                      <TextType
-                        text={`${link.command.padEnd(12)}  # ${link.description}`}
-                        as="span"
-                        typingSpeed={20}
-                        loop={false}
-                        startOnVisible={true}
-                        showCursor={false}
-                        initialDelay={200}
-                        variableSpeed={{min: 50, max: 75}}
-                        className="text-muted-foreground font-bold group-hover:text-foreground transition-colors duration-200 inline"
-                      />
+                      <div className="relative inline-block text-muted-foreground font-bold group-hover:text-foreground transition-colors duration-200 whitespace-pre">
+                        <div className="invisible" aria-hidden="true">
+                          {`${link.command.padEnd(12)}  # ${link.description}`}
+                        </div>
+                        <div className="absolute inset-0">
+                          <TextType
+                            text={`${link.command.padEnd(12)}  # ${link.description}`}
+                            as="span"
+                            typingSpeed={20}
+                            loop={false}
+                            startOnVisible={true}
+                            showCursor={false}
+                            initialDelay={200}
+                            variableSpeed={{min: 50, max: 75}}
+                            className="whitespace-pre"
+                          />
+                        </div>
+                      </div>
                     </div>
                   )}
                 </a>

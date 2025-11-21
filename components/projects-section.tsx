@@ -15,7 +15,7 @@ import {useMediaQuery} from "@/hooks/use-media-query";
 export function ProjectsSection() {
   const isMobile = useMediaQuery('(max-width: 768px)')
   return (
-    <section id="projects" className="pt-12 pb-20 px-2 md:px-6 overflow-visible">
+    <section id="projects" className="pt-12 pb-20 px-0 md:px-6 overflow-visible">
       <div className="max-w-6xl mx-auto overflow-visible">
         {/* Section header */}
         <div className="font-mono text-lg ml-12 mt-15 mb-[-95]">
