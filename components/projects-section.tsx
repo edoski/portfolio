@@ -12,9 +12,11 @@ import { ExternalLink } from "lucide-react"
 import { SiGithub } from "react-icons/si"
 import { PROJECTS } from "@/lib/constants"
 import { useState } from "react";
+import {useMediaQuery} from "@/hooks/use-media-query";
 
 export function ProjectsSection() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const isMobile = useMediaQuery('(max-width: 768px)')
 
   return (
     <section id="projects" className="pt-12 pb-20 px-0 md:px-6 overflow-visible">
@@ -35,7 +37,7 @@ export function ProjectsSection() {
           useWindowScroll={true}
           className="min-h-0 overflow-visible"
           itemDistance={40}
-          itemStackDistance={20}
+          itemStackDistance={isMobile ? 40 : 30}
           stackPosition="20%"
           baseScale={0.9}
           rotationAmount={0}

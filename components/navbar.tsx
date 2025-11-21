@@ -8,9 +8,6 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50">
       {/* Glassmorphism navbar */}
       <div className="relative bg-background/30 backdrop-blur-[20px] border-b border-white/5 shadow-lg shadow-black/5 isolate overflow-hidden">
-        {/* Subtle top glow */}
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[color:var(--color-terminal-green)]/20 to-transparent pointer-events-none" />
-
         <div className="px-5 mx-auto py-4">
           <div className="flex items-center justify-between">
             {/* Logo/Brand */}
@@ -71,9 +68,6 @@ export function Navbar() {
             </div>
           </div>
         </div>
-
-        {/* Subtle bottom gradient */}
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none" />
       </div>
     </nav>
   )

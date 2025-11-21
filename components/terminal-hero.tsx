@@ -40,11 +40,11 @@ export function TerminalHero() {
         <FaultyTerminal
           tint="#9bed82"
           gridMul={isMobile ? [1, 1.8] : [1.2, 0.6]}
-          scale={isMobile ? 0.5 : 1}
+          scale={isMobile ? 0.8 : 1}
           scanlineIntensity={0.4}
           flickerAmount={0.6}
           glitchAmount={0}
-          curvature={isMobile ? 0 : 0.08}
+          curvature={isMobile ? 0.02 : 0.08}
           brightness={0.6}
           dither={1}
           mouseReact={true}
