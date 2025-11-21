@@ -30,20 +30,20 @@ const StarBorder = <T extends React.ElementType = 'button'>({
       }}
     >
       <div
-        className="star-border-effect-bottom absolute w-[300%] h-[50%] opacity-0 bottom-[-11px] right-[-250%] rounded-[12px] animate-star-movement-bottom pointer-events-none z-0"
+        className="star-border-effect-bottom absolute w-[300%] h-[50%] opacity-0 bottom-[-11px] right-[-250%] rounded-[10px] animate-star-movement-bottom pointer-events-none z-0"
         style={{
           background: `radial-gradient(circle, ${color}, transparent 10%)`,
           animationDuration: speed
         }}
       ></div>
       <div
-        className="star-border-effect-top absolute w-[300%] h-[50%] opacity-0 top-[-10px] left-[-250%] rounded-[12px] animate-star-movement-top pointer-events-none z-0"
+        className="star-border-effect-top absolute w-[300%] h-[50%] opacity-0 top-[-10px] left-[-250%] rounded-[10px] animate-star-movement-top pointer-events-none z-0"
         style={{
           background: `radial-gradient(circle, ${color}, transparent 10%)`,
           animationDuration: speed
         }}
       ></div>
-      <div className="relative z-10 bg-[rgb(16_16_16)] border border-[rgb(32_32_32)] py-[16px] px-[26px] rounded-[12px]">
+      <div className="relative z-10 border border-[rgb(59_59_59)] rounded-[10px]">
         {children}
       </div>
     </Component>

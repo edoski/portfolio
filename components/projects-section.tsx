@@ -5,6 +5,7 @@ import { TerminalChrome } from "@/components/ui/terminal-chrome"
 import { TerminalPrompt } from "@/components/ui/terminal-prompt"
 import DecryptedText from "@/components/DecryptedText"
 import ScrollStack, { ScrollStackItem } from "@/components/ScrollStack"
+import StarBorder from "@/components/StarBorder"
 import TiltedCard from "@/components/TiltedCard"
 import { ExternalLink } from "lucide-react"
 import { SiGithub } from "react-icons/si"
@@ -49,6 +50,12 @@ export function ProjectsSection() {
                 showMobileWarning={false}
                 showTooltip={false}
               >
+                <StarBorder
+                  as="div"
+                  color="var(--color-terminal-green)"
+                  thickness={2}
+                  speed={"4s"}
+                >
                 <TerminalChrome
                   title={`~/projects/${project.directory}`}
                   hideTrafficLights={true}
@@ -105,6 +112,7 @@ export function ProjectsSection() {
                   </div>
                 </div>
               </TerminalChrome>
+                </StarBorder>
               </TiltedCard>
             </ScrollStackItem>
           ))}
