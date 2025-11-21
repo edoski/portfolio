@@ -5,14 +5,15 @@ import { TerminalChrome } from "@/components/ui/terminal-chrome"
 import { TerminalPrompt } from "@/components/ui/terminal-prompt"
 import DecryptedText from "@/components/DecryptedText"
 import ScrollStack, { ScrollStackItem } from "@/components/ScrollStack"
+import TiltedCard from "@/components/TiltedCard"
 import { ExternalLink } from "lucide-react"
 import { SiGithub } from "react-icons/si"
 import { PROJECTS } from "@/lib/constants"
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="pt-12 pb-20 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" className="pt-12 pb-20 px-6 overflow-visible">
+      <div className="max-w-6xl mx-auto overflow-visible">
         {/* Section header */}
         <div className="font-mono text-lg">
           <DecryptedText
@@ -27,7 +28,7 @@ export function ProjectsSection() {
         {/* ScrollStack with project cards */}
         <ScrollStack
           useWindowScroll={true}
-          className="min-h-0"
+          className="min-h-0 overflow-visible"
           itemDistance={20}
           itemStackDistance={20}
           stackPosition="20%"
@@ -36,12 +37,24 @@ export function ProjectsSection() {
           blurAmount={1.5}
         >
           {PROJECTS.map((project, index) => (
-            <ScrollStackItem key={index}>
-              <TerminalChrome
-                title={`~/projects/${project.directory}`}
-                hideTrafficLights={true}
-                allowContentOverflow={false}
+            <ScrollStackItem key={index} itemClassName="p-0 h-auto shadow-none rounded-none my-0">
+              <TiltedCard
+                containerHeight="auto"
+                containerWidth="100%"
+                imageHeight="auto"
+                imageWidth="100%"
+                scaleOnHover={1.02}
+                invertTilt={true}
+                rotateAmplitude={8}
+                showMobileWarning={false}
+                showTooltip={false}
               >
+                <TerminalChrome
+                  title={`~/projects/${project.directory}`}
+                  hideTrafficLights={true}
+                  allowContentOverflow={false}
+                  className="w-full"
+                >
                 <TerminalPrompt
                   path="~/projects"
                   command={`cat ${project.directory}/README.md`}
@@ -92,6 +105,7 @@ export function ProjectsSection() {
                   </div>
                 </div>
               </TerminalChrome>
+              </TiltedCard>
             </ScrollStackItem>
           ))}
         </ScrollStack>
