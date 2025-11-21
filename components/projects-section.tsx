@@ -7,13 +7,15 @@ import DecryptedText from "@/components/DecryptedText"
 import ScrollStack, { ScrollStackItem } from "@/components/ScrollStack"
 import StarBorder from "@/components/StarBorder"
 import TiltedCard from "@/components/TiltedCard"
+import ShinyText from "@/components/ShinyText"
 import { ExternalLink } from "lucide-react"
 import { SiGithub } from "react-icons/si"
 import { PROJECTS } from "@/lib/constants"
-import {useMediaQuery} from "@/hooks/use-media-query";
+import { useState } from "react";
 
 export function ProjectsSection() {
-  const isMobile = useMediaQuery('(max-width: 768px)')
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+
   return (
     <section id="projects" className="pt-12 pb-20 px-0 md:px-6 overflow-visible">
       <div className="max-w-6xl mx-auto overflow-visible">
@@ -70,9 +72,17 @@ export function ProjectsSection() {
                   className="text-sm mb-6"
                 />
                 {/* Project content - preserve existing internal layout */}
-                <div className="group">
-                  <h3 className="text-xl font-bold font-mono text-foreground group-hover:text-[color:var(--color-terminal-green)] transition-colors mb-2">
-                    {project.directory}/
+                <div
+                  className="group"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  <h3 className="text-xl font-bold font-mono mb-2">
+                    <ShinyText
+                      text={`${project.directory}/`}
+                      disabled={hoveredIndex !== index}
+                      speed={4.5}
+                    />
                   </h3>
                   <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
                     {project.description}

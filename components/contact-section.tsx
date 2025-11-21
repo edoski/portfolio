@@ -5,9 +5,11 @@ import { TerminalChrome } from "@/components/ui/terminal-chrome"
 import { TerminalPrompt } from "@/components/ui/terminal-prompt"
 import TiltedCard from "@/components/TiltedCard"
 import DecryptedText from "@/components/DecryptedText"
+import ShinyText from "@/components/ShinyText"
 import { SiGithub, SiLinkedin } from "react-icons/si"  // Simple Icons (brands)
 import { LuFileText, LuMail } from "react-icons/lu"  // Lucide icons (generic)
-import {useMediaQuery} from "@/hooks/use-media-query";
+import {useMediaQuery} from "@/hooks/use-media-query"
+import { useState } from "react";
 
 const contactLinks = [
   {
@@ -46,6 +48,7 @@ const contactLinks = [
 
 export function ContactSection() {
   const isMobile = useMediaQuery('(max-width: 768px)')
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   return (
     <section id="contact" className="py-20 px-6">
@@ -101,6 +104,8 @@ export function ContactSection() {
                   rel={link.external ? "noopener noreferrer" : undefined}
                   aria-label={`${link.command} - ${link.description}`}
                   className="group block py-2 px-3 rounded hover:bg-card/50 focus-visible:outline-2 focus-visible:outline-[color:var(--color-terminal-green)] focus-visible:outline-offset-2 focus-visible:bg-card/50 transition-all duration-200 cursor-pointer"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
                 >
                   {isMobile ? (
                     // Mobile layout: Stack description on top, command below
@@ -126,8 +131,12 @@ export function ContactSection() {
                       {/* Icon + Command below (static, no typing animation) */}
                       <div className="flex items-center gap-2">
                         <link.icon className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-200" />
-                        <span className="text-muted-foreground font-bold group-hover:text-foreground transition-colors duration-200">
-                          {link.command}
+                        <span className="font-bold">
+                          <ShinyText
+                            text={link.command}
+                            disabled={hoveredIndex !== index}
+                            speed={4.5}
+                          />
                         </span>
                       </div>
                     </div>
@@ -142,25 +151,19 @@ export function ContactSection() {
                         {link.permission}
                       </span>
 
-                      {/* Command + Description - TYPING */}
-                      <div className="relative inline-block text-muted-foreground font-bold group-hover:text-foreground transition-colors duration-200 whitespace-pre">
-                        <div className="invisible" aria-hidden="true">
-                          {`${link.command.padEnd(12)}  # ${link.description}`}
-                        </div>
-                        <div className="absolute inset-0">
-                          <TextType
-                            text={`${link.command.padEnd(12)}  # ${link.description}`}
-                            as="span"
-                            typingSpeed={20}
-                            loop={false}
-                            startOnVisible={true}
-                            showCursor={false}
-                            initialDelay={200}
-                            variableSpeed={{min: 50, max: 75}}
-                            className="whitespace-pre"
+                      {/* Command + Description with proper spacing */}
+                      <span className="whitespace-pre">
+                        <span className="font-bold">
+                          <ShinyText
+                            text={link.command.padEnd(12)}
+                            disabled={hoveredIndex !== index}
+                            speed={4.5}
                           />
-                        </div>
-                      </div>
+                        </span>
+                        <span className="text-muted-foreground">
+                          {"  # "}{link.description}
+                        </span>
+                      </span>
                     </div>
                   )}
                 </a>

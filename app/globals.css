@@ -68,6 +68,9 @@
   /* Star border animations */
   --animate-star-movement-bottom: star-movement-bottom linear infinite alternate;
   --animate-star-movement-top: star-movement-top linear infinite alternate;
+
+  /* Shine animation */
+  --animate-shine: shine 3s linear infinite;
 }
 
 @layer base {
@@ -95,6 +98,18 @@ html {
   51%,
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes shine {
+  0% {
+    background-position: 200% center;
+  }
+  30% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: -200% center;
   }
 }
 
