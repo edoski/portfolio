@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
 
 type StarBorderProps<T extends React.ElementType> = React.ComponentPropsWithoutRef<T> & {
   as?: T;
@@ -19,9 +21,37 @@ const StarBorder = <T extends React.ElementType = 'button'>({
                                                               ...rest
                                                             }: StarBorderProps<T>) => {
   const Component = as || 'button';
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        rootMargin: '50px',
+      }
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const animationStyle: React.CSSProperties = {
+    animationPlayState: isVisible ? 'running' : 'paused',
+  };
 
   return (
     <Component
+      ref={containerRef}
       className={`star-border-wrapper relative block overflow-hidden rounded-[12px] ${className}`}
       {...(rest as any)}
       style={{
@@ -33,14 +63,16 @@ const StarBorder = <T extends React.ElementType = 'button'>({
         className="star-border-effect-bottom absolute w-[300%] h-[50%] opacity-0 bottom-[-11px] right-[-250%] rounded-[10px] animate-star-movement-bottom pointer-events-none z-0"
         style={{
           background: `radial-gradient(circle, ${color}, transparent 10%)`,
-          animationDuration: speed
+          animationDuration: speed,
+          ...animationStyle,
         }}
       ></div>
       <div
         className="star-border-effect-top absolute w-[300%] h-[50%] opacity-0 top-[-10px] left-[-250%] rounded-[10px] animate-star-movement-top pointer-events-none z-0"
         style={{
           background: `radial-gradient(circle, ${color}, transparent 10%)`,
-          animationDuration: speed
+          animationDuration: speed,
+          ...animationStyle,
         }}
       ></div>
       <div className="relative z-10 border border-[rgb(59_59_59)] rounded-[10px]">

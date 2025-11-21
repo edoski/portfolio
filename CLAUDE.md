@@ -11,7 +11,7 @@ This is a developer portfolio website built with Next.js 16 (App Router), showca
 - `pnpm dev` - Start development server at http://localhost:3000
 - `pnpm build` - Create production build (note: TypeScript errors are ignored during builds per `next.config.mjs`)
 - `pnpm start` - Start production server
-- `pnpm lint` - Run Next.js ESLint checks
+- `pnpm lint` - Run ESLint checks
 - `pnpm exec tsc --noEmit` - Type-check without emitting files
 
 ## Architecture & Structure
@@ -22,9 +22,10 @@ The main page (`app/page.tsx`) follows a single-page application pattern with th
 2. `TerminalHero` - Hero section with WebGL terminal effects and ASCII art text rendering
 3. `ProjectsSection` - Portfolio projects display
 4. `ContactSection` - Contact information and form
+5. `Footer` - Site footer
 
 ### Component Organization
-- `components/` - Feature components (navbar, terminal-hero, projects-section, contact-section) and WebGL components (FaultyTerminal, ASCIIText)
+- `components/` - Feature components (navbar, terminal-hero, projects-section, contact-section, footer) and effect components (FaultyTerminal, ASCIIText, TiltedCard, ScrollStack, StarBorder, FadeContent, DecryptedText, TextType)
 - `components/ui/` - UI primitives (button from shadcn/ui; terminal-chrome and terminal-prompt are custom components)
 - `app/` - Next.js App Router pages and layouts
 - `lib/` - Utilities (cn() utility, constants)
@@ -36,7 +37,7 @@ The main page (`app/page.tsx`) follows a single-page application pattern with th
 - Terminal-themed colors: `--terminal-green`, `--terminal-orange`, `--terminal-cursor`
 - Access colors via `var(--color-*)` syntax or `color:var(--color-terminal-orange)` in Tailwind
 - Custom animations: `blink` (cursor), `typewriter` (text typing effect)
-- Uses JetBrains Mono (via @fontsource/jetbrains-mono) and IBM Plex Mono (via next/font/google) for monospace text
+- Uses JetBrains Mono weights 400 & 500 (via @fontsource/jetbrains-mono) and IBM Plex Mono weight 500 (via next/font/google) for monospace text
 - shadcn/ui configuration: New York style, RSC enabled, neutral base color
 
 **ASCII Text Component Styles:**
@@ -88,6 +89,7 @@ const Component = dynamic(
 - Proper cleanup in useEffect returns (context disposal, animation frame cancellation)
 - ResizeObserver for responsive canvas sizing
 - IntersectionObserver for lazy initialization when component becomes visible
+- **Visibility-based animation pausing**: FaultyTerminal and ASCIIText pause their RAF loops when scrolled out of view, reducing GPU usage by ~98% when off-screen
 
 **Dependencies:**
 - `ogl@1.0.11` - Lightweight WebGL library for FaultyTerminal
@@ -102,17 +104,17 @@ Components sourced from ReactBits (https://reactbits.dev) are managed via jsrepo
 - FaultyTerminal - WebGL terminal background effect
 - ASCIIText - Three.js ASCII art text renderer
 - TiltedCard - 3D perspective tilt card with mouse-reactive rotation
+- ScrollStack - Scroll-triggered stacking cards animation (uses Lenis for smooth scrolling)
+- StarBorder - Animated star/sparkle border effect
+- FadeContent - Scroll-triggered fade-in content
+- DecryptedText - Text decryption reveal animation
+- TextType - Typewriter text animation with cursor
 
 **Installation Method:**
 Components were installed using shadcn CLI with ReactBits registry:
 ```bash
-npx shadcn@latest add https://reactbits.dev/r/FaultyTerminal-TS-TW.json
-npx shadcn@latest add https://reactbits.dev/r/ASCIIText-TS-TW.json
-npx shadcn@latest add https://reactbits.dev/r/TiltedCard-TS-TW.json
+npx shadcn@latest add https://reactbits.dev/r/[ComponentName]-TS-TW.json
 ```
-
-**Installation Method:**
-All ReactBits components are installed via shadcn CLI using the registry URLs above.
 
 **Component Variants:**
 - Format: `ComponentName-LANG-STYLE.json`
@@ -138,7 +140,7 @@ All ReactBits components are installed via shadcn CLI using the registry URLs ab
 - **ASCII Art Text**: 3D text rendering using Three.js with mouse-reactive rotation and hue shifting
 - **Responsive design**: Mobile-first with `md:` breakpoints for desktop variations
 - **Analytics**: Vercel Analytics integrated in root layout
-- **Image optimization**: Disabled (`unoptimized: true`) for portability
+- **Image optimization**: Enabled via Next.js automatic image optimization
 
 ## Dependencies
 
@@ -154,7 +156,13 @@ All ReactBits components are installed via shadcn CLI using the registry URLs ab
 
 ### UI Components
 - shadcn/ui components (button)
-- lucide-react - Icon library
+- lucide-react - Icon library (Terminal, ExternalLink)
+- react-icons - Additional icon library (brand icons: Github, LinkedIn; Lucide icons: Mail, FileText)
+
+### Animation & Effects
+- motion@12.x - Framer Motion for React animations (TiltedCard, etc.)
+- gsap@3.x - GreenSock animation library (TextType cursor blink animation)
+- lenis@1.x - Smooth scroll library (ScrollStack)
 
 ### WebGL & 3D Rendering
 - three@0.181.2 - Three.js for 3D ASCII art rendering
@@ -162,9 +170,8 @@ All ReactBits components are installed via shadcn CLI using the registry URLs ab
 - ogl@1.0.11 - Lightweight WebGL library for shader effects
 
 ### Fonts
-- @fontsource/jetbrains-mono@5.2.8 - Self-hosted JetBrains Mono font
-- next/font/google - IBM Plex Mono (loaded via Next.js font optimization)
-- geist@1.5.1 - Installed but not currently used (legacy)
+- @fontsource/jetbrains-mono@5.2.8 - Self-hosted JetBrains Mono font (weights: 400, 500)
+- next/font/google - IBM Plex Mono weight 500 (loaded via Next.js font optimization, used by ASCIIText component)
 
 ### Development Tools
 - ESLint with Next.js config
@@ -190,7 +197,7 @@ This automatically installs TypeScript + Tailwind variants of ReactBits componen
 ## Build Configuration Notes
 
 - TypeScript errors do not block builds (`typescript.ignoreBuildErrors: true`)
-- Images are not optimized at build time
+- Images are optimized at build time via Next.js automatic image optimization (requires 'sharp' package installed in devDependencies)
 - ESLint is run separately via `pnpm lint` and does not run during builds in Next.js 16
 - These settings prioritize rapid iteration over strict validation
 

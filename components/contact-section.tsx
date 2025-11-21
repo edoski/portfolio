@@ -6,8 +6,8 @@ import { TerminalPrompt } from "@/components/ui/terminal-prompt"
 import TiltedCard from "@/components/TiltedCard"
 import DecryptedText from "@/components/DecryptedText"
 import { SiGithub, SiLinkedin } from "react-icons/si"  // Simple Icons (brands)
-import { LuFileText, LuMail } from "react-icons/lu"
-import {useMediaQuery} from "@/hooks/use-media-query";                // Lucide icons (generic)
+import { LuFileText, LuMail } from "react-icons/lu"  // Lucide icons (generic)
+import {useMediaQuery} from "@/hooks/use-media-query";
 
 const contactLinks = [
   {

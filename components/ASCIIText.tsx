@@ -302,6 +302,7 @@ class CanvAscii {
   filter!: AsciiFilter;
   center!: { x: number; y: number };
   animationFrameId: number = 0;
+  private isPaused: boolean = false;
 
   constructor(
     { text, asciiFontSize, textFontSize, textColor, planeBaseHeight, enableWaves }: CanvAsciiOptions,
@@ -419,10 +420,23 @@ class CanvAscii {
 
   animate() {
     const animateFrame = () => {
+      if (this.isPaused) return;
       this.animationFrameId = requestAnimationFrame(animateFrame);
       this.render();
     };
     animateFrame();
+  }
+
+  pause() {
+    this.isPaused = true;
+    cancelAnimationFrame(this.animationFrameId);
+  }
+
+  resume() {
+    if (this.isPaused) {
+      this.isPaused = false;
+      this.animate();
+    }
   }
 
   render() {
@@ -506,11 +520,14 @@ export default function ASCIIText({
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const { width, height } = containerRef.current.getBoundingClientRect();
+    const element = containerRef.current;
+    let isInitialized = false;
 
-    if (width === 0 || height === 0) {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
+    // Create visibility observer for pause/resume and lazy initialization
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!isInitialized) {
+          // Lazy initialization: wait for element to be visible with valid dimensions
           if (entry.isIntersecting && entry.boundingClientRect.width > 0 && entry.boundingClientRect.height > 0) {
             const { width: w, height: h } = entry.boundingClientRect;
 
@@ -523,43 +540,50 @@ export default function ASCIIText({
                 planeBaseHeight,
                 enableWaves
               },
-              containerRef.current!,
+              element,
               w,
               h
             );
             asciiRef.current.load();
-
-            observer.disconnect();
+            isInitialized = true;
           }
-        },
-        { threshold: 0.1 }
-      );
-
-      observer.observe(containerRef.current);
-
-      return () => {
-        observer.disconnect();
-        if (asciiRef.current) {
-          asciiRef.current.dispose();
+        } else {
+          // After initialization, handle visibility-based pause/resume
+          if (entry.isIntersecting) {
+            asciiRef.current?.resume();
+          } else {
+            asciiRef.current?.pause();
+          }
         }
-      };
+      },
+      { threshold: 0.1 }
+    );
+
+    const { width, height } = element.getBoundingClientRect();
+
+    // If element already has valid dimensions and is visible, initialize immediately
+    if (width > 0 && height > 0) {
+      asciiRef.current = new CanvAscii(
+        {
+          text,
+          asciiFontSize,
+          textFontSize,
+          textColor,
+          planeBaseHeight,
+          enableWaves
+        },
+        element,
+        width,
+        height
+      );
+      asciiRef.current.load();
+      isInitialized = true;
     }
 
-    asciiRef.current = new CanvAscii(
-      {
-        text,
-        asciiFontSize,
-        textFontSize,
-        textColor,
-        planeBaseHeight,
-        enableWaves
-      },
-      containerRef.current,
-      width,
-      height
-    );
-    asciiRef.current.load();
+    // Always observe for visibility changes (lazy init or pause/resume)
+    visibilityObserver.observe(element);
 
+    // ResizeObserver for responsive sizing
     const ro = new ResizeObserver(entries => {
       if (!entries[0] || !asciiRef.current) return;
       const { width: w, height: h } = entries[0].contentRect;
@@ -567,9 +591,10 @@ export default function ASCIIText({
         asciiRef.current.setSize(w, h);
       }
     });
-    ro.observe(containerRef.current);
+    ro.observe(element);
 
     return () => {
+      visibilityObserver.disconnect();
       ro.disconnect();
       if (asciiRef.current) {
         asciiRef.current.dispose();

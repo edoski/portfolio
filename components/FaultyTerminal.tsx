@@ -274,6 +274,7 @@ export default function FaultyTerminal({
   const loadAnimationStartRef = useRef<number>(0);
   const [timeOffset] = useState(() => Math.random() * 100);
   const timeOffsetRef = useRef<number>(timeOffset);
+  const isVisibleRef = useRef(true);
 
   const tintVec = useMemo(() => hexToRgb(tint), [tint]);
 
@@ -347,7 +348,27 @@ export default function FaultyTerminal({
     resizeObserver.observe(ctn);
     resize();
 
+    // IntersectionObserver to pause animation when out of view
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        const wasVisible = isVisibleRef.current;
+        isVisibleRef.current = entry.isIntersecting;
+
+        // Restart RAF loop if becoming visible again
+        if (!wasVisible && entry.isIntersecting) {
+          rafRef.current = requestAnimationFrame(update);
+        }
+      },
+      { threshold: 0, rootMargin: '50px' }
+    );
+    intersectionObserver.observe(ctn);
+
     const update = (t: number) => {
+      // Skip scheduling next frame if not visible
+      if (!isVisibleRef.current) {
+        return;
+      }
       rafRef.current = requestAnimationFrame(update);
 
       if (pageLoadAnimation && loadAnimationStartRef.current === 0) {
@@ -391,6 +412,7 @@ export default function FaultyTerminal({
     return () => {
       cancelAnimationFrame(rafRef.current);
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
       if (mouseReact) ctn.removeEventListener('mousemove', handleMouseMove);
       if (gl.canvas.parentElement === ctn) ctn.removeChild(gl.canvas);
       gl.getExtension('WEBGL_lose_context')?.loseContext();

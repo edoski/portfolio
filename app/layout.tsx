@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import '@fontsource/jetbrains-mono/400.css'
 import '@fontsource/jetbrains-mono/500.css'
-import '@fontsource/jetbrains-mono/700.css'
 import { IBM_Plex_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
