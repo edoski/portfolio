@@ -2,6 +2,9 @@
   "name": "edo's portfolio",
   "version": "0.1.0",
   "private": true,
+  "pnpm": {
+    "onlyBuiltDependencies": ["sharp"]
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,6 +15,7 @@
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@radix-ui/react-slot": "1.2.4",
     "@vercel/analytics": "1.5.0",
+    "@vercel/speed-insights": "^1.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "gsap": "^3.13.0",
