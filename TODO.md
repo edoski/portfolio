@@ -1,1 +1,1 @@
-- do i add a skills section / cv section
+- finish netlify -> vercel domain transfer

@@ -37,7 +37,7 @@ export function ProjectsSection() {
           useWindowScroll={true}
           className="min-h-0 overflow-visible"
           itemDistance={40}
-          itemStackDistance={isMobile ? 40 : 30}
+          itemStackDistance={isMobile ? 35 : 30}
           stackPosition="20%"
           baseScale={0.9}
           rotationAmount={0}
