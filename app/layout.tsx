@@ -3,6 +3,7 @@ import '@fontsource/jetbrains-mono/400.css'
 import '@fontsource/jetbrains-mono/500.css'
 import { IBM_Plex_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 
 const ibmPlexMono = IBM_Plex_Mono({
@@ -37,6 +38,7 @@ export default function RootLayout({
       <body className={`font-mono ${ibmPlexMono.variable}`}>
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
