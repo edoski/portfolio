@@ -10,6 +10,7 @@ export interface PortfolioLink {
 export interface Project {
   title: string
   directory: string
+  category: ProjectCategory
   summary: string
   details: string
   focus: string[]
@@ -19,17 +20,30 @@ export interface Project {
   demo?: string
 }
 
+export type ProjectCategory = "ai" | "systems" | "web"
+
 export const profile = {
   name: "Edoardo Galli",
   handle: "edo",
   prompt: "edo@portfolio",
   asciiText: "edo.",
-  userFile: [
-    "Edoardo Galli, 22 - native English & Italian speaker studying Information Science for Management (BSc) at the University of Bologna.",
-    "Focused on deep learning, AI systems, and data-intensive software.",
-  ],
   location: "Bologna, Italy",
 } as const
+
+export const education = [
+  {
+    title: "M.Sc. Artificial Intelligence",
+    institution: "University of Bologna",
+  },
+  {
+    title: "B.Sc. Information Science for Management",
+    institution: "University of Bologna",
+  },
+  {
+    title: "International Baccalaureate Diploma",
+    institution: "International School of Bologna",
+  },
+] as const
 
 export const navigation = [
   { label: "projects", href: "#projects", command: "cd ~/projects", external: false },
@@ -69,6 +83,7 @@ export const projects: Project[] = [
   {
     title: "spice",
     directory: "spice",
+    category: "ai",
     summary: "Temporal fee-decision deep learning pipeline.",
     details:
       "End-to-end thesis pipeline turning EVM block history into temporal deep learning problems. LSTM, Transformer, and hybrid model families with Optuna tuning and reproducible workflows.",
@@ -88,6 +103,7 @@ export const projects: Project[] = [
   {
     title: "journal",
     directory: "journal",
+    category: "systems",
     summary: "Personal analytics journal pipeline.",
     details:
       "Automation system syncing Flow focus data, goals, reminders, and daily metrics into Obsidian. Typed contracts, protocol ports, and snapshot-based period reports.",
@@ -107,6 +123,7 @@ export const projects: Project[] = [
   {
     title: "sweng-notes",
     directory: "sweng-notes",
+    category: "web",
     summary: "Real-time collaborative note editor.",
     details:
       "A shared writing workspace built around typed React surfaces, Liveblocks presence, and Convex-backed collaboration.",
@@ -127,6 +144,7 @@ export const projects: Project[] = [
   {
     title: "stackoverflow-survey-2025-analysis",
     directory: "stackoverflow-survey-2025-analysis",
+    category: "ai",
     summary: "AI trust analysis from the Stack Overflow 2025 Developer Survey.",
     details:
       "Logistic regression and SVM classifiers with leakage-safe preprocessing, GridSearchCV, and reproducible statistical analysis workflow.",
@@ -145,6 +163,73 @@ export const projects: Project[] = [
   },
 ]
 
+export const projectIndexProjects: Project[] = [
+  ...projects,
+  {
+    title: "portfolio",
+    directory: "portfolio",
+    category: "web",
+    summary: "Developer portfolio with a terminal-minimal interface.",
+    details:
+      "Personal portfolio site built with Next.js, React, Tailwind CSS, and a focused Three.js ASCII mark. The current architecture keeps portfolio facts centralized and page sections modular.",
+    focus: [
+      "Terminal-minimal portfolio composition with dense project surfaces.",
+      "Centralized content data for profile, links, and project facts.",
+      "Small client islands for visual effects without moving whole sections client-side.",
+    ],
+    outcomes: [
+      "Built a responsive portfolio around Next.js App Router.",
+      "Retained a signature Three.js ASCII mark without ambient background animation.",
+      "Consolidated portfolio content into a reusable typed module.",
+    ],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Three.js"],
+    repo: "https://github.com/edoski/portfolio",
+    demo: "https://edoski.com",
+  },
+  {
+    title: "bostarter",
+    directory: "bostarter",
+    category: "web",
+    summary: "Kickstarter-like platform for managing projects.",
+    details:
+      "Crowdfunding-style web platform for creating, browsing, and managing project campaigns, built with PHP services, SQL and document data stores, and a Dockerized Apache environment.",
+    focus: [
+      "Campaign-style project management flows.",
+      "Relational and document persistence across MySQL and MongoDB.",
+      "Dockerized local environment for repeatable PHP and Apache development.",
+    ],
+    outcomes: [
+      "Implemented a project-management platform inspired by crowdfunding workflows.",
+      "Used MySQL and MongoDB for different persistence needs.",
+      "Packaged the runtime with Docker and Apache.",
+    ],
+    tech: ["PHP", "MySQL", "MongoDB", "Docker", "Apache"],
+    repo: "https://github.com/edoski/bostarter",
+  },
+  {
+    title: "pubsub",
+    directory: "pubsub",
+    category: "systems",
+    summary: "Terminal publish-subscribe protocol for text messages.",
+    details:
+      "Java socket application implementing a terminal-based publish-subscribe protocol, with multithreaded client handling and ExecutorService-backed concurrency.",
+    focus: [
+      "Socket-based publish-subscribe communication.",
+      "Concurrent client handling through Java threading primitives.",
+      "Terminal-first protocol design for message exchange.",
+    ],
+    outcomes: [
+      "Built a working publish-subscribe messaging protocol.",
+      "Handled multiple clients with ExecutorService concurrency.",
+      "Kept the interface terminal-based and protocol-focused.",
+    ],
+    tech: ["Java", "Sockets", "Multithreaded", "ExecutorService"],
+    repo: "https://github.com/edoski/pubsub",
+  },
+]
+
+export const featuredProjects = projects
+
 export const contactLinks = links
 
 export function getLink(kind: LinkKind) {
@@ -152,5 +237,5 @@ export function getLink(kind: LinkKind) {
 }
 
 export function getProject(directory: string) {
-  return projects.find((project) => project.directory === directory)
+  return projectIndexProjects.find((project) => project.directory === directory)
 }

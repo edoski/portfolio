@@ -4,7 +4,8 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   allowedDevOrigins: [
-    'http://192.168.1.5:3000',
+    '192.168.1.5',
+    '192.168.1.7',
   ],
 }
 

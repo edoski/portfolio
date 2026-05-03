@@ -1,3 +1,4 @@
 onlyBuiltDependencies:
+  - sharp
   - '@vercel/speed-insights'
   - unrs-resolver

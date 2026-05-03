@@ -4,7 +4,10 @@ import '@fontsource/jetbrains-mono/500.css'
 import { IBM_Plex_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { TooltipProvider } from '@/components/ui/tooltip'
+import { Footer } from '@/components/footer'
+import { Navbar } from '@/components/navbar'
+import { ScrollProgress } from '@/components/scroll-progress'
+import { HashScrollRestorer } from '@/components/smooth-scroll-link'
 import './globals.css'
 
 const ibmPlexMono = IBM_Plex_Mono({
@@ -35,9 +38,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={`font-mono ${ibmPlexMono.variable}`}>
-        <TooltipProvider>{children}</TooltipProvider>
+        <HashScrollRestorer />
+        <div className="site-shell flex min-h-screen flex-col bg-background text-foreground">
+          <ScrollProgress />
+          <div className="site-shell-noise" aria-hidden="true" />
+          <Navbar />
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </div>
         <Analytics />
         <SpeedInsights />
       </body>
