@@ -20,7 +20,7 @@ export function TerminalHero() {
           </div>
 
           <div className="space-y-8 font-mono">
-            <TerminalCue path="~/about" command="cat user.md" />
+            <TerminalCue path="~/about" command="cat README.md" />
 
             <div className="w-full border-l border-foreground/35 pl-4 font-mono text-sm leading-7 text-foreground/80 md:pl-5">
               {profile.userFile.map((line) => (
