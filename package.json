@@ -6,7 +6,10 @@
     "onlyBuiltDependencies": [
       "msw",
       "sharp"
-    ]
+    ],
+    "overrides": {
+      "postcss": "^8.5.13"
+    }
   },
   "scripts": {
     "dev": "next dev",
