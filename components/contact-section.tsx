@@ -27,7 +27,7 @@ function ContactItem({
       rel={link.external ? "noopener noreferrer" : undefined}
       aria-label={link.label}
       title={link.label}
-      className="group inline-flex min-w-0 items-center gap-3 py-2 font-mono text-base leading-7 text-foreground/80 transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:text-lg"
+      className="group flex min-w-0 items-center justify-center gap-3 py-3 font-mono text-base leading-7 text-foreground/80 transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:text-lg"
     >
       <span
         aria-hidden="true"
@@ -55,11 +55,11 @@ export function ContactSection() {
           <TerminalCue path="~/contact" command='ping edo' />
 
           <div className="font-mono">
-            <ul className="mx-auto grid max-w-sm grid-cols-2 justify-items-center gap-x-6 gap-y-4 md:flex md:max-w-none md:flex-wrap md:items-center md:justify-center md:gap-x-8">
+            <ul className="grid w-full grid-cols-2 gap-x-8 gap-y-4 md:flex md:flex-wrap md:items-center md:justify-between">
               {contactLinks.map((link) => (
                 <li
                   key={link.kind}
-                  className="group/item relative flex min-w-0 items-center justify-center"
+                  className="group/item relative min-w-0"
                 >
                   <ContactItem link={link} />
                 </li>

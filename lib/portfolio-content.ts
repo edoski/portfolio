@@ -46,8 +46,8 @@ export const education = [
 ] as const
 
 export const navigation = [
-  { label: "projects", href: "#projects", command: "cd ~/projects", external: false },
-  { label: "contact", href: "#contact", command: "open ~/contact", external: false },
+  { label: "projects", href: "/#projects", command: "cd ~/projects", external: false },
+  { label: "contact", href: "/#contact", command: "open ~/contact", external: false },
   { label: "resume", href: "/CV_Edoardo_Galli.pdf", command: "cat resume.pdf", external: true },
 ] as const
 

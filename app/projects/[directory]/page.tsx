@@ -7,7 +7,6 @@ import { SmoothScrollLink } from "@/components/smooth-scroll-link"
 import { TechBadgeList } from "@/components/tech-badge-list"
 import { TerminalCue } from "@/components/terminal-cue"
 import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
 import { getProject, projectIndexProjects } from "@/lib/portfolio-content"
 
 interface ProjectPageProps {
@@ -53,7 +52,7 @@ export default async function ProjectPage({
 
   if (!project) notFound()
 
-  const backHref = from === "home" ? "/#projects" : "/projects"
+  const backHref = from === "home" ? "/" : "/projects"
 
   return (
     <main className="project-shell px-6 pb-12 pt-28 md:pb-16 md:pt-24 lg:px-8">
@@ -80,7 +79,7 @@ export default async function ProjectPage({
           <TechBadgeList tech={project.tech} />
         </div>
 
-        <Separator className="bg-white/[0.08]" />
+        <div aria-hidden="true" className="h-0.5 w-full bg-foreground/15" />
 
         <div className="grid gap-8 md:grid-cols-2">
           <section className="space-y-4">
@@ -106,7 +105,7 @@ export default async function ProjectPage({
           </section>
         </div>
 
-        <div className="flex flex-wrap gap-3 border-t border-white/[0.08] pt-6">
+        <div className="flex flex-wrap gap-3 border-t-2 border-foreground/15 pt-6">
           <Button asChild variant="outline" size="sm">
             <a href={project.repo} target="_blank" rel="noopener noreferrer">
               <SiGithub className="size-3.5" />

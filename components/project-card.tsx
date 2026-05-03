@@ -7,7 +7,7 @@ import {
   useMotionTemplate,
   useMotionValue,
 } from "motion/react"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { SiGithub } from "react-icons/si"
 
 import { TechBadgeList } from "@/components/tech-badge-list"
@@ -31,6 +31,7 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, source = "projects" }: ProjectCardProps) {
+  const router = useRouter()
   const [isTouchActive, setIsTouchActive] = useState(false)
   const animationFrame = useRef<number | null>(null)
   const resetTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -43,6 +44,7 @@ export function ProjectCard({ project, source = "projects" }: ProjectCardProps) 
   const sheenX = useMotionValue("50%")
   const sheenY = useMotionValue("50%")
   const sheen = useMotionTemplate`radial-gradient(420px circle at ${sheenX} ${sheenY}, rgba(255,255,255,0.08), transparent 42%)`
+  const detailsHref = `/projects/${project.directory}?from=${source}`
 
   function tick() {
     const lerpFactor = isInteracting.current
@@ -147,8 +149,38 @@ export function ProjectCard({ project, source = "projects" }: ProjectCardProps) 
     resetTimeout.current = setTimeout(resetTilt, 160)
   }
 
+  function isProjectAction(target: EventTarget) {
+    return target instanceof Element && Boolean(target.closest("a, button"))
+  }
+
+  function openDetails() {
+    router.push(detailsHref)
+  }
+
+  function handleClick(event: React.MouseEvent<HTMLElement>) {
+    if (isProjectAction(event.target)) {
+      return
+    }
+
+    openDetails()
+  }
+
+  function handleKeyDown(event: React.KeyboardEvent<HTMLElement>) {
+    if (isProjectAction(event.target)) {
+      return
+    }
+
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault()
+      openDetails()
+    }
+  }
+
   return (
     <motion.article
+      role="link"
+      tabIndex={0}
+      aria-label={`View ${project.title} project details`}
       style={{ rotateX, rotateY, scale, transformPerspective: 900, touchAction: "pan-y" }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
@@ -156,14 +188,11 @@ export function ProjectCard({ project, source = "projects" }: ProjectCardProps) 
       onPointerUp={handlePointerUp}
       onPointerCancel={resetTilt}
       onBlur={resetTilt}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
       className="group h-full transform-gpu"
     >
-      <Card className="relative h-full cursor-pointer gap-0 overflow-hidden border-white/10 bg-secondary/80 py-0 shadow-[0_0_0_1px_rgba(255,255,255,0.025),0_18px_60px_rgba(255,255,255,0.035)] backdrop-blur-sm transition-colors duration-200 group-hover:border-white/20 group-hover:shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_22px_70px_rgba(255,255,255,0.05)]">
-        <Link
-          href={`/projects/${project.directory}?from=${source}`}
-          aria-label={`View ${project.title} project details`}
-          className="absolute inset-0 z-10 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-        />
+      <Card className="relative h-full cursor-pointer gap-0 overflow-hidden border-white/10 bg-secondary/80 py-0 shadow-[0_0_0_1px_rgba(255,255,255,0.025),0_18px_50px_rgba(255,255,255,0.028),0_0_48px_rgba(255,255,255,0.01)] backdrop-blur-sm transition-colors duration-200 group-hover:border-white/20 group-hover:shadow-[0_0_0_1px_rgba(255,255,255,0.035),0_22px_58px_rgba(255,255,255,0.04),0_0_56px_rgba(255,255,255,0.016)] group-focus-visible:ring-2 group-focus-visible:ring-foreground/50 group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-background">
         <motion.div
           aria-hidden="true"
           className={cn(
@@ -174,8 +203,10 @@ export function ProjectCard({ project, source = "projects" }: ProjectCardProps) 
         />
         <CardHeader className="relative gap-3 p-4 pb-3">
           <div className="flex items-start justify-between gap-3">
-            <CardTitle className="min-w-0 break-words font-mono text-base leading-6 text-foreground">
-              {project.title}
+            <CardTitle className="min-w-0 break-words font-mono text-base leading-6 text-foreground/90 transition-colors duration-200 group-hover:text-foreground group-focus-visible:text-foreground">
+              <span className="relative inline after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-foreground/70 after:transition-transform after:duration-300 group-hover:after:scale-x-100 group-focus-visible:after:scale-x-100">
+                {project.title}
+              </span>
             </CardTitle>
             <div className="relative z-20 flex shrink-0 items-center gap-1.5">
               {project.demo && (

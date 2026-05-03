@@ -9,15 +9,8 @@ export function ProjectsSection() {
   return (
     <section id="projects" className="px-6 pb-0 pt-6 md:pt-8 lg:px-8">
       <div className="mx-auto max-w-6xl space-y-8">
-        <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
           <TerminalCue path="~/projects" command="ls" />
-          <Link
-            href="/projects"
-            className="group hidden items-center gap-2 border-b border-foreground/40 pb-1 font-mono text-sm text-foreground transition-colors hover:border-muted-foreground hover:text-muted-foreground sm:inline-flex"
-          >
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-            <span>view more.</span>
-          </Link>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -26,13 +19,15 @@ export function ProjectsSection() {
           ))}
         </div>
 
-        <Link
-          href="/projects"
-          className="group inline-flex items-center gap-2 border-b border-foreground/40 pb-1 font-mono text-sm text-foreground transition-colors hover:border-muted-foreground hover:text-muted-foreground sm:hidden"
-        >
-          <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-          <span>view more.</span>
-        </Link>
+        <div className="flex justify-end">
+          <Link
+            href="/projects"
+            className="group inline-flex items-center gap-2 rounded-md border border-foreground/15 bg-foreground/[0.03] px-3 py-2 font-mono text-sm text-foreground transition-colors hover:border-foreground/25 hover:bg-foreground/[0.06] hover:text-foreground"
+          >
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+            <span>view more.</span>
+          </Link>
+        </div>
       </div>
     </section>
   )
