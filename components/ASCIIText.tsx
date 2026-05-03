@@ -275,6 +275,7 @@ interface CanvAsciiOptions {
   textColor: string;
   planeBaseHeight: number;
   enableWaves: boolean;
+  trackingSelector?: string;
 }
 
 class CanvAscii {
@@ -284,10 +285,12 @@ class CanvAscii {
   textColor: string;
   planeBaseHeight: number;
   container: HTMLElement;
-  // @ts-ignore
   trackingElement: HTMLElement;
+  trackingSelector?: string;
   width: number;
   height: number;
+  trackingWidth: number;
+  trackingHeight: number;
   enableWaves: boolean;
   camera: THREE.PerspectiveCamera;
   scene: THREE.Scene;
@@ -305,7 +308,7 @@ class CanvAscii {
   private isPaused: boolean = false;
 
   constructor(
-    { text, asciiFontSize, textFontSize, textColor, planeBaseHeight, enableWaves }: CanvAsciiOptions,
+    { text, asciiFontSize, textFontSize, textColor, planeBaseHeight, enableWaves, trackingSelector }: CanvAsciiOptions,
     containerElem: HTMLElement,
     width: number,
     height: number
@@ -316,8 +319,12 @@ class CanvAscii {
     this.textColor = textColor;
     this.planeBaseHeight = planeBaseHeight;
     this.container = containerElem;
+    this.trackingElement = containerElem;
+    this.trackingSelector = trackingSelector;
     this.width = width;
     this.height = height;
+    this.trackingWidth = width;
+    this.trackingHeight = height;
     this.enableWaves = enableWaves;
 
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 1000);
@@ -380,8 +387,10 @@ class CanvAscii {
     this.container.appendChild(this.filter.domElement);
     this.setSize(this.width, this.height);
 
-    // Find the terminal-window parent to track mouse across entire terminal
-    this.trackingElement = this.container.closest('.terminal-window') as HTMLElement || this.container;
+    this.trackingElement = this.trackingSelector
+      ? this.container.closest(this.trackingSelector) as HTMLElement || this.container
+      : this.container;
+    this.setTrackingSize();
 
     this.trackingElement.addEventListener('mousemove', this.onMouseMove);
     this.trackingElement.addEventListener('touchmove', this.onMouseMove);
@@ -399,6 +408,13 @@ class CanvAscii {
     this.filter.setSize(w, h);
 
     this.center = { x: w / 2, y: h / 2 };
+    this.setTrackingSize();
+  }
+
+  setTrackingSize() {
+    const bounds = this.trackingElement.getBoundingClientRect();
+    this.trackingWidth = bounds.width || this.width;
+    this.trackingHeight = bounds.height || this.height;
   }
 
   load() {
@@ -407,7 +423,7 @@ class CanvAscii {
 
   onMouseMove(evt: MouseEvent | TouchEvent) {
     const e = (evt as TouchEvent).touches ? (evt as TouchEvent).touches[0] : (evt as MouseEvent);
-    const bounds = this.container.getBoundingClientRect();
+    const bounds = this.trackingElement.getBoundingClientRect();
     const x = e.clientX - bounds.left;
     const y = e.clientY - bounds.top;
     this.mouse = { x, y };
@@ -453,10 +469,10 @@ class CanvAscii {
 
   updateRotation() {
     const targetX = this.isHovering
-      ? map(this.mouse.y, 0, this.height, 0.5, -0.5)
+      ? map(this.mouse.y, 0, this.trackingHeight, 0.5, -0.5)
       : 0;
     const targetY = this.isHovering
-      ? map(this.mouse.x, 0, this.width, -0.5, 0.5)
+      ? map(this.mouse.x, 0, this.trackingWidth, -0.5, 0.5)
       : 0;
 
     // Use slower lerp when returning to neutral for smoother animation
@@ -504,6 +520,7 @@ interface ASCIITextProps {
   textColor?: string;
   planeBaseHeight?: number;
   enableWaves?: boolean;
+  trackingSelector?: string;
 }
 
 export default function ASCIIText({
@@ -512,7 +529,8 @@ export default function ASCIIText({
   textFontSize = 200,
   textColor = '#fdf9f3',
   planeBaseHeight = 8,
-  enableWaves = true
+  enableWaves = true,
+  trackingSelector
 }: ASCIITextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const asciiRef = useRef<CanvAscii | null>(null);
@@ -538,7 +556,8 @@ export default function ASCIIText({
                 textFontSize,
                 textColor,
                 planeBaseHeight,
-                enableWaves
+                enableWaves,
+                trackingSelector
               },
               element,
               w,
@@ -570,7 +589,8 @@ export default function ASCIIText({
           textFontSize,
           textColor,
           planeBaseHeight,
-          enableWaves
+          enableWaves,
+          trackingSelector
         },
         element,
         width,
@@ -600,7 +620,7 @@ export default function ASCIIText({
         asciiRef.current.dispose();
       }
     };
-  }, [text, asciiFontSize, textFontSize, textColor, planeBaseHeight, enableWaves]);
+  }, [text, asciiFontSize, textFontSize, textColor, planeBaseHeight, enableWaves, trackingSelector]);
 
   return (
     <div

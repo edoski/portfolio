@@ -4,6 +4,7 @@ import '@fontsource/jetbrains-mono/500.css'
 import { IBM_Plex_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { TooltipProvider } from '@/components/ui/tooltip'
 import './globals.css'
 
 const ibmPlexMono = IBM_Plex_Mono({
@@ -15,8 +16,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "edo's portfolio",
-  description: "edo's developer portfolio; a collection of projects.",
+  title: "Edoardo Galli | Portfolio",
+  description: "A terminal-minimal software engineering portfolio by Edoardo Galli.",
   manifest: '/manifest.json',
   icons: {
     icon: '/icon.png',
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0a0a0a',
+  themeColor: '#050505',
 }
 
 export default function RootLayout({
@@ -36,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-mono ${ibmPlexMono.variable}`}>
-        {children}
+        <TooltipProvider>{children}</TooltipProvider>
         <Analytics />
         <SpeedInsights />
       </body>

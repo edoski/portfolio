@@ -1,30 +1,12 @@
-"use client"
-
-import DecryptedText from "@/components/DecryptedText"
+import { profile } from "@/lib/portfolio-content"
 
 export function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
-
   return (
-    <footer className="border-t border-border/30">
-      <div className="max-w-6xl mx-auto px-6 py-8">
-        <div className="flex flex-col items-center justify-center gap-2 text-center">
-          <button
-            onClick={scrollToTop}
-            className="font-mono text-sm cursor-pointer hover:opacity-80 transition-opacity"
-            aria-label="Scroll to top"
-          >
-            <DecryptedText
-              text={`edo's portfolio © ${new Date().getFullYear()}`}
-              animateOn="both"
-              sequential={true}
-              speed={75}
-              className="text-[color:var(--color-terminal-green)]"
-            />
-          </button>
-        </div>
+    <footer className="border-t border-white/10 px-6 py-8 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <p className="text-center font-mono text-sm text-muted-foreground">
+          © {new Date().getFullYear()} {profile.name}
+        </p>
       </div>
     </footer>
   )

@@ -4,226 +4,197 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated color tokens to match terminal/OpenAI aesthetic */
-  --background: oklch(0.145 0 0); /* Dark background #1f2937 equivalent */
-  --foreground: oklch(0.985 0 0); /* Light foreground #ffffff equivalent */
-  --card: oklch(0.269 0 0); /* Muted background #374151 equivalent */
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.269 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.145 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.488 0.243 264.376); /* Accent color #6366f1 equivalent */
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.145 0 0);
-  --ring: oklch(0.488 0.243 264.376);
-  --radius: 0.5rem;
+    --background: oklch(0.08 0 0);
+    --foreground: oklch(0.96 0 0);
+    --card: oklch(0.12 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.16 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.96 0 0);
+    --primary-foreground: oklch(0.08 0 0);
+    --secondary: oklch(0.18 0 0);
+    --secondary-foreground: oklch(0.94 0 0);
+    --muted: oklch(0.18 0 0);
+    --muted-foreground: oklch(0.68 0 0);
+    --accent: oklch(0.22 0 0);
+    --accent-foreground: oklch(0.96 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --destructive-foreground: oklch(0.985 0 0);
+    --border: oklch(0.22 0 0);
+    --input: oklch(0.16 0 0);
+    --ring: oklch(0.72 0 0);
+    --radius: 0.5rem;
 
-  /* Added terminal-specific color tokens */
-  --terminal-green: oklch(0.7 0.15 142);
-  --terminal-orange: oklch(0.75 0.15 70);
-  --terminal-cursor: oklch(0.985 0 0);
+    --terminal-green: oklch(0.68 0 0);
+    --terminal-orange: oklch(0.75 0.15 70);
+    --terminal-cursor: oklch(0.985 0 0);
+
+    --scroll-progress: 0;
 }
 
 @theme inline {
-  --font-sans: 'Geist Sans', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Geist Mono', monospace;
-  --font-ibm-plex-mono: 'IBM Plex Mono', 'Courier New', monospace;
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+    --font-sans: 'Geist Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Geist Mono', monospace;
+    --font-ibm-plex-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
 
-  /* Added terminal color tokens to theme */
-  --color-terminal-green: var(--terminal-green);
-  --color-terminal-orange: var(--terminal-orange);
-  --color-terminal-cursor: var(--terminal-cursor);
-
-  /* Star border animations */
-  --animate-star-movement-bottom: star-movement-bottom linear infinite alternate;
-  --animate-star-movement-top: star-movement-top linear infinite alternate;
-
-  /* Shine animation */
-  --animate-shine: shine 3s linear infinite;
+    --color-terminal-green: var(--terminal-green);
+    --color-terminal-orange: var(--terminal-orange);
+    --color-terminal-cursor: var(--terminal-cursor);
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-    position: relative;
-  }
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        position: relative;
+    }
 }
 
-/* Smooth scrolling must be outside @layer to have proper cascade priority */
+html,
+body {
+    scroll-behavior: smooth;
+}
+
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+    scroll-padding-top: 80px;
 }
 
-/* Terminal-specific animations and styles */
+.site-shell {
+    position: relative;
+    isolation: isolate;
+}
+
+.site-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: 0 calc(var(--scroll-progress) * -100px);
+    opacity: 0.62;
+    mask-image:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.72) 0%, black 14%, black 88%, rgba(0, 0, 0, 0.58) 100%);
+}
+
+.site-shell::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background:
+        linear-gradient(to right, rgba(0, 0, 0, 0.24), transparent 18%, transparent 82%, rgba(0, 0, 0, 0.24)),
+        radial-gradient(ellipse at center, transparent 58%, rgba(0, 0, 0, 0.12) 82%, rgba(0, 0, 0, 0.22) 100%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.04), transparent 18%, transparent 68%, rgba(0, 0, 0, 0.32));
+}
+
+.site-shell-noise {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.25;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+}
+
+/* Terminal cursor blink */
 @keyframes blink {
-  0%,
-  50% {
-    opacity: 1;
-  }
-  51%,
-  100% {
-    opacity: 0;
-  }
-}
 
-@keyframes shine {
-  0% {
-    background-position: 200% center;
-  }
-  100% {
-    background-position: -200% center;
-  }
-}
+    0%,
+    50% {
+        opacity: 1;
+    }
 
-@keyframes star-movement-bottom {
-  0% {
-    transform: translate(0%, 0%);
-  }
-  60% {
-    transform: translate(-60%, 0%);
-  }
-  85% {
-    transform: translate(-85%, 0%);
-  }
-  100% {
-    transform: translate(-100%, 0%);
-  }
-}
-
-@keyframes star-movement-top {
-  0% {
-    transform: translate(0%, 0%);
-  }
-  60% {
-    transform: translate(60%, 0%);
-  }
-  85% {
-    transform: translate(85%, 0%);
-  }
-  100% {
-    transform: translate(100%, 0%);
-  }
+    51%,
+    100% {
+        opacity: 0;
+    }
 }
 
 .terminal-cursor {
-  animation: blink 1s infinite;
+    animation: blink 1s infinite;
 }
 
-/* Cursor that only blinks on parent group hover */
 .terminal-cursor-hover {
-  opacity: 0;
-  transition: none;
+    opacity: 0;
+    transition: none;
 }
 
 .group:hover .terminal-cursor-hover {
-  animation: blink 1s infinite;
-}
-
-/* Terminal window chrome styling */
-.terminal-window {
-  position: relative;
-  background: oklch(0.2 0 0);
-  border: 1px solid oklch(0.35 0 0);
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(40, 40, 40, 0.3), 0 2px 4px -1px rgba(40, 40, 40, 0.15),
-    0 10px 25px -5px rgba(40, 40, 40, 0.25), 0 20px 40px -10px rgba(40, 40, 40, 0.1),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
-}
-
-.terminal-window::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2.5rem;
-  background: linear-gradient(
-    to bottom,
-    oklch(0.25 0 0),
-    oklch(0.22 0 0)
-  );
-  border-bottom: 1px solid oklch(0.35 0 0);
-  border-radius: 0.5rem 0.5rem 0 0;
+    animation: blink 1s infinite;
 }
 
 /* ASCII Text component styles */
 .ascii-text-container canvas {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  image-rendering: optimizeSpeed;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -o-crisp-edges;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: optimize-contrast;
-  image-rendering: crisp-edges;
-  image-rendering: pixelated;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25))
-    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15))
-    drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
 }
 
 .ascii-text-container pre {
-  margin: 0;
-  user-select: none;
-  padding: 0;
-  line-height: 1em;
-  text-align: left;
-  position: absolute;
-  left: 0;
-  top: 0;
-  background-image: radial-gradient(circle, #ff6188 0%, #fc9867 50%, #ffd866 100%);
-  background-attachment: fixed;
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  z-index: 9;
-  mix-blend-mode: difference;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    margin: 0;
+    user-select: none;
+    padding: 0;
+    line-height: 1em;
+    text-align: left;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: radial-gradient(circle, #ff9d3d 0%, #d6d0c9 52%, #ffffff 100%);
+    background-attachment: fixed;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    z-index: 9;
+    mix-blend-mode: difference;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-/* StarBorder hover effects */
-.star-border-wrapper {
-  overflow: hidden;
-}
+@media (prefers-reduced-motion: reduce) {
 
-.star-border-wrapper:hover .star-border-effect-bottom,
-.star-border-wrapper:hover .star-border-effect-top {
-  opacity: 0.7;
+    html,
+    body {
+        scroll-behavior: auto !important;
+    }
 }

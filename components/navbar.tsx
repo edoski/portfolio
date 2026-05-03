@@ -1,72 +1,67 @@
-"use client"
+import { FaLinkedin } from "react-icons/fa6"
+import { SiGithub } from "react-icons/si"
 
-import { Terminal } from "lucide-react"
-import { SOCIAL_LINKS } from "@/lib/constants"
+import { Button } from "@/components/ui/button"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { links, navigation } from "@/lib/portfolio-content"
+
+const socialIcons = {
+  github: SiGithub,
+  linkedin: FaLinkedin,
+}
 
 export function Navbar() {
+  const socialLinks = links.filter((link) => link.kind === "github" || link.kind === "linkedin")
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50">
-      {/* Glassmorphism navbar */}
-      <div className="relative bg-background/30 backdrop-blur-[20px] border-b border-white/5 shadow-lg shadow-black/5 isolate overflow-hidden">
-        <div className="px-5 mx-auto py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo/Brand */}
-            <a href="#" className="flex items-center gap-2.5 group">
-              <Terminal size={18} className="text-foreground/80" />
-              <div className="font-mono text-base font-medium text-foreground flex items-center">
-                <span>edo@portfolio</span>
-                <span className="inline-block w-[2px] h-[14px] bg-current ml-0.5 terminal-cursor-hover"></span>
-              </div>
-            </a>
+    <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-background/70 px-6 backdrop-blur-xl lg:px-8">
+      <div className="mx-auto flex max-w-6xl items-center justify-between py-3">
+        <a href="#" className="flex items-center">
+          <span className="font-mono text-sm text-foreground/90">
+            edo@portfolio
+          </span>
+        </a>
 
-            {/* Navigation Links */}
-            <div className="flex items-center gap-5">
-              <div className="hidden md:flex items-center gap-1 font-mono text-sm">
+        <div className="flex items-center gap-1">
+          <div className="hidden items-center gap-0.5 md:flex">
+            {navigation.map((item) => (
+              <Button key={item.href} asChild variant="ghost" size="sm">
                 <a
-                  href="#projects"
-                  className="px-2.5 py-2 text-muted-foreground/80 hover:text-foreground hover:bg-white/5 rounded-md transition-all duration-200 group"
+                  href={item.href}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
+                  className="font-mono text-muted-foreground"
                 >
-                  <span className="text-[color:var(--color-terminal-green)]/60 group-hover:text-[color:var(--color-terminal-green)] mr-1.5 transition-colors">$</span>
-                  <span className="group-hover:translate-x-0.5 inline-block transition-transform">projects</span>
+                  {item.label}
                 </a>
-                <a
-                  href="#contact"
-                  className="px-2.5 py-2 text-muted-foreground/80 hover:text-foreground hover:bg-white/5 rounded-md transition-all duration-200 group"
-                >
-                  <span className="text-[color:var(--color-terminal-green)]/60 group-hover:text-[color:var(--color-terminal-green)] mr-1.5 transition-colors">$</span>
-                  <span className="group-hover:translate-x-0.5 inline-block transition-transform">contact</span>
-                </a>
-                <a
-                  href="/CV_Edoardo_Galli.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-2.5 py-2 text-muted-foreground/80 hover:text-foreground hover:bg-white/5 rounded-md transition-all duration-200 group"
-                >
-                  <span className="text-[color:var(--color-terminal-green)]/60 group-hover:text-[color:var(--color-terminal-green)] mr-1.5 transition-colors">$</span>
-                  <span className="group-hover:translate-x-0.5 inline-block transition-transform">resume</span>
-                </a>
-              </div>
-
-              {/* Divider */}
-              <div className="h-5 w-px bg-muted-foreground/20"></div>
-
-              {/* Social Links */}
-              <div className="flex items-center gap-1">
-                {SOCIAL_LINKS.slice(0, 2).map(({ platform, label, url, icon: Icon }) => (
-                  <a
-                    key={platform}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 text-muted-foreground/70 hover:text-foreground hover:bg-white/5 rounded-md transition-all duration-200 hover:scale-110"
-                    title={label}
-                  >
-                    <Icon size={16} />
-                  </a>
-                ))}
-              </div>
-            </div>
+              </Button>
+            ))}
           </div>
+          <div className="mx-1 h-5 w-px bg-white/10" />
+          {socialLinks.map((link) => {
+            const Icon = socialIcons[link.kind as keyof typeof socialIcons]
+            return (
+              <Tooltip key={link.kind}>
+                <TooltipTrigger asChild>
+                  <Button asChild variant="ghost" size="icon" className="size-8">
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={link.label}
+                    >
+                      <Icon className="size-3.5" />
+                    </a>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>{link.label}</TooltipContent>
+              </Tooltip>
+            )
+          })}
         </div>
       </div>
     </nav>
