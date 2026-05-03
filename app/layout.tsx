@@ -16,8 +16,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Edoardo Galli | Portfolio",
-  description: "A terminal-minimal software engineering portfolio by Edoardo Galli.",
+  title: "edo's portfolio",
+  description: "a terminal-minimal portfolio.",
   manifest: '/manifest.json',
   icons: {
     icon: '/icon.png',
