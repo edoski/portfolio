@@ -6,7 +6,6 @@ import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
-import { ScrollProgress } from '@/components/scroll-progress'
 import { HashScrollRestorer } from '@/components/smooth-scroll-link'
 import './globals.css'
 
@@ -42,8 +41,6 @@ export default function RootLayout({
       <body className={`font-mono ${ibmPlexMono.variable}`}>
         <HashScrollRestorer />
         <div className="site-shell flex min-h-screen flex-col bg-background text-foreground">
-          <ScrollProgress />
-          <div className="site-shell-noise" aria-hidden="true" />
           <Navbar />
           <div className="flex-1">{children}</div>
           <Footer />

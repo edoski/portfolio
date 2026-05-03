@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react"
 import { ExternalLink } from "lucide-react"
 import {
   motion,
-  useAnimationFrame,
   useMotionTemplate,
   useMotionValue,
 } from "motion/react"
@@ -33,6 +32,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, source = "projects" }: ProjectCardProps) {
   const [isTouchActive, setIsTouchActive] = useState(false)
+  const animationFrame = useRef<number | null>(null)
   const resetTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isInteracting = useRef(false)
   const current = useRef({ rotateX: 0, rotateY: 0, scale: 1 })
@@ -44,7 +44,7 @@ export function ProjectCard({ project, source = "projects" }: ProjectCardProps) 
   const sheenY = useMotionValue("50%")
   const sheen = useMotionTemplate`radial-gradient(420px circle at ${sheenX} ${sheenY}, rgba(255,255,255,0.08), transparent 42%)`
 
-  useAnimationFrame(() => {
+  function tick() {
     const lerpFactor = isInteracting.current
       ? activeLerpFactor
       : idleLerpFactor
@@ -59,10 +59,38 @@ export function ProjectCard({ project, source = "projects" }: ProjectCardProps) 
     rotateX.set(current.current.rotateX)
     rotateY.set(current.current.rotateY)
     scale.set(current.current.scale)
-  })
+
+    const isSettled =
+      Math.abs(target.current.rotateX - current.current.rotateX) < 0.01 &&
+      Math.abs(target.current.rotateY - current.current.rotateY) < 0.01 &&
+      Math.abs(target.current.scale - current.current.scale) < 0.001
+
+    if (!isInteracting.current && isSettled) {
+      current.current = { ...target.current }
+      rotateX.set(target.current.rotateX)
+      rotateY.set(target.current.rotateY)
+      scale.set(target.current.scale)
+      animationFrame.current = null
+      return
+    }
+
+    animationFrame.current = requestAnimationFrame(tick)
+  }
+
+  function startAnimation() {
+    if (animationFrame.current !== null) {
+      return
+    }
+
+    animationFrame.current = requestAnimationFrame(tick)
+  }
 
   useEffect(() => {
     return () => {
+      if (animationFrame.current !== null) {
+        cancelAnimationFrame(animationFrame.current)
+      }
+
       if (resetTimeout.current) {
         clearTimeout(resetTimeout.current)
       }
@@ -81,6 +109,7 @@ export function ProjectCard({ project, source = "projects" }: ProjectCardProps) 
     target.current.scale = 1.015
     sheenX.set(`${(x / rect.width) * 100}%`)
     sheenY.set(`${(y / rect.height) * 100}%`)
+    startAnimation()
   }
 
   function handlePointerDown(event: React.PointerEvent<HTMLElement>) {
@@ -107,6 +136,7 @@ export function ProjectCard({ project, source = "projects" }: ProjectCardProps) 
     target.current.rotateY = 0
     target.current.scale = 1
     setIsTouchActive(false)
+    startAnimation()
   }
 
   function handlePointerUp(event: React.PointerEvent<HTMLElement>) {
