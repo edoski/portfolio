@@ -46,6 +46,27 @@ export function SmoothScrollLink({
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     onClick?.(event)
 
+    if (
+      href === "/" &&
+      !event.defaultPrevented &&
+      event.button === 0 &&
+      !event.metaKey &&
+      !event.altKey &&
+      !event.ctrlKey &&
+      !event.shiftKey
+    ) {
+      event.preventDefault()
+
+      if (window.location.pathname === "/") {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+        window.history.pushState(null, "", "/")
+        return
+      }
+
+      router.push("/")
+      return
+    }
+
     const target = splitHashHref(href)
 
     if (

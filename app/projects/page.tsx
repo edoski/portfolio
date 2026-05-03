@@ -48,11 +48,7 @@ export default function ProjectsPage() {
                 </h2>
                 <div className="grid gap-4 md:grid-cols-2">
                   {categoryProjects.map((project) => (
-                    <ProjectCard
-                      key={project.directory}
-                      project={project}
-                      source="projects"
-                    />
+                    <ProjectCard key={project.directory} project={project} />
                   ))}
                 </div>
               </section>

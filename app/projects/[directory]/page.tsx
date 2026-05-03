@@ -1,20 +1,16 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { ArrowLeft, ExternalLink } from "lucide-react"
+import { ExternalLink } from "lucide-react"
 import { SiGithub } from "react-icons/si"
 
-import { SmoothScrollLink } from "@/components/smooth-scroll-link"
+import { ProjectBackLink } from "@/components/project-back-link"
 import { TechBadgeList } from "@/components/tech-badge-list"
-import { TerminalCue } from "@/components/terminal-cue"
 import { Button } from "@/components/ui/button"
 import { getProject, projectIndexProjects } from "@/lib/portfolio-content"
 
 interface ProjectPageProps {
   params: Promise<{
     directory: string
-  }>
-  searchParams: Promise<{
-    from?: string
   }>
 }
 
@@ -44,25 +40,18 @@ export async function generateMetadata({
 
 export default async function ProjectPage({
   params,
-  searchParams,
 }: ProjectPageProps) {
   const { directory } = await params
-  const { from } = await searchParams
   const project = getProject(directory)
 
   if (!project) notFound()
-
-  const backHref = from === "home" ? "/" : "/projects"
 
   return (
     <main className="project-shell px-6 pb-12 pt-28 md:pb-16 md:pt-24 lg:px-8">
       <article className="mx-auto max-w-6xl space-y-10">
         <div className="space-y-6">
           <Button asChild variant="ghost" size="sm" className="-ml-3">
-            <SmoothScrollLink href={backHref}>
-              <ArrowLeft className="size-3.5" />
-              back
-            </SmoothScrollLink>
+            <ProjectBackLink href="/projects" />
           </Button>
 
           <div className="space-y-4">

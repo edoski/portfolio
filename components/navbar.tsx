@@ -17,7 +17,7 @@ export function Navbar() {
   return (
     <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-background/70 px-6 backdrop-blur-xl lg:px-8">
       <div className="mx-auto flex max-w-6xl items-center justify-between py-3">
-        <SmoothScrollLink href="/#" className="flex items-center">
+        <SmoothScrollLink href="/" className="flex items-center">
           <span className="font-mono text-sm text-foreground/90">
             edo@portfolio
           </span>

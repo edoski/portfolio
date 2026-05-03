@@ -19,6 +19,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import type { Project } from "@/lib/portfolio-content"
+import { PROJECT_RETURN_PATH_KEY } from "@/lib/project-return"
 import { cn } from "@/lib/utils"
 
 const maxRotation = 5
@@ -27,10 +28,9 @@ const idleLerpFactor = 0.025
 
 interface ProjectCardProps {
   project: Project
-  source?: "home" | "projects"
 }
 
-export function ProjectCard({ project, source = "projects" }: ProjectCardProps) {
+export function ProjectCard({ project }: ProjectCardProps) {
   const router = useRouter()
   const [isTouchActive, setIsTouchActive] = useState(false)
   const animationFrame = useRef<number | null>(null)
@@ -44,7 +44,7 @@ export function ProjectCard({ project, source = "projects" }: ProjectCardProps) 
   const sheenX = useMotionValue("50%")
   const sheenY = useMotionValue("50%")
   const sheen = useMotionTemplate`radial-gradient(420px circle at ${sheenX} ${sheenY}, rgba(255,255,255,0.08), transparent 42%)`
-  const detailsHref = `/projects/${project.directory}?from=${source}`
+  const detailsHref = `/projects/${project.directory}`
 
   function tick() {
     const lerpFactor = isInteracting.current
@@ -154,6 +154,7 @@ export function ProjectCard({ project, source = "projects" }: ProjectCardProps) 
   }
 
   function openDetails() {
+    sessionStorage.setItem(PROJECT_RETURN_PATH_KEY, window.location.pathname)
     router.push(detailsHref)
   }
 
