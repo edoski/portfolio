@@ -44,7 +44,7 @@ export function TerminalHero() {
                 </div>
               </div>
 
-              <div className="mt-8 flex justify-end sm:mt-0">
+              <div className="mt-8 flex justify-end md:mt-0">
                 <SmoothScrollLink
                   href="#contact"
                   className="group inline-flex items-center gap-2 rounded-md border border-foreground/15 bg-foreground/[0.03] px-3 py-2 font-mono text-sm text-foreground transition-colors hover:border-foreground/25 hover:bg-foreground/[0.06] hover:text-foreground"

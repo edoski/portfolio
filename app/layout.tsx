@@ -59,8 +59,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
-      <body className={`font-mono ${jetBrainsMono.variable} ${ibmPlexMono.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <body className={`font-mono ${jetBrainsMono.variable} ${ibmPlexMono.variable}`} suppressHydrationWarning>
         <HashScrollRestorer />
         <div className="site-shell flex min-h-screen flex-col bg-background text-foreground">
           <Navbar />
