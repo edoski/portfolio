@@ -13,6 +13,7 @@ interface AsciiMarkProps {
 
 export function AsciiMark({ text }: AsciiMarkProps) {
   const [isMobile, setIsMobile] = useState(false)
+  const variant = isMobile ? "mobile" : "desktop"
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 639px)")
@@ -26,13 +27,14 @@ export function AsciiMark({ text }: AsciiMarkProps) {
 
   return (
     <ASCIIText
-      key={isMobile ? "mobile" : "desktop"}
+      key={variant}
       text={text}
       asciiFontSize={isMobile ? 4 : 6}
       textFontSize={500}
       planeBaseHeight={isMobile ? 11 : 15}
       textColor="#ff9d3d"
       enableWaves={false}
+      introDurationMs={1400}
       trackingSelector="[data-ascii-pointer-region]"
     />
   )

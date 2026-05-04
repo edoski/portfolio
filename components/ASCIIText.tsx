@@ -139,7 +139,7 @@ class AsciiFilter {
     }
   }
 
-  render(scene: THREE.Scene, camera: THREE.Camera) {
+  render(scene: THREE.Scene, camera: THREE.Camera, neutralHue = false) {
     this.renderer.render(scene, camera);
 
     const w = this.canvas.width;
@@ -151,7 +151,7 @@ class AsciiFilter {
       }
 
       this.asciify(this.context, w, h);
-      this.hue();
+      this.hue(neutralHue);
     }
   }
 
@@ -167,10 +167,23 @@ class AsciiFilter {
     return this.mouse.y - this.center.y;
   }
 
-  hue() {
-    const deg = (Math.atan2(this.dy, this.dx) * 180) / Math.PI;
+  hue(neutral = false) {
+    const deg = neutral ? 0 : (Math.atan2(this.dy, this.dx) * 180) / Math.PI;
     this.deg += (deg - this.deg) * 0.075;
     this.domElement.style.filter = `hue-rotate(${this.deg.toFixed(1)}deg)`;
+  }
+
+  settleNeutralHue() {
+    const isSettled = Math.abs(this.deg) < 0.1;
+
+    if (isSettled) {
+      this.deg = 0;
+      this.mouse = { ...this.center };
+      this.domElement.style.filter = 'hue-rotate(0deg)';
+      return true;
+    }
+
+    return false;
   }
 
   asciify(ctx: CanvasRenderingContext2D, w: number, h: number) {
@@ -276,6 +289,7 @@ interface CanvAsciiOptions {
   fontFamily: string;
   planeBaseHeight: number;
   enableWaves: boolean;
+  introDurationMs: number;
   trackingSelector?: string;
 }
 
@@ -294,6 +308,7 @@ class CanvAscii {
   trackingWidth: number;
   trackingHeight: number;
   enableWaves: boolean;
+  introEndsAt: number;
   camera: THREE.PerspectiveCamera;
   scene: THREE.Scene;
   mouse: { x: number; y: number };
@@ -306,11 +321,13 @@ class CanvAscii {
   renderer!: THREE.WebGLRenderer;
   filter!: AsciiFilter;
   center!: { x: number; y: number };
-  animationFrameId: number = 0;
-  private isPaused: boolean = false;
+  animationFrameId: number | null = null;
+  private isVisible: boolean = true;
+  private shaderTime: number = 0;
+  private animateFrame: () => void;
 
   constructor(
-    { text, asciiFontSize, textFontSize, textColor, fontFamily, planeBaseHeight, enableWaves, trackingSelector }: CanvAsciiOptions,
+    { text, asciiFontSize, textFontSize, textColor, fontFamily, planeBaseHeight, enableWaves, introDurationMs, trackingSelector }: CanvAsciiOptions,
     containerElem: HTMLElement,
     width: number,
     height: number
@@ -329,6 +346,7 @@ class CanvAscii {
     this.trackingWidth = width;
     this.trackingHeight = height;
     this.enableWaves = enableWaves;
+    this.introEndsAt = performance.now() + introDurationMs;
 
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 1, 1000);
     this.camera.position.z = 30;
@@ -339,6 +357,7 @@ class CanvAscii {
 
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.animateFrame = this.createAnimationFrame();
 
     this.setMesh();
     this.setRenderer();
@@ -358,6 +377,7 @@ class CanvAscii {
     document.fonts?.load(this.textCanvas.font).then(() => {
       this.textCanvas.render();
       this.texture.needsUpdate = true;
+      this.startAnimation();
     }).catch(() => {
       // Font loading failure keeps the already-rendered fallback texture.
     });
@@ -418,6 +438,7 @@ class CanvAscii {
 
     this.center = { x: w / 2, y: h / 2 };
     this.setTrackingSize();
+    this.startAnimation();
   }
 
   setTrackingSize() {
@@ -427,7 +448,7 @@ class CanvAscii {
   }
 
   load() {
-    this.animate();
+    this.startAnimation();
   }
 
   onMouseMove(evt: MouseEvent | TouchEvent) {
@@ -437,40 +458,71 @@ class CanvAscii {
     const y = e.clientY - bounds.top;
     this.mouse = { x, y };
     this.isHovering = true;
+    this.startAnimation();
   }
 
   onMouseLeave() {
     this.isHovering = false;
+    this.startAnimation();
   }
 
-  animate() {
-    const animateFrame = () => {
-      if (this.isPaused) return;
-      this.animationFrameId = requestAnimationFrame(animateFrame);
-      this.render();
+  createAnimationFrame() {
+    return () => {
+      this.animationFrameId = null;
+
+      if (!this.isVisible) return;
+
+      const shouldContinue = this.render();
+
+      if (shouldContinue) {
+        this.startAnimation();
+      }
     };
-    animateFrame();
+  }
+
+  startAnimation() {
+    if (!this.isVisible || this.animationFrameId !== null) return;
+
+    this.animationFrameId = requestAnimationFrame(this.animateFrame);
   }
 
   pause() {
-    this.isPaused = true;
-    cancelAnimationFrame(this.animationFrameId);
+    this.isVisible = false;
+
+    if (this.animationFrameId !== null) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
   }
 
   resume() {
-    if (this.isPaused) {
-      this.isPaused = false;
-      this.animate();
-    }
+    this.isVisible = true;
+    this.startAnimation();
   }
 
   render() {
     const time = new Date().getTime() * 0.001;
+    const isIntroActive = performance.now() < this.introEndsAt;
+    const targetShaderTime = this.isHovering || isIntroActive ? Math.sin(time) : 0;
 
-    (this.mesh.material as THREE.ShaderMaterial).uniforms.uTime.value = Math.sin(time);
+    this.shaderTime += (targetShaderTime - this.shaderTime) * (this.isHovering || isIntroActive ? 1 : 0.075);
+    (this.mesh.material as THREE.ShaderMaterial).uniforms.uTime.value = this.shaderTime;
 
-    this.updateRotation();
-    this.filter.render(this.scene, this.camera);
+    const rotationSettled = this.updateRotation();
+    const neutralHue = !this.isHovering;
+
+    this.filter.render(this.scene, this.camera, neutralHue);
+
+    if (this.isHovering || isIntroActive || this.enableWaves) return true;
+
+    const shaderSettled = Math.abs(this.shaderTime) < 0.001;
+
+    if (shaderSettled) {
+      this.shaderTime = 0;
+      (this.mesh.material as THREE.ShaderMaterial).uniforms.uTime.value = 0;
+    }
+
+    return !(rotationSettled && shaderSettled && this.filter.settleNeutralHue());
   }
 
   updateRotation() {
@@ -486,6 +538,18 @@ class CanvAscii {
 
     this.mesh.rotation.x += (targetX - this.mesh.rotation.x) * lerpFactor;
     this.mesh.rotation.y += (targetY - this.mesh.rotation.y) * lerpFactor;
+
+    const isSettled =
+      Math.abs(targetX - this.mesh.rotation.x) < 0.001 &&
+      Math.abs(targetY - this.mesh.rotation.y) < 0.001;
+
+    if (!this.isHovering && isSettled) {
+      this.mesh.rotation.x = 0;
+      this.mesh.rotation.y = 0;
+      return true;
+    }
+
+    return false;
   }
 
   clear() {
@@ -507,7 +571,9 @@ class CanvAscii {
   }
 
   dispose() {
-    cancelAnimationFrame(this.animationFrameId);
+    if (this.animationFrameId !== null) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
     this.filter.dispose();
     this.container.removeChild(this.filter.domElement);
     this.trackingElement.removeEventListener('mousemove', this.onMouseMove);
@@ -526,6 +592,7 @@ interface ASCIITextProps {
   textColor?: string;
   planeBaseHeight?: number;
   enableWaves?: boolean;
+  introDurationMs?: number;
   trackingSelector?: string;
 }
 
@@ -542,6 +609,7 @@ export default function ASCIIText({
   textColor = '#fdf9f3',
   planeBaseHeight = 8,
   enableWaves = true,
+  introDurationMs = 1400,
   trackingSelector
 }: ASCIITextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -571,6 +639,7 @@ export default function ASCIIText({
                 fontFamily,
                 planeBaseHeight,
                 enableWaves,
+                introDurationMs,
                 trackingSelector
               },
               element,
@@ -605,6 +674,7 @@ export default function ASCIIText({
           fontFamily,
           planeBaseHeight,
           enableWaves,
+          introDurationMs,
           trackingSelector
         },
         element,
@@ -635,7 +705,7 @@ export default function ASCIIText({
         asciiRef.current.dispose();
       }
     };
-  }, [text, asciiFontSize, textFontSize, textColor, planeBaseHeight, enableWaves, trackingSelector]);
+  }, [text, asciiFontSize, textFontSize, textColor, planeBaseHeight, enableWaves, introDurationMs, trackingSelector]);
 
   return (
     <div
