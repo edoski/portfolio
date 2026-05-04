@@ -194,7 +194,7 @@ class AsciiFilter {
         }
         str += '\n';
       }
-      this.pre.innerHTML = str;
+      this.pre.textContent = str;
     }
   }
 
@@ -273,6 +273,7 @@ interface CanvAsciiOptions {
   asciiFontSize: number;
   textFontSize: number;
   textColor: string;
+  fontFamily: string;
   planeBaseHeight: number;
   enableWaves: boolean;
   trackingSelector?: string;
@@ -283,6 +284,7 @@ class CanvAscii {
   asciiFontSize: number;
   textFontSize: number;
   textColor: string;
+  fontFamily: string;
   planeBaseHeight: number;
   container: HTMLElement;
   trackingElement: HTMLElement;
@@ -308,7 +310,7 @@ class CanvAscii {
   private isPaused: boolean = false;
 
   constructor(
-    { text, asciiFontSize, textFontSize, textColor, planeBaseHeight, enableWaves, trackingSelector }: CanvAsciiOptions,
+    { text, asciiFontSize, textFontSize, textColor, fontFamily, planeBaseHeight, enableWaves, trackingSelector }: CanvAsciiOptions,
     containerElem: HTMLElement,
     width: number,
     height: number
@@ -317,6 +319,7 @@ class CanvAscii {
     this.asciiFontSize = asciiFontSize;
     this.textFontSize = textFontSize;
     this.textColor = textColor;
+    this.fontFamily = fontFamily;
     this.planeBaseHeight = planeBaseHeight;
     this.container = containerElem;
     this.trackingElement = containerElem;
@@ -344,7 +347,7 @@ class CanvAscii {
   setMesh() {
     this.textCanvas = new CanvasTxt(this.textString, {
       fontSize: this.textFontSize,
-      fontFamily: 'IBM Plex Mono',
+      fontFamily: this.fontFamily,
       color: this.textColor
     });
     this.textCanvas.resize();
@@ -352,6 +355,12 @@ class CanvAscii {
 
     this.texture = new THREE.CanvasTexture(this.textCanvas.texture);
     this.texture.minFilter = THREE.NearestFilter;
+    document.fonts?.load(this.textCanvas.font).then(() => {
+      this.textCanvas.render();
+      this.texture.needsUpdate = true;
+    }).catch(() => {
+      // Font loading failure keeps the already-rendered fallback texture.
+    });
 
     const textAspect = this.textCanvas.width / this.textCanvas.height;
     const baseH = this.planeBaseHeight;
@@ -379,7 +388,7 @@ class CanvAscii {
     this.renderer.setClearColor(0x000000, 0);
 
     this.filter = new AsciiFilter(this.renderer, {
-      fontFamily: 'IBM Plex Mono',
+      fontFamily: this.fontFamily,
       fontSize: this.asciiFontSize,
       invert: true
     });
@@ -458,9 +467,6 @@ class CanvAscii {
   render() {
     const time = new Date().getTime() * 0.001;
 
-    this.textCanvas.render();
-    this.texture.needsUpdate = true;
-
     (this.mesh.material as THREE.ShaderMaterial).uniforms.uTime.value = Math.sin(time);
 
     this.updateRotation();
@@ -523,6 +529,12 @@ interface ASCIITextProps {
   trackingSelector?: string;
 }
 
+function getAsciiFontFamily() {
+  return getComputedStyle(document.body)
+    .getPropertyValue('--font-ibm-plex-mono')
+    .trim() || 'IBM Plex Mono, Courier New, monospace';
+}
+
 export default function ASCIIText({
   text = 'David!',
   asciiFontSize = 8,
@@ -540,6 +552,7 @@ export default function ASCIIText({
 
     const element = containerRef.current;
     let isInitialized = false;
+    const fontFamily = getAsciiFontFamily();
 
     // Create visibility observer for pause/resume and lazy initialization
     const visibilityObserver = new IntersectionObserver(
@@ -555,6 +568,7 @@ export default function ASCIIText({
                 asciiFontSize,
                 textFontSize,
                 textColor,
+                fontFamily,
                 planeBaseHeight,
                 enableWaves,
                 trackingSelector
@@ -588,6 +602,7 @@ export default function ASCIIText({
           asciiFontSize,
           textFontSize,
           textColor,
+          fontFamily,
           planeBaseHeight,
           enableWaves,
           trackingSelector
@@ -633,8 +648,6 @@ export default function ASCIIText({
       }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&display=swap');
-
         body {
           margin: 0;
           padding: 0;

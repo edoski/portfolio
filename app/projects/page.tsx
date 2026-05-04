@@ -15,7 +15,7 @@ const projectCategories = ["ai", "systems", "web"] satisfies ProjectCategory[]
 
 export default function ProjectsPage() {
   return (
-    <main className="project-shell px-6 pb-16 pt-28 md:pt-24 lg:px-8">
+    <main className="project-shell px-6 pb-16 pt-10 md:pt-24 lg:px-8">
       <section className="mx-auto max-w-6xl space-y-8">
         <div className="space-y-4">
           <Button asChild variant="ghost" size="sm" className="-ml-3">
@@ -43,7 +43,7 @@ export default function ProjectsPage() {
 
             return (
               <section key={category} className="space-y-4">
-                <h2 className="font-mono text-sm font-bold text-muted-foreground">
+                <h2 className="font-mono text-base font-bold underline underline-offset-4 text-muted-foreground">
                   {category}
                 </h2>
                 <div className="grid gap-4 md:grid-cols-2">

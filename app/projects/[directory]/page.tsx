@@ -14,6 +14,8 @@ interface ProjectPageProps {
   }>
 }
 
+export const dynamicParams = false
+
 export function generateStaticParams() {
   return projectIndexProjects.map((project) => ({
     directory: project.directory,
@@ -47,7 +49,7 @@ export default async function ProjectPage({
   if (!project) notFound()
 
   return (
-    <main className="project-shell px-6 pb-12 pt-28 md:pb-16 md:pt-24 lg:px-8">
+    <main className="project-shell px-6 pb-12 pt-10 md:pb-16 md:pt-24 lg:px-8">
       <article className="mx-auto max-w-6xl space-y-10">
         <div className="space-y-6">
           <Button asChild variant="ghost" size="sm" className="-ml-3">

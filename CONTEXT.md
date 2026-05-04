@@ -19,5 +19,3 @@
 **Project Card** — The interactive shadcn Card surface used to present one Project. It owns the tactile tilt interaction.
 
 **ASCII Mark** — The orange 3D ASCII name mark in the hero. It is the only retained Three.js/WebGL visual effect.
-
-**React Bits Background** — The vendor Pixel Blast background used only in the hero. Local code owns integration and blending; vendor source stays isolated.

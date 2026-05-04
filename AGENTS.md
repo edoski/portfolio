@@ -24,10 +24,10 @@ Do not run `pnpm dev` manually. Assume the user already has it running; if it is
 
 `app/page.tsx` is the composition module. It renders these Portfolio Sections in order:
 
-1. `Navbar` - fixed navigation with terminal/developer cues
-2. `TerminalHero` - Profile, ASCII Mark, primary links, and work preview
+1. `Navbar` - navigation with terminal/developer cues
+2. `TerminalHero` - Profile, ASCII Mark, biography, education, and contact action
 3. `ProjectsSection` - dense Project Card grid
-4. `ContactSection` - shadcn Card-based Contact Link grid
+4. `ContactSection` - Contact Link grid
 5. `Footer` - minimal site footer
 
 ### Content Module
@@ -38,8 +38,8 @@ Do not reintroduce scattered constants for Profile, Project, Social Link, Contac
 
 ### Component Organization
 
-- `components/` - Portfolio Sections plus focused modules such as `ascii-mark`, `project-card`, and `terminal-cue`
-- `components/ui/` - shadcn/ui primitives (`button`, `card`, `badge`, `separator`, `tooltip`)
+- `components/` - Portfolio Sections plus focused modules such as `ascii-mark`, `project-card`, `contact-link`, `tilt-icon-action`, `tilt-tech-badge`, and `terminal-cue`
+- `components/ui/` - shadcn/ui primitives currently used by the portfolio (`button`, `card`, `badge`)
 - `app/` - Next.js App Router pages, layout, manifest, and global CSS
 - `lib/` - shared utilities and portfolio content
 - `public/` - static assets
@@ -48,9 +48,10 @@ Do not reintroduce scattered constants for Profile, Project, Social Link, Contac
 
 Keep sections server-rendered unless they need browser-only behavior. Current client islands:
 
-- `components/ascii-mark.tsx` - dynamic browser-only wrapper for `ASCIIText`, with `prefers-reduced-motion` fallback
-- `components/project-card.tsx` - Motion-based project tilt and entry fade
-- `components/ui/tooltip.tsx` and `components/ui/separator.tsx` - shadcn/Radix primitives
+- `components/ascii-mark.tsx` - dynamic browser-only wrapper for `ASCIIText`
+- `components/project-card.tsx` - Motion-based Project Card tilt
+- `components/contact-link.tsx`, `components/tilt-icon-action.tsx`, and `components/tilt-tech-badge.tsx` - Motion-based tilt surfaces
+- `components/project-back-link.tsx` and `components/smooth-scroll-link.tsx` - route/sessionStorage navigation helpers
 
 Avoid moving whole sections to `"use client"` for convenience.
 
@@ -78,14 +79,14 @@ Avoid reintroducing the deleted ambient/scroll/text effect stack: WebGL terminal
 
 Core:
 
-- Next.js 16.0.3
-- React 19.2.0
-- TypeScript 5.x
+- Next.js 16.2.4
+- React 19.2.5
+- TypeScript 6.x
 
 UI:
 
 - shadcn/ui primitives
-- `radix-ui` for generated shadcn primitives
+- `@radix-ui/react-slot` for `Button asChild`
 - `lucide-react` for generic UI icons
 - `react-icons/si` for brand icons only
 
@@ -119,5 +120,5 @@ This places components in `components/ui/` following `components.json`.
 - Component files use kebab-case filenames
 - Component exports use PascalCase
 - Use `cn()` from `@/lib/utils` for conditional className merging
-- Prefer named exports except browser-only ReactBits-style modules that require default export compatibility
+- Prefer named exports except browser-only modules that require default export compatibility
 - Use `"use client"` only for modules with browser-only behavior

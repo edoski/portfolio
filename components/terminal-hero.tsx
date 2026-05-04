@@ -10,11 +10,11 @@ export function TerminalHero() {
     <section
       id="about"
       data-ascii-pointer-region
-      className="relative min-h-[76vh] px-6 pb-4 pt-20 md:min-h-[78vh] md:pb-6 md:pt-24 lg:px-8"
+      className="relative min-h-[76vh] px-6 pb-4 pt-8 md:min-h-[78vh] md:pb-6 md:pt-24 lg:px-8"
     >
       <div className="mx-auto max-w-6xl">
         <div>
-          <TerminalCue path="~/about" command="whoami" />
+          <TerminalCue path="~" command="whoami" />
 
           <div className="relative h-52 overflow-hidden sm:h-56 md:h-[17rem] lg:h-[19rem]">
             <AsciiMark text={profile.asciiText} />
@@ -27,7 +27,7 @@ export function TerminalHero() {
 
             <div className="relative">
               <div className="w-full space-y-4 border-l border-foreground/35 pl-4 pr-0 font-mono text-sm leading-7 text-foreground/80 md:pl-5 md:pr-40">
-                <p>focused on <strong>deep learning</strong>, <strong>AI systems</strong>, and <strong>data-intensive</strong> software. Native <strong>English & Italian</strong> speaker.</p>
+                <p>focused on <strong>deep learning</strong>, <strong>AI systems</strong>, and <strong>data-intensive</strong> software. native <strong>English & Italian</strong> speaker.</p>
                 <div className="space-y-2">
                   <p className="inline-block pb-0.5 font-bold lowercase leading-none text-muted-foreground">
                     education
@@ -44,7 +44,7 @@ export function TerminalHero() {
                 </div>
               </div>
 
-              <div className="mt-7 flex justify-end md:absolute md:bottom-0 md:right-0 md:mt-0">
+              <div className="mt-8 flex justify-end sm:mt-0">
                 <SmoothScrollLink
                   href="#contact"
                   className="group inline-flex items-center gap-2 rounded-md border border-foreground/15 bg-foreground/[0.03] px-3 py-2 font-mono text-sm text-foreground transition-colors hover:border-foreground/25 hover:bg-foreground/[0.06] hover:text-foreground"

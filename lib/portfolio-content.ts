@@ -1,4 +1,4 @@
-export type LinkKind = "github" | "linkedin" | "email" | "resume"
+type LinkKind = "github" | "linkedin" | "email" | "resume"
 
 export interface PortfolioLink {
   kind: LinkKind
@@ -51,7 +51,7 @@ export const navigation = [
   { label: "resume", href: "/CV_Edoardo_Galli.pdf", command: "cat resume.pdf", external: true },
 ] as const
 
-export const links: PortfolioLink[] = [
+export const contactLinks: PortfolioLink[] = [
   {
     kind: "github",
     label: "GitHub",
@@ -77,9 +77,7 @@ export const links: PortfolioLink[] = [
   },
 ]
 
-export const primaryLinks = ["github", "resume", "email"] satisfies LinkKind[]
-
-export const projects: Project[] = [
+export const featuredProjects: Project[] = [
   {
     title: "spice",
     directory: "spice",
@@ -164,7 +162,7 @@ export const projects: Project[] = [
 ]
 
 export const projectIndexProjects: Project[] = [
-  ...projects,
+  ...featuredProjects,
   {
     title: "portfolio",
     directory: "portfolio",
@@ -227,14 +225,6 @@ export const projectIndexProjects: Project[] = [
     repo: "https://github.com/edoski/pubsub",
   },
 ]
-
-export const featuredProjects = projects
-
-export const contactLinks = links
-
-export function getLink(kind: LinkKind) {
-  return links.find((link) => link.kind === kind)
-}
 
 export function getProject(directory: string) {
   return projectIndexProjects.find((project) => project.directory === directory)

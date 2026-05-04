@@ -3,7 +3,7 @@ import { SiGithub } from "react-icons/si"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { SmoothScrollLink } from "@/components/smooth-scroll-link"
-import { links, navigation } from "@/lib/portfolio-content"
+import { contactLinks, navigation } from "@/lib/portfolio-content"
 import { cn } from "@/lib/utils"
 
 const socialIcons = {
@@ -12,10 +12,12 @@ const socialIcons = {
 }
 
 export function Navbar() {
-  const socialLinks = links.filter((link) => link.kind === "github" || link.kind === "linkedin")
+  const socialLinks = contactLinks.filter(
+    (link) => link.kind === "github" || link.kind === "linkedin",
+  )
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-background/70 px-6 backdrop-blur-xl lg:px-8">
+    <nav className="inset-x-0 top-0 z-50 border-b border-white/10 bg-background/70 px-6 backdrop-blur-xl md:fixed lg:px-8">
       <div className="mx-auto flex max-w-6xl items-center justify-between py-3">
         <SmoothScrollLink href="/" className="flex items-center">
           <span className="font-mono text-sm text-foreground/90">

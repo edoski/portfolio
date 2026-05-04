@@ -1,51 +1,6 @@
-import { FileText, Mail } from "lucide-react"
-import { FaLinkedin } from "react-icons/fa6"
-import { SiGithub } from "react-icons/si"
-
+import { ContactLink } from "@/components/contact-link"
 import { TerminalCue } from "@/components/terminal-cue"
 import { contactLinks } from "@/lib/portfolio-content"
-
-const contactIcons = {
-  github: SiGithub,
-  linkedin: FaLinkedin,
-  resume: FileText,
-  email: Mail,
-}
-
-function ContactItem({
-  link,
-}: {
-  link: (typeof contactLinks)[number]
-}) {
-  const Icon = contactIcons[link.kind]
-  const label = link.label.toLowerCase()
-
-  return (
-    <a
-      href={link.href}
-      target={link.external ? "_blank" : undefined}
-      rel={link.external ? "noopener noreferrer" : undefined}
-      aria-label={link.label}
-      title={link.label}
-      className="group flex min-w-0 items-center justify-center gap-3 py-3 font-mono text-base leading-7 text-foreground/80 transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:text-lg"
-    >
-      <span
-        aria-hidden="true"
-        className="text-muted-foreground/55 transition-colors group-hover:text-foreground/80"
-      >
-        [
-      </span>
-      <Icon className="size-5 shrink-0 transition-colors group-hover:text-foreground" />
-      <span>{label}</span>
-      <span
-        aria-hidden="true"
-        className="text-muted-foreground/55 transition-colors group-hover:text-foreground/80"
-      >
-        ]
-      </span>
-    </a>
-  )
-}
 
 export function ContactSection() {
   return (
@@ -61,7 +16,7 @@ export function ContactSection() {
                   key={link.kind}
                   className="group/item relative min-w-0"
                 >
-                  <ContactItem link={link} />
+                  <ContactLink link={link} />
                 </li>
               ))}
             </ul>
