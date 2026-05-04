@@ -1,13 +1,31 @@
 import type { Metadata, Viewport } from 'next'
-import '@fontsource/jetbrains-mono/latin-400.css'
-import '@fontsource/jetbrains-mono/latin-500.css'
 import { IBM_Plex_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
 import { HashScrollRestorer } from '@/components/smooth-scroll-link'
 import './globals.css'
+
+const jetBrainsMono = localFont({
+  src: [
+    {
+      path: '../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+  ],
+  display: 'block',
+  variable: '--font-jetbrains-mono',
+  preload: true,
+  fallback: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+})
 
 const ibmPlexMono = IBM_Plex_Mono({
   weight: ['500'],
@@ -42,7 +60,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
-      <body className={`font-mono ${ibmPlexMono.variable}`}>
+      <body className={`font-mono ${jetBrainsMono.variable} ${ibmPlexMono.variable}`}>
         <HashScrollRestorer />
         <div className="site-shell flex min-h-screen flex-col bg-background text-foreground">
           <Navbar />

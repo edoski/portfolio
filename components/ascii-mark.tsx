@@ -1,11 +1,8 @@
 "use client"
 
-import dynamic from "next/dynamic"
 import { useEffect, useState } from "react"
 
-const ASCIIText = dynamic(() => import("@/components/ASCIIText"), {
-  ssr: false,
-})
+import ASCIIText from "@/components/ASCIIText"
 
 interface AsciiMarkProps {
   text: string

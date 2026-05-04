@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 
@@ -374,13 +376,6 @@ class CanvAscii {
 
     this.texture = new THREE.CanvasTexture(this.textCanvas.texture);
     this.texture.minFilter = THREE.NearestFilter;
-    document.fonts?.load(this.textCanvas.font).then(() => {
-      this.textCanvas.render();
-      this.texture.needsUpdate = true;
-      this.startAnimation();
-    }).catch(() => {
-      // Font loading failure keeps the already-rendered fallback texture.
-    });
 
     const textAspect = this.textCanvas.width / this.textCanvas.height;
     const baseH = this.planeBaseHeight;
@@ -602,6 +597,16 @@ function getAsciiFontFamily() {
     .trim() || 'IBM Plex Mono, Courier New, monospace';
 }
 
+async function loadAsciiFont(fontFamily: string, textFontSize: number) {
+  if (!document.fonts?.load) return;
+
+  try {
+    await document.fonts.load(`600 ${textFontSize}px ${fontFamily}`);
+  } catch {
+    // Font loading failure falls back to the browser's available monospace face.
+  }
+}
+
 export default function ASCIIText({
   text = 'David!',
   asciiFontSize = 8,
@@ -620,51 +625,19 @@ export default function ASCIIText({
 
     const element = containerRef.current;
     let isInitialized = false;
+    let isInitializing = false;
+    let isDisposed = false;
     const fontFamily = getAsciiFontFamily();
 
-    // Create visibility observer for pause/resume and lazy initialization
-    const visibilityObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (!isInitialized) {
-          // Lazy initialization: wait for element to be visible with valid dimensions
-          if (entry.isIntersecting && entry.boundingClientRect.width > 0 && entry.boundingClientRect.height > 0) {
-            const { width: w, height: h } = entry.boundingClientRect;
+    const initialize = async (width: number, height: number) => {
+      if (isInitialized || isInitializing || width <= 0 || height <= 0) return;
 
-            asciiRef.current = new CanvAscii(
-              {
-                text,
-                asciiFontSize,
-                textFontSize,
-                textColor,
-                fontFamily,
-                planeBaseHeight,
-                enableWaves,
-                introDurationMs,
-                trackingSelector
-              },
-              element,
-              w,
-              h
-            );
-            asciiRef.current.load();
-            isInitialized = true;
-          }
-        } else {
-          // After initialization, handle visibility-based pause/resume
-          if (entry.isIntersecting) {
-            asciiRef.current?.resume();
-          } else {
-            asciiRef.current?.pause();
-          }
-        }
-      },
-      { threshold: 0.1 }
-    );
+      isInitializing = true;
+      await loadAsciiFont(fontFamily, textFontSize);
+      isInitializing = false;
 
-    const { width, height } = element.getBoundingClientRect();
+      if (isDisposed || isInitialized) return;
 
-    // If element already has valid dimensions and is visible, initialize immediately
-    if (width > 0 && height > 0) {
       asciiRef.current = new CanvAscii(
         {
           text,
@@ -683,12 +656,34 @@ export default function ASCIIText({
       );
       asciiRef.current.load();
       isInitialized = true;
+    };
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!isInitialized) {
+          if (entry.isIntersecting && entry.boundingClientRect.width > 0 && entry.boundingClientRect.height > 0) {
+            const { width: w, height: h } = entry.boundingClientRect;
+            void initialize(w, h);
+          }
+        } else {
+          if (entry.isIntersecting) {
+            asciiRef.current?.resume();
+          } else {
+            asciiRef.current?.pause();
+          }
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const { width, height } = element.getBoundingClientRect();
+
+    if (width > 0 && height > 0) {
+      void initialize(width, height);
     }
 
-    // Always observe for visibility changes (lazy init or pause/resume)
     visibilityObserver.observe(element);
 
-    // ResizeObserver for responsive sizing
     const ro = new ResizeObserver(entries => {
       if (!entries[0] || !asciiRef.current) return;
       const { width: w, height: h } = entries[0].contentRect;
@@ -699,6 +694,7 @@ export default function ASCIIText({
     ro.observe(element);
 
     return () => {
+      isDisposed = true;
       visibilityObserver.disconnect();
       ro.disconnect();
       if (asciiRef.current) {
