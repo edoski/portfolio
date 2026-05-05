@@ -142,6 +142,20 @@ html {
     animation: blink 1s infinite;
 }
 
+.project-card-surface {
+    border-width: 2px;
+    background:
+        linear-gradient(var(--secondary), var(--secondary)) padding-box,
+        var(--project-card-edge-tracer) border-box,
+        linear-gradient(rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10)) border-box;
+}
+
+.traced-rule-block {
+    background:
+        var(--rule-trace) left center / 2px 100% no-repeat,
+        linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)) left center / 2px 100% no-repeat;
+}
+
 /* ASCII Text component styles */
 .ascii-text-container canvas {
     position: absolute;

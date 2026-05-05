@@ -18,7 +18,6 @@ import {
 import type { Project } from "@/lib/portfolio-content"
 import { PROJECT_RETURN_PATH_KEY } from "@/lib/project-return"
 import { usePointerTiltPreset } from "@/lib/use-pointer-tilt"
-import { cn } from "@/lib/utils"
 
 interface ProjectCardProps {
   project: Project
@@ -26,8 +25,12 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const router = useRouter()
-  const { style, sheen, isTouchActive, tiltHandlers } =
-    usePointerTiltPreset("projectCard")
+  const {
+    style,
+    edgeTracer,
+    isTouchActive,
+    tiltHandlers,
+  } = usePointerTiltPreset("projectCard")
   const detailsHref = `/projects/${project.directory}`
 
   function isProjectAction(target: EventTarget) {
@@ -67,21 +70,21 @@ export function ProjectCard({ project }: ProjectCardProps) {
       role="link"
       tabIndex={0}
       aria-label={`View ${project.title} project details`}
-      style={style}
+      style={
+        {
+          ...style,
+          "--project-card-edge-tracer": edgeTracer,
+        } as React.ComponentProps<typeof motion.article>["style"]
+      }
       {...tiltHandlers}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      className="group h-full transform-gpu"
+      className="group relative h-full transform-gpu"
     >
-      <Card className="relative h-full cursor-pointer gap-0 overflow-hidden border-white/10 bg-secondary/80 py-0 shadow-[0_0_0_1px_rgba(255,255,255,0.025),0_18px_50px_rgba(255,255,255,0.028),0_0_48px_rgba(255,255,255,0.01)] backdrop-blur-sm transition-colors duration-200 group-hover:border-white/20 group-hover:shadow-[0_0_0_1px_rgba(255,255,255,0.035),0_22px_58px_rgba(255,255,255,0.04),0_0_56px_rgba(255,255,255,0.016)] group-focus-visible:ring-2 group-focus-visible:ring-foreground/50 group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-background">
-        <motion.div
-          aria-hidden="true"
-          className={cn(
-            "pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100",
-            isTouchActive && "opacity-100",
-          )}
-          style={{ background: sheen }}
-        />
+      <Card
+        data-touch-active={isTouchActive}
+        className="project-card-surface relative h-full cursor-pointer gap-0 overflow-hidden border-transparent py-0 shadow-[0_0_0_1px_rgba(255,255,255,0.025),0_18px_50px_rgba(255,255,255,0.028),0_0_48px_rgba(255,255,255,0.01)] backdrop-blur-sm transition-[background,box-shadow] duration-200 group-hover:shadow-[0_0_0_1px_rgba(255,255,255,0.035),0_22px_58px_rgba(255,255,255,0.04),0_0_56px_rgba(255,255,255,0.016)] group-focus-visible:ring-2 group-focus-visible:ring-foreground/50 group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-background"
+      >
         <CardHeader className="relative gap-3 p-4 pb-3">
           <div className="flex items-start justify-between gap-3">
             <CardTitle className="min-w-0 break-words font-mono text-base leading-6 text-foreground/90 transition-colors duration-200 group-hover:text-foreground group-focus-visible:text-foreground">

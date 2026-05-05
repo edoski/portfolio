@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react"
 import { AsciiMark } from "@/components/ascii-mark"
 import { SmoothScrollLink } from "@/components/smooth-scroll-link"
 import { TerminalCue } from "@/components/terminal-cue"
+import { TracedRuleBlock } from "@/components/traced-rule-block"
 import { education, profile, spokenLanguages } from "@/lib/portfolio-content"
 
 export function TerminalHero() {
@@ -27,7 +28,7 @@ export function TerminalHero() {
 
             <div className="relative">
               <div className="space-y-5">
-                <div className="relative w-full border-l border-foreground/35 pl-4 font-mono text-sm leading-7 text-foreground/80 md:pl-5">
+                <TracedRuleBlock className="font-mono text-sm leading-7 text-foreground/80">
                   <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
                     <p className="inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
                       profile
@@ -36,9 +37,9 @@ export function TerminalHero() {
                       focused on <strong>deep learning</strong>, <strong>ai systems</strong>, and <strong>data-intensive</strong> software; studying at the <strong>university of bologna</strong>.
                     </p>
                   </div>
-                </div>
+                </TracedRuleBlock>
 
-                <div className="relative w-full border-l border-foreground/35 pl-4 font-mono text-sm leading-7 text-foreground/80 md:pl-5">
+                <TracedRuleBlock className="font-mono text-sm leading-7 text-foreground/80">
                   <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
                     <p className="inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
                       education
@@ -59,9 +60,9 @@ export function TerminalHero() {
                       ))}
                     </ul>
                   </div>
-                </div>
+                </TracedRuleBlock>
 
-                <div className="relative w-full border-l border-foreground/35 pl-4 font-mono text-sm leading-7 text-foreground/80 md:pl-5">
+                <TracedRuleBlock className="font-mono text-sm leading-7 text-foreground/80">
                   <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
                     <p className="inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
                       languages
@@ -83,7 +84,7 @@ export function TerminalHero() {
                       ))}
                     </ul>
                   </div>
-                </div>
+                </TracedRuleBlock>
               </div>
 
               <div className="flex justify-end pt-4 md:absolute md:bottom-0 md:right-0 md:pt-0">
