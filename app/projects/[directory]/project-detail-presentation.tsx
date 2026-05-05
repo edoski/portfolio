@@ -55,7 +55,10 @@ export function ProjectDetailSidebarSections({ project }: { project: Project }) 
   return (
     <>
       <ProjectSection title="// stack">
-        <TechBadgeList tech={project.tech} />
+        <TechBadgeList
+          tech={project.tech}
+          badgeClassName="border-white/15 shadow-[inset_0_0_0_0.5px_rgb(255_255_255_/_0.08)] hover:border-white/25"
+        />
       </ProjectSection>
 
       <ProjectSection title="// status">
