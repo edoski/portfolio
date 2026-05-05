@@ -8,6 +8,7 @@ import {
   isProjectReturnPath,
   PROJECT_RETURN_PATH_KEY,
 } from "@/lib/project-return"
+import { terminalNavLinkTextClassName } from "@/lib/terminal-nav-link"
 
 export function ProjectBackLink({
   href,
@@ -44,7 +45,7 @@ export function ProjectBackLink({
   return (
     <a href={href} onClick={handleClick} {...props}>
       <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />
-      {children}
+      <span className={terminalNavLinkTextClassName}>{children}</span>
     </a>
   )
 }

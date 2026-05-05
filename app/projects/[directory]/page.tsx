@@ -9,8 +9,7 @@ import {
 } from "@/app/projects/[directory]/project-detail-presentation"
 import { ProjectBackLink } from "@/components/project-back-link"
 import { getProject, getProjectDirectories } from "@/lib/portfolio-content"
-import { terminalActionLinkClassName } from "@/lib/terminal-action-link"
-import { cn } from "@/lib/utils"
+import { terminalNavLinkClassName } from "@/lib/terminal-nav-link"
 
 interface ProjectPageProps {
   params: Promise<{
@@ -49,7 +48,7 @@ export default async function ProjectPage({
         <header className="space-y-7">
           <ProjectBackLink
             href="/projects"
-            className={cn(terminalActionLinkClassName, "px-2.5 py-1.5")}
+            className={terminalNavLinkClassName}
           />
 
           <div className="space-y-6">

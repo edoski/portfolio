@@ -4,8 +4,10 @@ import { ArrowLeft } from "lucide-react"
 import { ProjectCard } from "@/components/project-card"
 import { SmoothScrollLink } from "@/components/smooth-scroll-link"
 import { getProjectsByCategory } from "@/lib/portfolio-content"
-import { terminalActionLinkClassName } from "@/lib/terminal-action-link"
-import { cn } from "@/lib/utils"
+import {
+  terminalNavLinkClassName,
+  terminalNavLinkTextClassName,
+} from "@/lib/terminal-nav-link"
 
 export const metadata: Metadata = {
   title: "Projects | Edoardo Galli",
@@ -21,10 +23,10 @@ export default function ProjectsPage() {
         <div className="space-y-4">
           <SmoothScrollLink
             href="/"
-            className={cn(terminalActionLinkClassName, "px-2.5 py-1.5")}
+            className={terminalNavLinkClassName}
           >
             <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />
-            back
+            <span className={terminalNavLinkTextClassName}>back</span>
           </SmoothScrollLink>
 
           <div className="space-y-3">

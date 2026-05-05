@@ -28,7 +28,7 @@ export function AsciiMark({ text }: AsciiMarkProps) {
       text={text}
       asciiFontSize={isMobile ? 4 : 6}
       textFontSize={500}
-      planeBaseHeight={isMobile ? 11 : 15}
+      planeBaseHeight={isMobile ? 11.5 : 16}
       textColor="#ff9d3d"
       enableWaves={false}
       introDurationMs={1400}
