@@ -19,6 +19,49 @@ interface PointerTiltOptions {
   touchResetDelay?: number
 }
 
+const tiltPresets = {
+  projectCard: {
+    options: {},
+    perspective: 900,
+  },
+  contactLink: {
+    options: {
+      maxRotation: 7,
+      activeScale: 1.04,
+      sheenOpacity: 0.095,
+      sheenSize: 150,
+      sheenOutsetX: 80,
+      sheenOutsetY: 48,
+    },
+    perspective: 700,
+  },
+  iconAction: {
+    options: {
+      maxRotation: 10,
+      activeScale: 1.08,
+      activeLerpFactor: 0.08,
+      idleLerpFactor: 0.04,
+    },
+    perspective: 320,
+  },
+  techBadge: {
+    options: {
+      maxRotation: 9,
+      activeScale: 1.08,
+      activeLerpFactor: 0.08,
+      idleLerpFactor: 0.04,
+      sheenOpacity: 0.12,
+      sheenSize: 80,
+    },
+    perspective: 320,
+  },
+} satisfies Record<string, {
+  options: PointerTiltOptions
+  perspective: number
+}>
+
+type PointerTiltPreset = keyof typeof tiltPresets
+
 export function usePointerTilt({
   maxRotation = 5,
   activeLerpFactor = 0.05,
@@ -165,6 +208,22 @@ export function usePointerTilt({
       onPointerUp: handlePointerUp,
       onPointerCancel: resetTilt,
       onBlur: resetTilt,
+    },
+  }
+}
+
+export function usePointerTiltPreset(preset: PointerTiltPreset) {
+  const { options, perspective } = tiltPresets[preset]
+  const tilt = usePointerTilt(options)
+
+  return {
+    ...tilt,
+    style: {
+      rotateX: tilt.rotateX,
+      rotateY: tilt.rotateY,
+      scale: tilt.scale,
+      transformPerspective: perspective,
+      touchAction: "pan-y",
     },
   }
 }

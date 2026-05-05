@@ -1,21 +1,18 @@
-import { FaLinkedin } from "react-icons/fa6"
-import { SiGithub } from "react-icons/si"
 import Link from "next/link"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { SmoothScrollLink } from "@/components/smooth-scroll-link"
 import { contactLinks, navigation } from "@/lib/portfolio-content"
+import {
+  getAccessibleLinkLabel,
+  getExternalAnchorProps,
+  getNavbarSocialLinks,
+  linkKindIcons,
+} from "@/lib/link-presentation"
 import { cn } from "@/lib/utils"
 
-const socialIcons = {
-  github: SiGithub,
-  linkedin: FaLinkedin,
-}
-
 export function Navbar() {
-  const socialLinks = contactLinks.filter(
-    (link) => link.kind === "github" || link.kind === "linkedin",
-  )
+  const socialLinks = getNavbarSocialLinks(contactLinks)
 
   return (
     <nav className="inset-x-0 top-0 z-50 border-b border-white/10 bg-background/70 px-6 backdrop-blur-xl md:fixed lg:px-8">
@@ -33,8 +30,7 @@ export function Navbar() {
                 {item.external ? (
                   <a
                     href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    {...getExternalAnchorProps(item)}
                     className="font-mono text-muted-foreground"
                   >
                     {item.label}
@@ -59,15 +55,16 @@ export function Navbar() {
           </div>
           <div className="mx-1 h-5 w-px bg-white/10" />
           {socialLinks.map((link) => {
-            const Icon = socialIcons[link.kind as keyof typeof socialIcons]
+            const Icon = linkKindIcons[link.kind]
+            const label = getAccessibleLinkLabel(link)
+
             return (
               <a
                 key={link.kind}
                 href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={link.label}
-                title={link.label}
+                {...getExternalAnchorProps(link)}
+                aria-label={label}
+                title={label}
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "icon" }),
                   "size-8 last:-mr-2",

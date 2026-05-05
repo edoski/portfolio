@@ -1,13 +1,15 @@
 import type { Metadata } from "next"
-import type { ReactNode } from "react"
 import { notFound } from "next/navigation"
-import { ExternalLink } from "lucide-react"
-import { SiGithub } from "react-icons/si"
 
+import {
+  getProjectDetailMetadata,
+  ProjectDetailActions,
+  ProjectDetailMainSections,
+  ProjectDetailSidebarSections,
+} from "@/app/projects/[directory]/project-detail-presentation"
 import { ProjectBackLink } from "@/components/project-back-link"
-import { TechBadgeList } from "@/components/tech-badge-list"
 import { Button } from "@/components/ui/button"
-import { getProject, projectIndexProjects } from "@/lib/portfolio-content"
+import { getProject, getProjectDirectories } from "@/lib/portfolio-content"
 
 interface ProjectPageProps {
   params: Promise<{
@@ -18,8 +20,8 @@ interface ProjectPageProps {
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return projectIndexProjects.map((project) => ({
-    directory: project.directory,
+  return getProjectDirectories().map((directory) => ({
+    directory,
   }))
 }
 
@@ -29,16 +31,7 @@ export async function generateMetadata({
   const { directory } = await params
   const project = getProject(directory)
 
-  if (!project) {
-    return {
-      title: "Project not found | Edoardo Galli",
-    }
-  }
-
-  return {
-    title: `${project.title} | Edoardo Galli`,
-    description: project.summary,
-  }
+  return getProjectDetailMetadata(project)
 }
 
 export default async function ProjectPage({
@@ -76,86 +69,15 @@ export default async function ProjectPage({
 
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
           <div className="space-y-10">
-            <ProjectSection title="// overview">
-              {project.detail.overview.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </ProjectSection>
-
-            <ProjectSection title="// how it works">
-              {project.detail.implementation.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </ProjectSection>
-
-            <ProjectSection title="// capabilities">
-              <div className="grid gap-5 sm:grid-cols-2">
-                {project.detail.capabilities.map((capability) => (
-                  <section key={capability.title} className="space-y-2">
-                    <h3 className="font-mono text-sm text-foreground">
-                      {capability.title}
-                    </h3>
-                    <p>{capability.description}</p>
-                  </section>
-                ))}
-              </div>
-            </ProjectSection>
+            <ProjectDetailMainSections project={project} />
           </div>
 
           <aside className="space-y-8 lg:border-l lg:border-foreground/15 lg:pl-6">
-            <ProjectSection title="// stack">
-              <TechBadgeList tech={project.tech} />
-            </ProjectSection>
-
-            <ProjectSection title="// status">
-              <p>{project.detail.status}</p>
-            </ProjectSection>
-
-            {project.detail.artifacts && (
-              <ProjectSection title="// artifacts">
-                <ul className="space-y-2">
-                  {project.detail.artifacts.map((artifact) => (
-                    <li key={artifact}>{artifact}</li>
-                  ))}
-                </ul>
-              </ProjectSection>
-            )}
-
-            <div className="flex flex-wrap gap-3 border-t border-foreground/15 pt-6">
-              <Button asChild variant="outline" size="sm">
-                <a href={project.repo} target="_blank" rel="noopener noreferrer">
-                  <SiGithub className="size-3.5" />
-                  repository
-                </a>
-              </Button>
-              {project.demo && (
-                <Button asChild variant="secondary" size="sm">
-                  <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="size-3.5" />
-                    live demo
-                  </a>
-                </Button>
-              )}
-            </div>
+            <ProjectDetailSidebarSections project={project} />
+            <ProjectDetailActions project={project} />
           </aside>
         </div>
       </article>
     </main>
-  )
-}
-
-interface ProjectSectionProps {
-  title: string
-  children: ReactNode
-}
-
-function ProjectSection({ title, children }: ProjectSectionProps) {
-  return (
-    <section className="space-y-4">
-      <h2 className="font-mono text-sm text-foreground">{title}</h2>
-      <div className="space-y-3 text-sm leading-6 text-muted-foreground">
-        {children}
-      </div>
-    </section>
   )
 }

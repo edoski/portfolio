@@ -1,46 +1,35 @@
 "use client"
 
-import { FileText, Mail } from "lucide-react"
 import { motion } from "motion/react"
-import { FaLinkedin } from "react-icons/fa6"
-import { SiGithub } from "react-icons/si"
 
 import type { PortfolioLink } from "@/lib/portfolio-content"
-import { usePointerTilt } from "@/lib/use-pointer-tilt"
+import {
+  getAccessibleLinkLabel,
+  getContactDisplayLabel,
+  getExternalAnchorProps,
+  linkKindIcons,
+} from "@/lib/link-presentation"
+import { usePointerTiltPreset } from "@/lib/use-pointer-tilt"
 import { cn } from "@/lib/utils"
-
-const contactIcons = {
-  github: SiGithub,
-  linkedin: FaLinkedin,
-  resume: FileText,
-  email: Mail,
-}
 
 interface ContactLinkProps {
   link: PortfolioLink
 }
 
 export function ContactLink({ link }: ContactLinkProps) {
-  const Icon = contactIcons[link.kind]
-  const label = link.label.toLowerCase()
-  const { rotateX, rotateY, scale, sheen, isTouchActive, tiltHandlers } =
-    usePointerTilt({
-      maxRotation: 7,
-      activeScale: 1.04,
-      sheenOpacity: 0.095,
-      sheenSize: 150,
-      sheenOutsetX: 80,
-      sheenOutsetY: 48,
-    })
+  const Icon = linkKindIcons[link.kind]
+  const label = getContactDisplayLabel(link)
+  const accessibleLabel = getAccessibleLinkLabel(link)
+  const { style, sheen, isTouchActive, tiltHandlers } =
+    usePointerTiltPreset("contactLink")
 
   return (
     <motion.a
       href={link.href}
-      target={link.external ? "_blank" : undefined}
-      rel={link.external ? "noopener noreferrer" : undefined}
-      aria-label={link.label}
-      title={link.label}
-      style={{ rotateX, rotateY, scale, transformPerspective: 700, touchAction: "pan-y" }}
+      {...getExternalAnchorProps(link)}
+      aria-label={accessibleLabel}
+      title={accessibleLabel}
+      style={style}
       {...tiltHandlers}
       className="group relative inline-flex min-w-0 transform-gpu items-center justify-center gap-3 rounded-md py-3 font-mono text-base leading-7 text-foreground/80 transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:text-lg"
     >

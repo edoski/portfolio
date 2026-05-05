@@ -3,7 +3,7 @@
 import { motion } from "motion/react"
 
 import { Badge } from "@/components/ui/badge"
-import { usePointerTilt } from "@/lib/use-pointer-tilt"
+import { usePointerTiltPreset } from "@/lib/use-pointer-tilt"
 import { cn } from "@/lib/utils"
 
 interface TiltTechBadgeProps {
@@ -11,18 +11,12 @@ interface TiltTechBadgeProps {
 }
 
 export function TiltTechBadge({ children }: TiltTechBadgeProps) {
-  const { rotateX, rotateY, scale, sheen, isTouchActive, tiltHandlers } = usePointerTilt({
-    maxRotation: 9,
-    activeScale: 1.08,
-    activeLerpFactor: 0.08,
-    idleLerpFactor: 0.04,
-    sheenOpacity: 0.12,
-    sheenSize: 80,
-  })
+  const { style, sheen, isTouchActive, tiltHandlers } =
+    usePointerTiltPreset("techBadge")
 
   return (
     <motion.span
-      style={{ rotateX, rotateY, scale, transformPerspective: 320, touchAction: "pan-y" }}
+      style={style}
       {...tiltHandlers}
       className="group/tech-badge inline-flex transform-gpu"
     >

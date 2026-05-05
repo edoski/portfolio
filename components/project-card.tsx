@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/card"
 import type { Project } from "@/lib/portfolio-content"
 import { PROJECT_RETURN_PATH_KEY } from "@/lib/project-return"
-import { usePointerTilt } from "@/lib/use-pointer-tilt"
+import { usePointerTiltPreset } from "@/lib/use-pointer-tilt"
 import { cn } from "@/lib/utils"
 
 interface ProjectCardProps {
@@ -26,8 +26,8 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const router = useRouter()
-  const { rotateX, rotateY, scale, sheen, isTouchActive, tiltHandlers } =
-    usePointerTilt()
+  const { style, sheen, isTouchActive, tiltHandlers } =
+    usePointerTiltPreset("projectCard")
   const detailsHref = `/projects/${project.directory}`
 
   function isProjectAction(target: EventTarget) {
@@ -67,7 +67,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       role="link"
       tabIndex={0}
       aria-label={`View ${project.title} project details`}
-      style={{ rotateX, rotateY, scale, transformPerspective: 900, touchAction: "pan-y" }}
+      style={style}
       {...tiltHandlers}
       onClick={handleClick}
       onKeyDown={handleKeyDown}

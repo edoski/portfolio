@@ -1,4 +1,4 @@
-type LinkKind = "github" | "linkedin" | "email" | "resume"
+export type LinkKind = "github" | "linkedin" | "email" | "resume"
 
 export interface PortfolioLink {
   kind: LinkKind
@@ -33,6 +33,8 @@ export interface ProjectCapability {
 }
 
 export type ProjectCategory = "ai" | "systems" | "web"
+
+export const projectCategoryOrder = ["ai", "systems", "web"] satisfies ProjectCategory[]
 
 export const profile = {
   name: "Edoardo Galli",
@@ -89,7 +91,7 @@ export const contactLinks: PortfolioLink[] = [
   },
 ]
 
-export const featuredProjects: Project[] = [
+const featuredProjectCatalog: Project[] = [
   {
     title: "spice",
     directory: "spice",
@@ -269,8 +271,8 @@ export const featuredProjects: Project[] = [
   },
 ]
 
-export const projectIndexProjects: Project[] = [
-  ...featuredProjects,
+const projectIndexCatalog: Project[] = [
+  ...featuredProjectCatalog,
   {
     title: "portfolio",
     directory: "portfolio",
@@ -406,6 +408,25 @@ export const projectIndexProjects: Project[] = [
   },
 ]
 
+export function getFeaturedProjects() {
+  return featuredProjectCatalog
+}
+
+export function getProjectIndexProjects() {
+  return projectIndexCatalog
+}
+
+export function getProjectsByCategory() {
+  return projectCategoryOrder.map((category) => ({
+    category,
+    projects: projectIndexCatalog.filter((project) => project.category === category),
+  }))
+}
+
+export function getProjectDirectories() {
+  return projectIndexCatalog.map((project) => project.directory)
+}
+
 export function getProject(directory: string) {
-  return projectIndexProjects.find((project) => project.directory === directory)
+  return projectIndexCatalog.find((project) => project.directory === directory)
 }

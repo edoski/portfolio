@@ -34,7 +34,7 @@ uniform sampler2D uTexture;
 void main() {
     float time = uTime;
     vec2 pos = vUv;
-    
+
     float move = sin(time + mouse) * 0.01;
     float r = texture2D(uTexture, pos + cos(time * 2. - time + pos.x) * .01).r;
     float g = texture2D(uTexture, pos + tan(time * .5 + pos.x - time) * .01).g;
@@ -49,6 +49,7 @@ function map(n: number, start: number, stop: number, start2: number, stop2: numb
 }
 
 const PX_RATIO = typeof window !== 'undefined' ? window.devicePixelRatio : 1;
+const HUE_ROTATION_STRENGTH = 0.25;
 
 interface AsciiFilterOptions {
   fontSize?: number;
@@ -170,7 +171,7 @@ class AsciiFilter {
   }
 
   hue(neutral = false) {
-    const deg = neutral ? 0 : (Math.atan2(this.dy, this.dx) * 180) / Math.PI;
+    const deg = neutral ? 0 : ((Math.atan2(this.dy, this.dx) * 180) / Math.PI) * HUE_ROTATION_STRENGTH;
     this.deg += (deg - this.deg) * 0.075;
     this.domElement.style.filter = `hue-rotate(${this.deg.toFixed(1)}deg)`;
   }
