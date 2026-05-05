@@ -43,7 +43,7 @@ export function ProjectBackLink({
 
   return (
     <a href={href} onClick={handleClick} {...props}>
-      <ArrowLeft className="size-3.5" />
+      <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />
       {children}
     </a>
   )

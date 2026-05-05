@@ -8,8 +8,9 @@ import {
   ProjectDetailSidebarSections,
 } from "@/app/projects/[directory]/project-detail-presentation"
 import { ProjectBackLink } from "@/components/project-back-link"
-import { Button } from "@/components/ui/button"
 import { getProject, getProjectDirectories } from "@/lib/portfolio-content"
+import { terminalActionLinkClassName } from "@/lib/terminal-action-link"
+import { cn } from "@/lib/utils"
 
 interface ProjectPageProps {
   params: Promise<{
@@ -46,9 +47,10 @@ export default async function ProjectPage({
     <main className="project-shell px-6 pb-12 pt-10 md:pb-16 md:pt-24 lg:px-8">
       <article className="mx-auto max-w-6xl space-y-10">
         <header className="space-y-7">
-          <Button asChild variant="ghost" size="sm" className="-ml-3">
-            <ProjectBackLink href="/projects" />
-          </Button>
+          <ProjectBackLink
+            href="/projects"
+            className={cn(terminalActionLinkClassName, "px-2.5 py-1.5")}
+          />
 
           <div className="space-y-6">
             <h1 className="break-words font-mono text-3xl font-medium tracking-normal md:text-5xl">

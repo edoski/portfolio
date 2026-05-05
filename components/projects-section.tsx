@@ -4,6 +4,8 @@ import Link from "next/link"
 import { ProjectCard } from "@/components/project-card"
 import { TerminalCue } from "@/components/terminal-cue"
 import { getFeaturedProjects } from "@/lib/portfolio-content"
+import { terminalActionLinkClassName } from "@/lib/terminal-action-link"
+import { cn } from "@/lib/utils"
 
 export function ProjectsSection() {
   const featuredProjects = getFeaturedProjects()
@@ -24,7 +26,7 @@ export function ProjectsSection() {
         <div className="flex justify-end">
           <Link
             href="/projects"
-            className="group inline-flex items-center gap-2 rounded-md border border-foreground/15 bg-foreground/[0.03] px-3 py-2 font-mono text-sm text-foreground transition-colors hover:border-foreground/25 hover:bg-foreground/[0.06] hover:text-foreground"
+            className={cn(terminalActionLinkClassName, "px-3 py-2")}
           >
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             <span>view more.</span>

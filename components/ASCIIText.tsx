@@ -48,8 +48,15 @@ function map(n: number, start: number, stop: number, start2: number, stop2: numb
   return ((n - start) / (stop - start)) * (stop2 - start2) + start2;
 }
 
-const PX_RATIO = typeof window !== 'undefined' ? window.devicePixelRatio : 1;
-const HUE_ROTATION_STRENGTH = 0.25;
+function clamp(n: number, min: number, max: number) {
+  return Math.min(Math.max(n, min), max);
+}
+
+const MAX_TILT_ROTATION = 0.5;
+const HUE_ROTATION_MAX_DEGREES = 22;
+const HUE_ROTATION_LERP_FACTOR = 0.08;
+const HUE_ROTATION_Y_WEIGHT = 0.85;
+const HUE_ROTATION_X_WEIGHT = -0.35;
 
 interface AsciiFilterOptions {
   fontSize?: number;
@@ -71,8 +78,6 @@ class AsciiFilter {
   charset: string;
   width: number = 0;
   height: number = 0;
-  center: { x: number; y: number } = { x: 0, y: 0 };
-  mouse: { x: number; y: number } = { x: 0, y: 0 };
   cols: number = 0;
   rows: number = 0;
 
@@ -102,9 +107,6 @@ class AsciiFilter {
       this.context.imageSmoothingEnabled = false;
       this.context.imageSmoothingEnabled = false;
     }
-
-    this.onMouseMove = this.onMouseMove.bind(this);
-    document.addEventListener('mousemove', this.onMouseMove);
   }
 
   setSize(width: number, height: number) {
@@ -112,9 +114,6 @@ class AsciiFilter {
     this.height = height;
     this.renderer.setSize(width, height);
     this.reset();
-
-    this.center = { x: width / 2, y: height / 2 };
-    this.mouse = { x: this.center.x, y: this.center.y };
   }
 
   reset() {
@@ -142,7 +141,7 @@ class AsciiFilter {
     }
   }
 
-  render(scene: THREE.Scene, camera: THREE.Camera, neutralHue = false) {
+  render(scene: THREE.Scene, camera: THREE.Camera, hueRotation: number) {
     this.renderer.render(scene, camera);
 
     const w = this.canvas.width;
@@ -154,25 +153,12 @@ class AsciiFilter {
       }
 
       this.asciify(this.context, w, h);
-      this.hue(neutralHue);
+      this.hue(hueRotation);
     }
   }
 
-  onMouseMove(e: MouseEvent) {
-    this.mouse = { x: e.clientX * PX_RATIO, y: e.clientY * PX_RATIO };
-  }
-
-  get dx() {
-    return this.mouse.x - this.center.x;
-  }
-
-  get dy() {
-    return this.mouse.y - this.center.y;
-  }
-
-  hue(neutral = false) {
-    const deg = neutral ? 0 : ((Math.atan2(this.dy, this.dx) * 180) / Math.PI) * HUE_ROTATION_STRENGTH;
-    this.deg += (deg - this.deg) * 0.075;
+  hue(targetDeg: number) {
+    this.deg += (targetDeg - this.deg) * HUE_ROTATION_LERP_FACTOR;
     this.domElement.style.filter = `hue-rotate(${this.deg.toFixed(1)}deg)`;
   }
 
@@ -181,7 +167,6 @@ class AsciiFilter {
 
     if (isSettled) {
       this.deg = 0;
-      this.mouse = { ...this.center };
       this.domElement.style.filter = 'hue-rotate(0deg)';
       return true;
     }
@@ -212,10 +197,6 @@ class AsciiFilter {
       }
       this.pre.textContent = str;
     }
-  }
-
-  dispose() {
-    document.removeEventListener('mousemove', this.onMouseMove);
   }
 }
 
@@ -505,9 +486,9 @@ class CanvAscii {
     (this.mesh.material as THREE.ShaderMaterial).uniforms.uTime.value = this.shaderTime;
 
     const rotationSettled = this.updateRotation();
-    const neutralHue = !this.isHovering;
+    const hueRotation = this.getHueRotation();
 
-    this.filter.render(this.scene, this.camera, neutralHue);
+    this.filter.render(this.scene, this.camera, hueRotation);
 
     if (this.isHovering || isIntroActive || this.enableWaves) return true;
 
@@ -519,6 +500,14 @@ class CanvAscii {
     }
 
     return !(rotationSettled && shaderSettled && this.filter.settleNeutralHue());
+  }
+
+  getHueRotation() {
+    const normalizedY = clamp(this.mesh.rotation.y / MAX_TILT_ROTATION, -1, 1);
+    const normalizedX = clamp(this.mesh.rotation.x / MAX_TILT_ROTATION, -1, 1);
+    const tiltMix = normalizedY * HUE_ROTATION_Y_WEIGHT + normalizedX * HUE_ROTATION_X_WEIGHT;
+
+    return clamp(tiltMix, -1, 1) * HUE_ROTATION_MAX_DEGREES;
   }
 
   updateRotation() {
@@ -570,7 +559,6 @@ class CanvAscii {
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
     }
-    this.filter.dispose();
     this.container.removeChild(this.filter.domElement);
     this.trackingElement.removeEventListener('mousemove', this.onMouseMove);
     this.trackingElement.removeEventListener('touchmove', this.onMouseMove);
@@ -714,44 +702,6 @@ export default function ASCIIText({
         height: '100%'
       }}
     >
-      <style>{`
-        body {
-          margin: 0;
-          padding: 0;
-        }
-
-        .ascii-text-container canvas {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          image-rendering: optimizeSpeed;
-          image-rendering: -moz-crisp-edges;
-          image-rendering: -o-crisp-edges;
-          image-rendering: -webkit-optimize-contrast;
-          image-rendering: optimize-contrast;
-          image-rendering: crisp-edges;
-          image-rendering: pixelated;
-        }
-
-        .ascii-text-container pre {
-          margin: 0;
-          user-select: none;
-          padding: 0;
-          line-height: 1em;
-          text-align: left;
-          position: absolute;
-          left: 0;
-          top: 0;
-          background-image: radial-gradient(circle, #ff6188 0%, #fc9867 50%, #ffd866 100%);
-          background-attachment: fixed;
-          -webkit-text-fill-color: transparent;
-          -webkit-background-clip: text;
-          z-index: 9;
-          mix-blend-mode: difference;
-        }
-      `}</style>
     </div>
   );
 }
