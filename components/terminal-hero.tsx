@@ -10,7 +10,7 @@ export function TerminalHero() {
     <section
       id="about"
       data-ascii-pointer-region
-      className="relative px-6 pb-4 pt-8 md:pb-5 md:pt-20 lg:px-8 xl:pt-24"
+      className="relative px-6 pb-3 pt-6 md:pb-4 md:pt-16 lg:px-8 xl:pt-20"
     >
       <div className="mx-auto max-w-6xl">
         <div>
@@ -32,7 +32,7 @@ export function TerminalHero() {
                     <p className="inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
                       profile
                     </p>
-                    <p className="min-w-0">
+                    <p className="min-w-0 [&_strong]:font-semibold [&_strong]:text-foreground/90">
                       focused on <strong>deep learning</strong>, <strong>ai systems</strong>, and <strong>data-intensive</strong> software; studying at the <strong>university of bologna</strong>.
                     </p>
                   </div>
@@ -47,11 +47,11 @@ export function TerminalHero() {
                       {education.map((item) => (
                         <li
                           key={item.title}
-                          className="grid gap-1 md:grid-cols-[22rem_1fr] md:gap-6 lg:whitespace-nowrap"
+                          className="grid gap-1 md:grid-cols-[22rem_1fr] md:gap-6 lg:grid-cols-[24rem_1fr] lg:whitespace-nowrap"
                         >
-                          <span className="text-foreground/90">
+                          <strong className="font-semibold text-foreground/90">
                             {item.title}
-                          </span>
+                          </strong>
                           <em className="not-italic text-muted-foreground">
                             {item.institution}
                           </em>
@@ -69,9 +69,9 @@ export function TerminalHero() {
                     <ul className="space-y-3 leading-6 lg:space-y-1.5">
                       {spokenLanguages.map((item) => (
                         <li key={item.language} className="lg:whitespace-nowrap">
-                          <span className="text-foreground/90">
+                          <strong className="font-semibold text-foreground/90">
                             {item.language}
-                          </span>
+                          </strong>
                           <span className="text-muted-foreground">, </span>
                           <span className="text-muted-foreground">
                             {item.level}

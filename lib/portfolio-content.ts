@@ -77,6 +77,18 @@ export const navigation = [
   { label: "resume", href: "/CV_Edoardo_Galli.pdf", command: "cat resume.pdf", external: true },
 ] as const
 
+export const contactDetails = [
+  {
+    label: "status",
+    value:
+      "M.Sc. AI student open to junior and internship roles across full-stack and AI/ML engineering.",
+  },
+  {
+    label: "location",
+    value: "Bologna, Italy; remote-friendly.",
+  },
+] as const
+
 export const contactLinks: PortfolioLink[] = [
   {
     kind: "github",

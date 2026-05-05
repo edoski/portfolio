@@ -65,14 +65,14 @@ export default async function ProjectPage({
           </div>
         </header>
 
-        <div aria-hidden="true" className="h-px w-full bg-foreground/15" />
+        <div aria-hidden="true" className="h-0.5 w-full bg-foreground/20" />
 
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
           <div className="space-y-10">
             <ProjectDetailMainSections project={project} />
           </div>
 
-          <aside className="space-y-8 lg:border-l lg:border-foreground/15 lg:pl-6">
+          <aside className="space-y-8 lg:border-l-2 lg:border-foreground/20 lg:pl-6">
             <ProjectDetailSidebarSections project={project} />
             <ProjectDetailActions project={project} />
           </aside>

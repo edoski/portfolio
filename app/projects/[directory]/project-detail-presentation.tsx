@@ -77,7 +77,7 @@ export function ProjectDetailSidebarSections({ project }: { project: Project }) 
 
 export function ProjectDetailActions({ project }: { project: Project }) {
   return (
-    <div className="flex flex-wrap gap-3 border-t border-foreground/15 pt-6">
+    <div className="flex flex-wrap gap-3 border-t-2 border-foreground/20 pt-6">
       <Button asChild variant="outline" size="sm">
         <a href={project.repo} target="_blank" rel="noopener noreferrer">
           <SiGithub className="size-3.5" />
