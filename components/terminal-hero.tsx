@@ -33,7 +33,7 @@ export function TerminalHero() {
                       profile
                     </p>
                     <p className="min-w-0">
-                      focused on <strong>deep learning</strong>, <strong>ai systems</strong>, and <strong>data-intensive</strong> software; currently studying at the <strong>university of bologna</strong>.
+                      focused on <strong>deep learning</strong>, <strong>ai systems</strong>, and <strong>data-intensive</strong> software; studying at the <strong>university of bologna</strong>.
                     </p>
                   </div>
                 </div>
