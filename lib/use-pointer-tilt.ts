@@ -41,6 +41,8 @@ const tiltPresets = {
       activeScale: 1.08,
       activeLerpFactor: 0.08,
       idleLerpFactor: 0.04,
+      sheenOpacity: 0.12,
+      sheenSize: 80,
     },
     perspective: 320,
   },

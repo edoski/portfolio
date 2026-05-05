@@ -83,7 +83,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
     >
       <Card
         data-touch-active={isTouchActive}
-        className="project-card-surface relative h-full cursor-pointer gap-0 overflow-hidden border-transparent py-0 shadow-[0_0_0_1px_rgba(255,255,255,0.025),0_18px_50px_rgba(255,255,255,0.028),0_0_48px_rgba(255,255,255,0.01)] backdrop-blur-sm transition-[background,box-shadow] duration-200 group-hover:shadow-[0_0_0_1px_rgba(255,255,255,0.035),0_22px_58px_rgba(255,255,255,0.04),0_0_56px_rgba(255,255,255,0.016)] group-focus-visible:ring-2 group-focus-visible:ring-foreground/50 group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-background"
+        className="project-card-surface relative h-full cursor-pointer gap-0 overflow-hidden border-transparent py-0 shadow-none backdrop-blur-sm group-focus-visible:ring-2 group-focus-visible:ring-foreground/50 group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-background"
       >
         <CardHeader className="relative gap-3 p-4 pb-3">
           <div className="flex items-start justify-between gap-3">
@@ -103,7 +103,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     asChild
                     size="icon"
                     variant="outline"
-                    className="size-8 border-white/10 bg-white/[0.04] text-muted-foreground shadow-none hover:bg-white/[0.07] hover:text-foreground"
+                    className="size-8 border-white/10 bg-white/[0.04] text-muted-foreground shadow-none hover:border-white/20 hover:bg-white/[0.04] hover:text-foreground dark:hover:bg-white/[0.04]"
                   >
                     <a
                       href={project.demo}
@@ -121,7 +121,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                   asChild
                   size="icon"
                   variant="outline"
-                  className="size-8 border-white/10 bg-white/[0.04] text-muted-foreground shadow-none hover:bg-white/[0.07] hover:text-foreground"
+                  className="size-8 border-white/10 bg-white/[0.04] text-muted-foreground shadow-none hover:border-white/20 hover:bg-white/[0.04] hover:text-foreground dark:hover:bg-white/[0.04]"
                 >
                   <a
                     href={project.repo}
