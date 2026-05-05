@@ -1,5 +1,6 @@
 import { FaLinkedin } from "react-icons/fa6"
 import { SiGithub } from "react-icons/si"
+import Link from "next/link"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { SmoothScrollLink } from "@/components/smooth-scroll-link"
@@ -38,13 +39,20 @@ export function Navbar() {
                   >
                     {item.label}
                   </a>
-                ) : (
+                ) : item.href.includes("#") ? (
                   <SmoothScrollLink
                     href={item.href}
                     className="font-mono text-muted-foreground"
                   >
                     {item.label}
                   </SmoothScrollLink>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="font-mono text-muted-foreground"
+                  >
+                    {item.label}
+                  </Link>
                 )}
               </Button>
             ))}

@@ -14,7 +14,7 @@ export function ContactSection() {
               {contactLinks.map((link) => (
                 <li
                   key={link.kind}
-                  className="group/item relative min-w-0"
+                  className="group/item relative flex min-w-0 justify-center"
                 >
                   <ContactLink link={link} />
                 </li>

@@ -28,9 +28,9 @@ export function ContactLink({ link }: ContactLinkProps) {
       maxRotation: 7,
       activeScale: 1.04,
       sheenOpacity: 0.095,
-      sheenSize: 220,
-      sheenOutsetX: 128,
-      sheenOutsetY: 80,
+      sheenSize: 150,
+      sheenOutsetX: 80,
+      sheenOutsetY: 48,
     })
 
   return (
@@ -42,12 +42,12 @@ export function ContactLink({ link }: ContactLinkProps) {
       title={link.label}
       style={{ rotateX, rotateY, scale, transformPerspective: 700, touchAction: "pan-y" }}
       {...tiltHandlers}
-      className="group relative flex min-w-0 transform-gpu items-center justify-center gap-3 rounded-md py-3 font-mono text-base leading-7 text-foreground/80 transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:text-lg"
+      className="group relative inline-flex min-w-0 transform-gpu items-center justify-center gap-3 rounded-md py-3 font-mono text-base leading-7 text-foreground/80 transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:text-lg"
     >
       <motion.span
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute -inset-x-32 -inset-y-20 opacity-0 transition-opacity duration-200 group-hover:opacity-100",
+          "pointer-events-none absolute -inset-x-20 -inset-y-12 opacity-0 transition-opacity duration-200 group-hover:opacity-100",
           isTouchActive && "opacity-100",
         )}
         style={{ background: sheen }}

@@ -8,9 +8,9 @@ const longLivedPublicAssets = [
 
 const resumeAsset = '/CV_Edoardo_Galli.pdf'
 
-const immutablePublicAssetCacheHeader = {
+const revalidatedIconCacheHeader = {
   key: 'Cache-Control',
-  value: 'public, max-age=31536000, immutable',
+  value: 'public, max-age=0, must-revalidate',
 }
 
 const resumeAssetCacheHeader = {
@@ -31,7 +31,7 @@ const nextConfig = {
     return [
       ...longLivedPublicAssets.map((source) => ({
         source,
-        headers: [immutablePublicAssetCacheHeader],
+        headers: [revalidatedIconCacheHeader],
       })),
       {
         source: resumeAsset,

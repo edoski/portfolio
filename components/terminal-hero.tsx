@@ -10,7 +10,7 @@ export function TerminalHero() {
     <section
       id="about"
       data-ascii-pointer-region
-      className="relative min-h-[76vh] px-6 pb-4 pt-8 md:min-h-[78vh] md:pb-6 md:pt-24 lg:px-8"
+      className="relative px-6 pb-4 pt-8 md:pb-6 md:pt-20 lg:px-8 xl:min-h-[78vh] xl:pt-24"
     >
       <div className="mx-auto max-w-6xl">
         <div>

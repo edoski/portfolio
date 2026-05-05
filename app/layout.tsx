@@ -35,17 +35,19 @@ const ibmPlexMono = IBM_Plex_Mono({
   preload: true,
 })
 
+const iconVersion = '2026-05-05'
+
 export const metadata: Metadata = {
   title: "edo's portfolio",
   description: "a terminal-minimal portfolio.",
   manifest: '/manifest.json',
   icons: {
     icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico', sizes: 'any' },
+      { url: `/icon.svg?v=${iconVersion}`, type: 'image/svg+xml' },
+      { url: `/favicon.ico?v=${iconVersion}`, sizes: 'any' },
     ],
-    shortcut: '/favicon.ico',
-    apple: '/apple-icon.png',
+    shortcut: `/favicon.ico?v=${iconVersion}`,
+    apple: `/apple-icon.png?v=${iconVersion}`,
   },
 }
 
