@@ -38,7 +38,7 @@ Do not reintroduce scattered constants for Profile, Project, Social Link, Contac
 
 ### Component Organization
 
-- `components/` - Portfolio Sections plus focused modules such as `ascii-mark`, `project-card`, `contact-link`, `tilt-icon-action`, `tilt-tech-badge`, and `terminal-cue`
+- `components/` - Portfolio Sections plus focused modules such as `ascii-mark`, `project-card`, `contact-link`, `tech-badge`, `tilt-icon-action`, and `terminal-cue`
 - `components/ui/` - shadcn/ui primitives currently used by the portfolio (`button`, `card`, `badge`)
 - `app/` - Next.js App Router pages, layout, manifest, and global CSS
 - `lib/` - shared utilities and portfolio content
@@ -50,7 +50,7 @@ Keep sections server-rendered unless they need browser-only behavior. Current cl
 
 - `components/ascii-mark.tsx` - dynamic browser-only wrapper for `ASCIIText`
 - `components/project-card.tsx` - Motion-based Project Card tilt
-- `components/contact-link.tsx`, `components/tilt-icon-action.tsx`, and `components/tilt-tech-badge.tsx` - Motion-based tilt surfaces
+- `components/contact-link.tsx` and `components/tilt-icon-action.tsx` - Motion-based tilt surfaces
 - `components/project-back-link.tsx` and `components/smooth-scroll-link.tsx` - route/sessionStorage navigation helpers
 
 Avoid moving whole sections to `"use client"` for convenience.

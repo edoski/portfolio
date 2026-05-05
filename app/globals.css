@@ -229,6 +229,38 @@ html {
     }
 }
 
+.tech-badge::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.12), transparent);
+    transform: translateX(-120%) skewX(-18deg);
+}
+
+.tech-badge:hover::before {
+    animation: tech-badge-sheen 560ms ease-out both;
+}
+
+@keyframes tech-badge-sheen {
+    0% {
+        opacity: 0;
+        transform: translateX(-120%) skewX(-18deg);
+    }
+
+    18%,
+    58% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(120%) skewX(-18deg);
+    }
+}
+
 /* ASCII Text component styles */
 .ascii-text-container canvas {
     position: absolute;

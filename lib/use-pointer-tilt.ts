@@ -46,17 +46,6 @@ const tiltPresets = {
     },
     perspective: 320,
   },
-  techBadge: {
-    options: {
-      maxRotation: 9,
-      activeScale: 1.08,
-      activeLerpFactor: 0.08,
-      idleLerpFactor: 0.04,
-      sheenOpacity: 0.12,
-      sheenSize: 80,
-    },
-    perspective: 320,
-  },
 } satisfies Record<string, {
   options: PointerTiltOptions
   perspective: number
