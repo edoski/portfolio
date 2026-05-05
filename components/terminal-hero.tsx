@@ -30,7 +30,7 @@ export function TerminalHero() {
               <div className="space-y-5">
                 <TracedRuleBlock className="font-mono text-sm leading-7 text-foreground/80">
                   <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
-                    <p className="inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
+                    <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
                       profile
                     </p>
                     <p className="min-w-0 [&_strong]:font-semibold [&_strong]:text-foreground/90">
@@ -41,7 +41,7 @@ export function TerminalHero() {
 
                 <TracedRuleBlock className="font-mono text-sm leading-7 text-foreground/80">
                   <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
-                    <p className="inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
+                    <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
                       education
                     </p>
                     <ul className="space-y-3 leading-6 lg:space-y-1.5">
@@ -64,7 +64,7 @@ export function TerminalHero() {
 
                 <TracedRuleBlock className="font-mono text-sm leading-7 text-foreground/80">
                   <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
-                    <p className="inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
+                    <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
                       languages
                     </p>
                     <ul className="space-y-3 leading-6 lg:space-y-1.5">

@@ -156,6 +156,15 @@ html {
         linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)) left center / 2px 100% no-repeat;
 }
 
+.traced-rule-label {
+    transition: color 220ms ease;
+}
+
+.traced-rule-block:hover .traced-rule-label,
+.traced-rule-block:focus-within .traced-rule-label {
+    color: rgb(250 250 250 / 0.9);
+}
+
 /* ASCII Text component styles */
 .ascii-text-container canvas {
     position: absolute;

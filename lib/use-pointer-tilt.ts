@@ -62,9 +62,9 @@ const tiltPresets = {
 
 type PointerTiltPreset = keyof typeof tiltPresets
 
-const edgeTracerRadius = 168
-const edgeTracerMaxSpeed = 860
-const edgeTracerFollowFactor = 0.30
+const edgeTracerRadius = 220
+const edgeTracerMaxSpeed = 960
+const edgeTracerFollowFactor = 0.34
 const edgeTracerFadeFactor = 0.16
 
 function moveAroundPerimeter(
