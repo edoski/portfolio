@@ -31,7 +31,7 @@ export function ContactLink({ link }: ContactLinkProps) {
       title={accessibleLabel}
       style={style}
       {...tiltHandlers}
-      className="group relative inline-flex min-w-0 transform-gpu items-center justify-center gap-3 rounded-md py-3 font-mono text-base leading-7 text-foreground/80 transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:text-lg"
+      className="group relative inline-flex min-w-0 transform-gpu items-center justify-center gap-2.5 rounded-md py-0.5 font-mono text-sm leading-6 text-foreground/80 transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:text-base"
     >
       <motion.span
         aria-hidden="true"
@@ -47,7 +47,7 @@ export function ContactLink({ link }: ContactLinkProps) {
       >
         [
       </span>
-      <Icon className="relative size-5 shrink-0 transition-colors group-hover:text-foreground" />
+      <Icon className="relative size-4 shrink-0 transition-colors group-hover:text-foreground" />
       <span className="relative">{label}</span>
       <span
         aria-hidden="true"

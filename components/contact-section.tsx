@@ -26,18 +26,25 @@ export function ContactSection() {
                   </div>
                 </div>
               ))}
-            </div>
 
-            <ul className="grid w-full grid-cols-2 gap-x-8 gap-y-4 md:flex md:flex-wrap md:items-center md:justify-between">
-              {contactLinks.map((link) => (
-                <li
-                  key={link.kind}
-                  className="group/item relative flex min-w-0 justify-center"
-                >
-                  <ContactLink link={link} />
-                </li>
-              ))}
-            </ul>
+              <blockquote className="relative w-full border-l border-foreground/35 pl-4 text-sm leading-7 text-foreground/80 md:pl-5">
+                <div className="grid gap-4 md:grid-cols-[6rem_minmax(0,1fr)] md:items-center md:gap-6">
+                  <p className="inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
+                    links
+                  </p>
+                  <ul className="grid min-w-0 grid-cols-2 justify-items-start gap-x-6 gap-y-3 sm:flex sm:w-full sm:items-center sm:justify-between sm:gap-6">
+                    {contactLinks.map((link) => (
+                      <li
+                        key={link.kind}
+                        className="group/item relative flex min-w-0 justify-start"
+                      >
+                        <ContactLink link={link} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </blockquote>
+            </div>
           </div>
         </div>
       </div>
