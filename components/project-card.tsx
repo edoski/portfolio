@@ -133,7 +133,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </div>
           </div>
           <p className="min-h-10 text-sm leading-5 text-muted-foreground">
-            {project.summary}
+            <span className="font-mono text-xs font-bold lowercase text-muted-foreground/85">
+              {project.category}
+            </span>
+            <span className="mx-2 text-muted-foreground/45">|</span>
+            <span>{project.summary}</span>
           </p>
         </CardHeader>
         <CardContent className="relative px-4 pb-4">

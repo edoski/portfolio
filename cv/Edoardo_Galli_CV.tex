@@ -1,0 +1,144 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[a4paper,margin=1.35cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{microtype}
+
+\definecolor{text}{HTML}{171717}
+\definecolor{muted}{HTML}{606060}
+\definecolor{rule}{HTML}{D8D8D8}
+\definecolor{accent}{HTML}{B45309}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accent,
+  linkcolor=accent
+}
+
+\pagenumbering{gobble}
+\renewcommand{\familydefault}{\sfdefault}
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{0pt}
+\setlength{\emergencystretch}{2em}
+\setlist[itemize]{leftmargin=1.2em, topsep=3pt, itemsep=2.5pt, parsep=0pt}
+
+\titleformat{\section}
+  {\large\bfseries\color{text}}
+  {}{0pt}{}
+  [\vspace{-2pt}{\color{rule}\titlerule}]
+\titlespacing*{\section}{0pt}{10pt}{5pt}
+
+\newcommand{\contactsep}{\quad{\color{muted}|}\quad}
+\newcommand{\link}[2]{\href{#1}{#2}}
+
+\newcommand{\educationentry}[4]{%
+  \textbf{#1}\hfill{\color{muted}#2}\\
+  {\color{muted}#3}\hfill{\color{muted}#4}
+}
+
+\newcommand{\projectentry}[4]{%
+  \textbf{#1}\hfill\link{#2}{Repository}\\
+  {\color{muted}#3}\\[-1pt]
+  {\small\color{muted}#4}
+}
+
+\newcommand{\projectgap}{\vspace{5pt}}
+
+\begin{document}
+\color{text}
+
+{\LARGE\bfseries Edoardo Galli}\\[2pt]
+{\large Computer Science student}\\[6pt]
+{\small
+Bologna, Italy
+\contactsep
+\link{mailto:edoski.dev@gmail.com}{edoski.dev@gmail.com}
+\contactsep
+\link{https://edoski.com}{edoski.com}
+\contactsep
+\link{https://github.com/edoski}{github.com/edoski}
+\contactsep
+\link{https://www.linkedin.com/in/edoardo-galli-5074321b9}{LinkedIn}
+}
+
+\section{Profile}
+Computer Science student at the University of Bologna, completing a B.Sc. in Information Science for Management and starting the M.Sc. in Artificial Intelligence in September 2026. Focused on deep learning, AI systems, and typed, reproducible software for data-intensive workflows.
+
+\section{Education}
+\educationentry{M.Sc. Artificial Intelligence}{Starts Sep 2026}{University of Bologna}{}
+
+\vspace{4pt}
+\educationentry{B.Sc. Information Science for Management}{2021--2026}{University of Bologna}{GPA 28/30}
+
+\vspace{4pt}
+\educationentry{International Baccalaureate Diploma}{2017--2021}{International School of Bologna}{Bilingual Diploma}
+
+\section{Languages}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}p{2.9cm}X@{}}
+\textbf{English} & Native, IELTS Academic 8.5 \\
+\textbf{Italian} & Native \\
+\end{tabularx}
+
+\section{Selected Projects}
+\projectentry
+  {spice}
+  {https://github.com/edoski/spice}
+  {Temporal fee-decision deep learning pipeline}
+  {Python, PyTorch, Optuna, Polars, Pydantic, web3.py}
+\begin{itemize}
+  \item Built an end-to-end thesis pipeline that turns EVM block history into temporal supervised learning datasets.
+  \item Compared LSTM, Transformer, and hybrid model families through reproducible Optuna-driven experiments.
+\end{itemize}
+\projectgap
+
+\projectentry
+  {journal}
+  {https://github.com/edoski/journal}
+  {Personal analytics journal pipeline}
+  {Python, Pydantic, pytest, Obsidian}
+\begin{itemize}
+  \item Built an automation system syncing Flow focus data, goals, reminders, and daily metrics into Obsidian.
+  \item Used typed contracts and protocol ports to keep external integrations explicit and testable.
+\end{itemize}
+\projectgap
+
+\projectentry
+  {sweng-notes}
+  {https://github.com/edoski/sweng-notes}
+  {Real-time collaborative note editor}
+  {Next.js, React, TypeScript, Tailwind CSS, Liveblocks, Convex}
+\begin{itemize}
+  \item Delivered a shared writing workspace with live presence and typed React surfaces.
+  \item Separated durable Convex document state from Liveblocks collaboration state.
+\end{itemize}
+\projectgap
+
+\projectentry
+  {stackoverflow-survey-2025-analysis}
+  {https://github.com/edoski/stackoverflow-survey-2025-analysis}
+  {AI trust analysis from the Stack Overflow 2025 Developer Survey}
+  {Python, scikit-learn, pandas, statsmodels, seaborn}
+\begin{itemize}
+  \item Modelled developer trust in AI tools with leakage-safe survey preprocessing.
+  \item Trained interpretable logistic regression and SVM baselines with GridSearchCV.
+\end{itemize}
+
+\section{Technical Skills}
+\renewcommand{\arraystretch}{1.22}
+\begin{tabularx}{\textwidth}{@{}p{2.9cm}X@{}}
+\textbf{Programming} & Python, TypeScript, Java, SQL, PHP \\
+\textbf{AI / ML} & PyTorch, scikit-learn, Optuna, pandas, Polars, statsmodels \\
+\textbf{Data / Backend} & Pydantic, web3.py, Convex, MySQL, MongoDB, REST, sockets \\
+\textbf{Frontend} & Next.js, React, Tailwind CSS, shadcn/ui \\
+\textbf{Tools} & Git, Docker, pytest, Bash, Obsidian, Vercel \\
+\end{tabularx}
+
+\end{document}

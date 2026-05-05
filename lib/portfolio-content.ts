@@ -59,6 +59,18 @@ export const education = [
   },
 ] as const
 
+export const spokenLanguages = [
+  {
+    language: "English",
+    level: "native",
+    credential: "IELTS Academic 8.5",
+  },
+  {
+    language: "Italian",
+    level: "native",
+  },
+] as const
+
 export const navigation = [
   { label: "projects", href: "/projects", command: "cd ~/projects", external: false },
   { label: "contact", href: "/#contact", command: "open ~/contact", external: false },
@@ -229,7 +241,7 @@ const featuredProjectCatalog: Project[] = [
     title: "stackoverflow-survey-2025-analysis",
     directory: "stackoverflow-survey-2025-analysis",
     category: "ai",
-    summary: "AI trust analysis from the Stack Overflow 2025 Developer Survey.",
+    summary: "AI trust analysis from Stack Overflow's 2025 survey.",
     tech: ["Python", "scikit-learn", "pandas", "statsmodels", "seaborn"],
     repo: "https://github.com/edoski/stackoverflow-survey-2025-analysis",
     detail: {
