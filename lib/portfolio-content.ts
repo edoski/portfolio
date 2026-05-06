@@ -69,6 +69,10 @@ export const spokenLanguages = [
     language: "Italian",
     level: "native",
   },
+  {
+    language: "Spanish",
+    level: "basic",
+  },
 ] as const
 
 export const skillGroups = [
