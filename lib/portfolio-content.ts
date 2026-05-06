@@ -37,7 +37,7 @@ export type ProjectCategory = "ai" | "systems" | "web"
 export const projectCategoryOrder = ["ai", "systems", "web"] satisfies ProjectCategory[]
 
 export const profile = {
-  name: "Edoardo Galli",
+  name: "edoardo galli",
   handle: "edo",
   prompt: "edo@portfolio",
   asciiText: "edo.",
@@ -100,7 +100,7 @@ export const contactDetails = [
   {
     label: "status",
     value:
-      "M.Sc. AI student open to junior and internship roles across full-stack and AI/ML engineering.",
+      "M.Sc. AI student open to junior and internship roles across full-stack and ai/ml engineering.",
   },
   {
     label: "location",

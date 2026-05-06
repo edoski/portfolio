@@ -16,9 +16,9 @@ function ContactDetailValue({ detail }: {
 
   return (
     <>
-      M.Sc. AI student open to <strong>junior</strong> and{" "}
+      M.Sc. ai student open to <strong>junior</strong> and{" "}
       <strong>internship</strong> <strong>roles</strong> across{" "}
-      <strong>full-stack</strong> and <strong>AI/ML engineering</strong>.
+      <strong>full-stack</strong> and <strong>ai/ml engineering</strong>.
     </>
   )
 }

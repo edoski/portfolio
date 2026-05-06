@@ -10,8 +10,8 @@ import {
 } from "@/lib/terminal-nav-link"
 
 export const metadata: Metadata = {
-  title: "Projects | Edoardo Galli",
-  description: "More software, AI, and data projects by Edoardo Galli.",
+  title: "projects | edoardo galli",
+  description: "broader project index.",
 }
 
 export default function ProjectsPage() {

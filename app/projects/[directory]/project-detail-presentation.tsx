@@ -10,12 +10,12 @@ import type { Project } from "@/lib/portfolio-content"
 export function getProjectDetailMetadata(project: Project | undefined): Metadata {
   if (!project) {
     return {
-      title: "Project not found | Edoardo Galli",
+      title: "project not found | edoardo galli",
     }
   }
 
   return {
-    title: `${project.title} | Edoardo Galli`,
+    title: `${project.title} | edoardo galli`,
     description: project.summary,
   }
 }
