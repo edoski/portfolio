@@ -173,19 +173,20 @@ html {
     animation: blink 1s infinite;
 }
 
-.terminal-cue-command::after {
-    content: "_";
+.terminal-cue-command-cursor {
     display: inline-block;
     width: 0.75ch;
     margin-left: 0.35ch;
     opacity: 0;
-    animation: terminal-command-cursor-blink 1s infinite;
-    transition: opacity 0s 1s;
+    color: var(--terminal-cursor);
 }
 
-.terminal-cue-command:hover::after {
+.terminal-cue-command-cursor[data-visible="true"] {
     opacity: 1;
-    transition-delay: 250ms;
+}
+
+.terminal-cue-command-cursor[data-active="true"] {
+    animation: terminal-command-cursor-blink 1s infinite;
 }
 
 .project-card-surface {

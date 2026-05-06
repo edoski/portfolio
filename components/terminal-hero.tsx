@@ -17,7 +17,7 @@ export function TerminalHero() {
     >
       <div className="mx-auto max-w-6xl">
         <div>
-          <TerminalCue path="~" command="whoami" />
+          <TerminalCue className="relative z-10" path="~" command="whoami" />
 
           <div className="relative -mt-10 h-52 overflow-hidden sm:h-56 md:h-[17rem] lg:h-[19rem]">
             <AsciiMark text={profile.asciiText} />

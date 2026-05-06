@@ -1,3 +1,4 @@
+import { TerminalCueCommand } from "@/components/terminal-cue-command"
 import { cn } from "@/lib/utils"
 
 interface TerminalCueProps {
@@ -22,9 +23,7 @@ export function TerminalCue({
       {command && (
         <>
           <span className="text-muted-foreground/55"> $ </span>
-          <span className="terminal-cue-command text-foreground">
-            {command}
-          </span>
+          <TerminalCueCommand>{command}</TerminalCueCommand>
         </>
       )}
     </p>
