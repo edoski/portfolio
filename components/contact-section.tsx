@@ -10,17 +10,27 @@ import {
 function ContactDetailValue({ detail }: {
   detail: (typeof contactDetails)[number]
 }) {
-  if (detail.label !== "status") {
-    return <>{detail.value}</>
+  if (detail.label === "location") {
+    return (
+      <span className="traced-rule-row">
+        <span className="traced-rule-row-copy">Bologna, Italy; </span>
+        <strong className="traced-rule-emphasis">remote-friendly</strong>
+        <span className="traced-rule-row-copy">.</span>
+      </span>
+    )
   }
 
-  return (
-    <>
-      M.Sc. ai student open to <strong>junior</strong> and{" "}
-      <strong>internship</strong> <strong>roles</strong> across{" "}
-      <strong>full-stack</strong> and <strong>ai/ml engineering</strong>.
-    </>
-  )
+  if (detail.label === "status") {
+    return (
+      <>
+        M.Sc. ai student open to <strong className="traced-rule-emphasis">junior</strong> and{" "}
+        <strong className="traced-rule-emphasis">internship</strong> <strong className="traced-rule-emphasis">roles</strong> across{" "}
+        <strong className="traced-rule-emphasis">full-stack</strong> and <strong className="traced-rule-emphasis">ai/ml engineering</strong>.
+      </>
+    )
+  }
+
+  return null
 }
 
 export function ContactSection() {
@@ -35,32 +45,35 @@ export function ContactSection() {
               {contactDetails.map((detail) => (
                 <TracedRuleBlock
                   key={detail.label}
-                  className="text-sm leading-7 text-foreground/80"
+                  className="text-sm leading-7"
                 >
                   <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
-                    <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
+                    <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6">
                       {detail.label}
                     </p>
-                    <p className="min-w-0 text-foreground/90 [&_strong]:font-semibold [&_strong]:text-foreground">
+                    <p className="min-w-0">
                       <ContactDetailValue detail={detail} />
                     </p>
                   </div>
                 </TracedRuleBlock>
               ))}
 
-              <TracedRuleBlock className="text-sm leading-7 text-foreground/80">
+              <TracedRuleBlock className="text-sm leading-7">
                 <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
-                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
+                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6">
                     languages
                   </p>
                   <ul className="space-y-3 leading-6 lg:space-y-1.5">
                     {spokenLanguages.map((item) => (
-                      <li key={item.language} className="lg:whitespace-nowrap">
-                        <strong className="font-semibold text-foreground/90">
+                      <li
+                        key={item.language}
+                        className="traced-rule-row lg:whitespace-nowrap"
+                      >
+                        <strong className="traced-rule-emphasis">
                           {item.language}
                         </strong>
-                        <span className="text-muted-foreground">, </span>
-                        <span className="text-muted-foreground">
+                        <span className="traced-rule-row-copy">, </span>
+                        <span className="traced-rule-row-copy">
                           {item.level}
                           {"credential" in item && item.credential
                             ? `, ${item.credential}`
@@ -72,9 +85,9 @@ export function ContactSection() {
                 </div>
               </TracedRuleBlock>
 
-              <TracedRuleBlock className="text-sm leading-7 text-foreground/80">
+              <TracedRuleBlock className="text-sm leading-7">
                 <div className="grid gap-4 md:grid-cols-[6rem_minmax(0,1fr)] md:items-center md:gap-6">
-                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
+                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6">
                     links
                   </p>
                   <ul className="grid min-w-0 grid-cols-2 justify-items-start gap-x-6 gap-y-3 sm:flex sm:w-full sm:items-center sm:justify-between sm:gap-6">

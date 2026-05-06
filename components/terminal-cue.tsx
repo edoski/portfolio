@@ -14,7 +14,7 @@ export function TerminalCue({
   return (
     <p
       className={cn(
-        "inline-block font-mono text-[1.0625rem] leading-tight text-foreground",
+        "terminal-cue inline-block font-mono text-[1.0625rem] leading-tight text-foreground",
         className
       )}
     >
@@ -22,7 +22,9 @@ export function TerminalCue({
       {command && (
         <>
           <span className="text-muted-foreground/55"> $ </span>
-          <span className="text-foreground">{command}</span>
+          <span className="terminal-cue-command text-foreground">
+            {command}
+          </span>
         </>
       )}
     </p>

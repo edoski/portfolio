@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react"
 
 import { AsciiMark } from "@/components/ascii-mark"
-import { SmoothScrollLink } from "@/components/smooth-scroll-link"
+import { TerminalActionLink } from "@/components/terminal-action-link"
 import { TerminalCue } from "@/components/terminal-cue"
 import { TracedRuleBlock } from "@/components/traced-rule-block"
 import { education, profile, skillGroups } from "@/lib/portfolio-content"
@@ -29,32 +29,32 @@ export function TerminalHero() {
             </div>
 
             <div className="space-y-5">
-              <TracedRuleBlock className="font-mono text-sm leading-7 text-foreground/80">
+              <TracedRuleBlock className="font-mono text-sm leading-7">
                 <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
-                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
+                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6">
                     profile
                   </p>
-                  <p className="min-w-0 [&_strong]:font-semibold [&_strong]:text-foreground/90">
-                    focused on <strong>deep learning</strong>, <strong>ai systems</strong>, and <strong>data-intensive</strong> software; studying at the <strong>university of bologna</strong>.
+                  <p className="min-w-0">
+                    focused on <strong className="traced-rule-emphasis">deep learning</strong>, <strong className="traced-rule-emphasis">ai systems</strong>, and <strong className="traced-rule-emphasis">data-intensive</strong> software; studying at the <strong className="traced-rule-emphasis">university of bologna</strong>.
                   </p>
                 </div>
               </TracedRuleBlock>
 
-              <TracedRuleBlock className="font-mono text-sm leading-7 text-foreground/80">
+              <TracedRuleBlock className="font-mono text-sm leading-7">
                 <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
-                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
+                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6">
                     education
                   </p>
                   <ul className="space-y-3 leading-6 lg:space-y-1.5">
                     {education.map((item) => (
                       <li
                         key={item.title}
-                        className="grid gap-1 md:grid-cols-[22rem_1fr] md:gap-6 lg:grid-cols-[24rem_1fr] lg:whitespace-nowrap"
+                        className="traced-rule-row grid gap-1 md:grid-cols-[22rem_1fr] md:gap-6 lg:grid-cols-[24rem_1fr] lg:whitespace-nowrap"
                       >
-                        <strong className="font-semibold text-foreground/90">
+                        <strong className="traced-rule-emphasis">
                           {item.title}
                         </strong>
-                        <em className="not-italic text-muted-foreground">
+                        <em className="traced-rule-row-copy not-italic">
                           {item.institution}
                         </em>
                       </li>
@@ -63,21 +63,21 @@ export function TerminalHero() {
                 </div>
               </TracedRuleBlock>
 
-              <TracedRuleBlock className="font-mono text-sm leading-7 text-foreground/80">
+              <TracedRuleBlock className="font-mono text-sm leading-7">
                 <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
-                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
+                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6">
                     skills
                   </p>
                   <dl className="space-y-3 leading-6 lg:space-y-1.5">
                     {skillGroups.map((group) => (
                       <div
                         key={group.label}
-                        className="grid gap-1 md:grid-cols-[5rem_minmax(0,1fr)] md:gap-6 lg:grid-cols-[5.5rem_minmax(0,1fr)]"
+                        className="traced-rule-row grid gap-1 md:grid-cols-[5rem_minmax(0,1fr)] md:gap-6 lg:grid-cols-[5.5rem_minmax(0,1fr)]"
                       >
-                        <dt className="font-semibold lowercase text-foreground/90">
+                        <dt className="traced-rule-emphasis lowercase">
                           {group.label}
                         </dt>
-                        <dd className="min-w-0 text-muted-foreground">
+                        <dd className="traced-rule-row-copy min-w-0">
                           {group.skills.join(", ")}
                         </dd>
                       </div>
@@ -88,13 +88,13 @@ export function TerminalHero() {
             </div>
 
             <div className="flex justify-start py-4">
-              <SmoothScrollLink
+              <TerminalActionLink
                 href="#contact"
                 className={cn(terminalActionLinkClassName, "px-3 py-2")}
               >
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                 <span>reach out.</span>
-              </SmoothScrollLink>
+              </TerminalActionLink>
             </div>
           </div>
         </div>

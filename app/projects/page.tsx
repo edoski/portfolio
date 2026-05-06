@@ -20,7 +20,7 @@ export default function ProjectsPage() {
   return (
     <main className="project-shell px-6 pb-16 pt-10 md:pt-24 lg:px-8">
       <section className="mx-auto max-w-6xl space-y-8">
-        <div className="space-y-4">
+        <div className="space-y-7">
           <SmoothScrollLink
             href="/"
             className={terminalNavLinkClassName}
@@ -29,7 +29,7 @@ export default function ProjectsPage() {
             <span className={terminalNavLinkTextClassName}>back</span>
           </SmoothScrollLink>
 
-          <div className="space-y-3">
+          <div className="space-y-6">
             <h1 className="font-mono text-3xl font-medium tracking-normal md:text-5xl">
               projects
             </h1>
@@ -41,8 +41,8 @@ export default function ProjectsPage() {
 
         <div className="space-y-10">
           {projectGroups.map(({ category, projects }) => (
-            <section key={category} className="space-y-4">
-              <h2 className="font-mono text-base font-bold underline underline-offset-4 text-muted-foreground">
+            <section key={category} className="project-category-group space-y-4">
+              <h2 className="project-category-heading font-mono text-base font-bold underline underline-offset-4 text-muted-foreground transition-colors">
                 {category}
               </h2>
               <div className="grid gap-4 md:grid-cols-2">
