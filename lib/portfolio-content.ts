@@ -82,7 +82,7 @@ export const skillGroups = [
   },
   {
     label: "web",
-    skills: ["React", "Next.js", "Tailwind CSS", "shadcn/ui"],
+    skills: ["React", "Next.js", "Tailwind CSS"],
   },
   {
     label: "backend",
