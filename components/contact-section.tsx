@@ -1,7 +1,11 @@
 import { ContactLink } from "@/components/contact-link"
 import { TerminalCue } from "@/components/terminal-cue"
 import { TracedRuleBlock } from "@/components/traced-rule-block"
-import { contactDetails, contactLinks } from "@/lib/portfolio-content"
+import {
+  contactDetails,
+  contactLinks,
+  spokenLanguages,
+} from "@/lib/portfolio-content"
 
 function ContactDetailValue({ detail }: {
   detail: (typeof contactDetails)[number]
@@ -43,6 +47,30 @@ export function ContactSection() {
                   </div>
                 </TracedRuleBlock>
               ))}
+
+              <TracedRuleBlock className="text-sm leading-7 text-foreground/80">
+                <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
+                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
+                    languages
+                  </p>
+                  <ul className="space-y-3 leading-6 lg:space-y-1.5">
+                    {spokenLanguages.map((item) => (
+                      <li key={item.language} className="lg:whitespace-nowrap">
+                        <strong className="font-semibold text-foreground/90">
+                          {item.language}
+                        </strong>
+                        <span className="text-muted-foreground">, </span>
+                        <span className="text-muted-foreground">
+                          {item.level}
+                          {"credential" in item && item.credential
+                            ? `, ${item.credential}`
+                            : ""}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </TracedRuleBlock>
 
               <TracedRuleBlock className="text-sm leading-7 text-foreground/80">
                 <div className="grid gap-4 md:grid-cols-[6rem_minmax(0,1fr)] md:items-center md:gap-6">

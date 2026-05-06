@@ -4,7 +4,7 @@ import { AsciiMark } from "@/components/ascii-mark"
 import { SmoothScrollLink } from "@/components/smooth-scroll-link"
 import { TerminalCue } from "@/components/terminal-cue"
 import { TracedRuleBlock } from "@/components/traced-rule-block"
-import { education, profile, spokenLanguages } from "@/lib/portfolio-content"
+import { education, profile, skillGroups } from "@/lib/portfolio-content"
 import { terminalActionLinkClassName } from "@/lib/terminal-action-link"
 import { cn } from "@/lib/utils"
 
@@ -66,24 +66,23 @@ export function TerminalHero() {
               <TracedRuleBlock className="font-mono text-sm leading-7 text-foreground/80">
                 <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
                   <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6 text-muted-foreground">
-                    languages
+                    skills
                   </p>
-                  <ul className="space-y-3 leading-6 lg:space-y-1.5">
-                    {spokenLanguages.map((item) => (
-                      <li key={item.language} className="lg:whitespace-nowrap">
-                        <strong className="font-semibold text-foreground/90">
-                          {item.language}
-                        </strong>
-                        <span className="text-muted-foreground">, </span>
-                        <span className="text-muted-foreground">
-                          {item.level}
-                          {"credential" in item && item.credential
-                            ? `, ${item.credential}`
-                            : ""}
-                        </span>
-                      </li>
+                  <dl className="space-y-3 leading-6 lg:space-y-1.5">
+                    {skillGroups.map((group) => (
+                      <div
+                        key={group.label}
+                        className="grid gap-1 md:grid-cols-[5rem_minmax(0,1fr)] md:gap-6 lg:grid-cols-[5.5rem_minmax(0,1fr)]"
+                      >
+                        <dt className="font-semibold lowercase text-foreground/90">
+                          {group.label}
+                        </dt>
+                        <dd className="min-w-0 text-muted-foreground">
+                          {group.skills.join(", ")}
+                        </dd>
+                      </div>
                     ))}
-                  </ul>
+                  </dl>
                 </div>
               </TracedRuleBlock>
             </div>

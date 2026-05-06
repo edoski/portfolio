@@ -71,6 +71,25 @@ export const spokenLanguages = [
   },
 ] as const
 
+export const skillGroups = [
+  {
+    label: "ai/ml",
+    skills: ["PyTorch", "scikit-learn", "Optuna", "pandas", "Polars"],
+  },
+  {
+    label: "code",
+    skills: ["Python", "TypeScript", "Java", "PHP", "SQL"],
+  },
+  {
+    label: "web",
+    skills: ["React", "Next.js", "Tailwind CSS", "shadcn/ui"],
+  },
+  {
+    label: "backend",
+    skills: ["Pydantic", "Convex", "MySQL", "MongoDB", "Docker"],
+  },
+] as const
+
 export const navigation = [
   { label: "projects", href: "/projects", command: "cd ~/projects", external: false },
   { label: "contact", href: "/#contact", command: "open ~/contact", external: false },
