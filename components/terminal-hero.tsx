@@ -88,7 +88,7 @@ export function TerminalHero() {
               </TracedRuleBlock>
             </div>
 
-            <div className="flex justify-end pt-4 md:pt-0">
+            <div className="flex justify-start py-4">
               <SmoothScrollLink
                 href="#contact"
                 className={cn(terminalActionLinkClassName, "px-3 py-2")}
