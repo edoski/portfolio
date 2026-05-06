@@ -49,6 +49,10 @@
   {\small\color{muted}#4}
 }
 
+\newcommand{\languageentry}[2]{%
+  \textbf{#1}{\color{muted}, #2}\\
+}
+
 \newcommand{\projectgap}{\vspace{5pt}}
 
 \begin{document}
@@ -135,10 +139,7 @@ Computer Science student at the University of Bologna, completing a B.Sc. in Inf
 \end{tabularx}
 
 \section{Languages}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{2.9cm}X@{}}
-\textbf{English} & Native, IELTS Academic 8.5 \\
-\textbf{Italian} & Native \\
-\end{tabularx}
+\languageentry{English}{native, IELTS Academic 8.5}
+\languageentry{Italian}{native}
 
 \end{document}
