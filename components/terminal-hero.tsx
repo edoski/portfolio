@@ -4,7 +4,7 @@ import { AsciiMark } from "@/components/ascii-mark"
 import { TerminalActionLink } from "@/components/terminal-action-link"
 import { TerminalCue } from "@/components/terminal-cue"
 import { TracedRuleBlock } from "@/components/traced-rule-block"
-import { education, profile, skillGroups } from "@/lib/portfolio-content"
+import { education, profile } from "@/lib/portfolio-content"
 import { terminalActionLinkClassName } from "@/lib/terminal-action-link"
 import { cn } from "@/lib/utils"
 
@@ -63,28 +63,6 @@ export function TerminalHero() {
                 </div>
               </TracedRuleBlock>
 
-              <TracedRuleBlock className="font-mono text-sm leading-7">
-                <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
-                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6">
-                    skills
-                  </p>
-                  <dl className="space-y-3 leading-6 lg:space-y-1.5">
-                    {skillGroups.map((group) => (
-                      <div
-                        key={group.label}
-                        className="traced-rule-row grid gap-1 md:grid-cols-[5rem_minmax(0,1fr)] md:gap-6 lg:grid-cols-[5.5rem_minmax(0,1fr)]"
-                      >
-                        <dt className="traced-rule-emphasis lowercase">
-                          {group.label}
-                        </dt>
-                        <dd className="traced-rule-row-copy min-w-0">
-                          {group.skills.join(", ")}
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              </TracedRuleBlock>
             </div>
 
             <div className="flex justify-start py-4">
