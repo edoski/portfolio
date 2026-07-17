@@ -1,6 +1,7 @@
 import { ContactLink } from "@/components/contact-link"
 import { TerminalCue } from "@/components/terminal-cue"
 import { TracedRuleBlock } from "@/components/traced-rule-block"
+import { TracedRuleText } from "@/components/traced-rule-text"
 import {
   contactDetails,
   contactLinks,
@@ -25,18 +26,7 @@ export function ContactSection() {
                       {detail.label}
                     </p>
                     <p className="min-w-0">
-                      <span className="traced-rule-row-copy">
-                        {detail.value}
-                      </span>
-                      {"qualifier" in detail && (
-                        <>
-                          <span className="traced-rule-row-copy">; </span>
-                          <strong className="traced-rule-emphasis">
-                            {detail.qualifier}
-                          </strong>
-                          <span className="traced-rule-row-copy">.</span>
-                        </>
-                      )}
+                      <TracedRuleText segments={detail.segments} />
                     </p>
                   </div>
                 </TracedRuleBlock>

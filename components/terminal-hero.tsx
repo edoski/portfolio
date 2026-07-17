@@ -4,6 +4,7 @@ import { AsciiMark } from "@/components/ascii-mark"
 import { TerminalActionLink } from "@/components/terminal-action-link"
 import { TerminalCue } from "@/components/terminal-cue"
 import { TracedRuleBlock } from "@/components/traced-rule-block"
+import { TracedRuleText } from "@/components/traced-rule-text"
 import { education, profile } from "@/lib/portfolio-content"
 import { terminalActionLinkClassName } from "@/lib/terminal-action-link"
 import { cn } from "@/lib/utils"
@@ -35,7 +36,7 @@ export function TerminalHero() {
                     profile
                   </p>
                   <p className="min-w-0">
-                    focused on <strong className="traced-rule-emphasis">deep learning</strong>, <strong className="traced-rule-emphasis">ai systems</strong>, and <strong className="traced-rule-emphasis">data-intensive</strong> software; studying at the <strong className="traced-rule-emphasis">university of bologna</strong>.
+                    <TracedRuleText segments={profile.summary} />
                   </p>
                 </div>
               </TracedRuleBlock>

@@ -42,6 +42,16 @@ export const profile = {
   prompt: "edo@portfolio",
   asciiText: "edo.",
   location: "Bologna, Italy",
+  summary: [
+    { text: "deep-learning", emphasis: true },
+    { text: " and ", emphasis: false },
+    { text: "data-intensive AI systems", emphasis: true },
+    { text: "; studying ", emphasis: false },
+    { text: "artificial intelligence", emphasis: true },
+    { text: " at the ", emphasis: false },
+    { text: "University of Bologna", emphasis: true },
+    { text: ".", emphasis: false },
+  ],
 } as const
 
 export const education = [
@@ -68,12 +78,23 @@ export const navigation = [
 export const contactDetails = [
   {
     label: "status",
-    value: "Open to ML/AI engineering internships and junior roles.",
+    segments: [
+      { text: "open to ", emphasis: false },
+      { text: "ML/AI", emphasis: true },
+      { text: " engineering ", emphasis: false },
+      { text: "internships", emphasis: true },
+      { text: " and ", emphasis: false },
+      { text: "junior", emphasis: true },
+      { text: " roles.", emphasis: false },
+    ],
   },
   {
     label: "location",
-    value: "Bologna, Italy",
-    qualifier: "remote-friendly",
+    segments: [
+      { text: "Bologna, Italy; ", emphasis: false },
+      { text: "remote-friendly", emphasis: true },
+      { text: ".", emphasis: false },
+    ],
   },
 ] as const
 
