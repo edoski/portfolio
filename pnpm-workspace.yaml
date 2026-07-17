@@ -4,3 +4,5 @@ allowBuilds:
 onlyBuiltDependencies:
   - '@vercel/speed-insights'
   - unrs-resolver
+overrides:
+  postcss: 8.5.19
