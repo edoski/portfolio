@@ -59,22 +59,6 @@ export const education = [
   },
 ] as const
 
-export const spokenLanguages = [
-  {
-    language: "English",
-    level: "native",
-    credential: "IELTS Academic 8.5",
-  },
-  {
-    language: "Italian",
-    level: "native",
-  },
-  {
-    language: "Spanish",
-    level: "basic",
-  },
-] as const
-
 export const navigation = [
   { label: "projects", href: "/projects", command: "cd ~/projects", external: false },
   { label: "contact", href: "/#contact", command: "open ~/contact", external: false },
@@ -84,12 +68,12 @@ export const navigation = [
 export const contactDetails = [
   {
     label: "status",
-    value:
-      "M.Sc. AI student open to junior and internship roles across full-stack and ai/ml engineering.",
+    value: "Open to ML/AI engineering internships and junior roles.",
   },
   {
     label: "location",
-    value: "Bologna, Italy; remote-friendly.",
+    value: "Bologna, Italy",
+    qualifier: "remote-friendly",
   },
 ] as const
 
