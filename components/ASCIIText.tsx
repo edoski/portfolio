@@ -57,6 +57,7 @@ const HUE_ROTATION_MAX_DEGREES = 22;
 const HUE_ROTATION_LERP_FACTOR = 0.08;
 const HUE_ROTATION_Y_WEIGHT = 0.85;
 const HUE_ROTATION_X_WEIGHT = -0.35;
+const PASSIVE_EVENT_OPTIONS = { passive: true } as const;
 
 interface AsciiFilterOptions {
   fontSize?: number;
@@ -80,6 +81,8 @@ class AsciiFilter {
   height: number = 0;
   cols: number = 0;
   rows: number = 0;
+  renderedText: string | null = null;
+  renderedFilter: string | null = null;
 
   constructor(renderer: THREE.WebGLRenderer, { fontSize, fontFamily, charset, invert }: AsciiFilterOptions = {}) {
     this.renderer = renderer;
@@ -159,7 +162,14 @@ class AsciiFilter {
 
   hue(targetDeg: number) {
     this.deg += (targetDeg - this.deg) * HUE_ROTATION_LERP_FACTOR;
-    this.domElement.style.filter = `hue-rotate(${this.deg.toFixed(1)}deg)`;
+    this.applyFilter(`hue-rotate(${this.deg.toFixed(1)}deg)`);
+  }
+
+  applyFilter(filter: string) {
+    if (filter !== this.renderedFilter) {
+      this.domElement.style.filter = filter;
+      this.renderedFilter = filter;
+    }
   }
 
   settleNeutralHue() {
@@ -167,7 +177,7 @@ class AsciiFilter {
 
     if (isSettled) {
       this.deg = 0;
-      this.domElement.style.filter = 'hue-rotate(0deg)';
+      this.applyFilter('hue-rotate(0deg)');
       return true;
     }
 
@@ -177,11 +187,15 @@ class AsciiFilter {
   asciify(ctx: CanvasRenderingContext2D, w: number, h: number) {
     if (w && h) {
       const imgData = ctx.getImageData(0, 0, w, h).data;
+      const charsetMaxIndex = this.charset.length - 1;
       let str = '';
       for (let y = 0; y < h; y++) {
         for (let x = 0; x < w; x++) {
           const i = x * 4 + y * 4 * w;
-          const [r, g, b, a] = [imgData[i], imgData[i + 1], imgData[i + 2], imgData[i + 3]];
+          const r = imgData[i];
+          const g = imgData[i + 1];
+          const b = imgData[i + 2];
+          const a = imgData[i + 3];
 
           if (a === 0) {
             str += ' ';
@@ -189,13 +203,17 @@ class AsciiFilter {
           }
 
           let gray = (0.3 * r + 0.6 * g + 0.1 * b) / 255;
-          let idx = Math.floor((1 - gray) * (this.charset.length - 1));
-          if (this.invert) idx = this.charset.length - idx - 1;
+          let idx = Math.floor((1 - gray) * charsetMaxIndex);
+          if (this.invert) idx = charsetMaxIndex - idx;
           str += this.charset[idx];
         }
         str += '\n';
       }
-      this.pre.textContent = str;
+
+      if (str !== this.renderedText) {
+        this.pre.textContent = str;
+        this.renderedText = str;
+      }
     }
   }
 }
@@ -399,7 +417,7 @@ class CanvAscii {
     this.setTrackingSize();
 
     this.trackingElement.addEventListener('mousemove', this.onMouseMove);
-    this.trackingElement.addEventListener('touchmove', this.onMouseMove);
+    this.trackingElement.addEventListener('touchmove', this.onMouseMove, PASSIVE_EVENT_OPTIONS);
     this.trackingElement.addEventListener('mouseleave', this.onMouseLeave);
     this.trackingElement.addEventListener('touchend', this.onMouseLeave);
   }
@@ -478,7 +496,7 @@ class CanvAscii {
   }
 
   render() {
-    const time = new Date().getTime() * 0.001;
+    const time = Date.now() * 0.001;
     const isIntroActive = performance.now() < this.introEndsAt;
     const targetShaderTime = this.isHovering || isIntroActive ? Math.sin(time) : 0;
 
@@ -564,6 +582,7 @@ class CanvAscii {
     this.trackingElement.removeEventListener('touchmove', this.onMouseMove);
     this.trackingElement.removeEventListener('mouseleave', this.onMouseLeave);
     this.trackingElement.removeEventListener('touchend', this.onMouseLeave);
+    this.texture.dispose();
     this.clear();
     this.renderer.dispose();
   }
