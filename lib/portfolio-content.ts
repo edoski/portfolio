@@ -218,7 +218,7 @@ const featuredProjectCatalog: Project[] = [
     directory: "journal",
     category: "systems",
     summary: "Local-first Obsidian analytics automation.",
-    tech: ["Python", "Obsidian", "SQLite", "Apple Shortcuts"],
+    tech: ["Python", "Obsidian", "SQLite"],
     repo: "https://github.com/edoski/journal",
     detail: {
       tagline: "Local-first automation for Obsidian journal analytics.",
