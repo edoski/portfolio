@@ -126,46 +126,90 @@ export const contactLinks: PortfolioLink[] = [
 
 const featuredProjectCatalog: Project[] = [
   {
-    title: "spice",
-    directory: "spice",
+    title: "kairos",
+    directory: "kairos",
     category: "ai",
-    summary: "Temporal fee-decision deep learning pipeline.",
-    tech: ["Python", "PyTorch", "Optuna", "Polars", "Pydantic", "web3.py"],
-    repo: "https://github.com/edoski/spice",
+    summary: "Causal deep learning for low-fee blockchain transaction timing.",
+    tech: ["Python", "PyTorch", "Lightning", "ExecuTorch"],
+    repo: "https://github.com/edoski/kairos",
     detail: {
-      tagline: "Temporal ML research pipeline for EVM fee-timing decisions.",
+      tagline: "Learning when to execute blockchain transactions.",
       overview: [
-        "SPICE turns blockchain block history into supervised temporal decision problems. It acquires canonical EVM block data, builds fee-dynamics features, trains neural sequence models, decodes predictions into timing offsets, and evaluates those decisions with replay-style economic metrics.",
-        "The project is structured as a research and operations system rather than a notebook. Typed YAML surfaces define experiments, workflows persist corpora, Optuna studies, model artifacts, evaluations, and benchmark result indexes.",
+        "KAIROS learns from finalized EVM block history to choose a low-base-fee block within a fixed future horizon. It turns externally built corpora into causal temporal samples, compares sequence models, and evaluates their timing decisions with mean per-origin economic metrics.",
+        "The project extends the original SPICE temporal experiment into a thesis-grade research and execution system: typed experiment programs, HPO, Slurm campaigns, durable training and evaluation objects, and an Expo/ExecuTorch demo.",
       ],
       implementation: [
-        "A Typer CLI and benchmark runner resolve configuration surfaces into acquisition, training, tuning, prediction, and evaluation workflows.",
-        "The pipeline builds or loads a corpus, constructs feature tables, compiles temporal examples, tensorizes sequences, trains model families, decodes outputs into fee-delay decisions, then scores them through evaluator contracts.",
+        "The Python pipeline loads canonical corpora, builds causal block features and historical windows, trains LSTM, Transformer, and Transformer-LSTM models with PyTorch Lightning, then selects candidates by economic optimality gap.",
+        "The mobile exporter converts selected models for ExecuTorch. The Expo app reads Ethereum, Polygon, and Avalanche directly through viem and runs inference on-device without a server fallback.",
       ],
       capabilities: [
         {
-          title: "EVM corpus acquisition",
-          description: "Collects block-history data for Ethereum, Polygon, and Avalanche through RPC providers.",
+          title: "Causal temporal samples",
+          description: "Uses strict closed-parent history and fixed block-count horizons to prevent future-data leakage.",
         },
         {
-          title: "Sequence model comparison",
-          description: "Runs LSTM, Transformer, and Transformer-LSTM families through repeatable training and tuning loops.",
+          title: "Dual-head sequence models",
+          description: "Compares three model families that predict both a target block offset and its minimum base fee.",
         },
         {
-          title: "Economic replay evaluation",
-          description: "Scores decoded timing offsets with temporal replay evaluators instead of only model-loss metrics.",
+          title: "Economic evaluation",
+          description: "Selects and reports models with optimality gap, fee savings, and P50 fee-inclusive evaluation.",
         },
         {
-          title: "Durable experiment state",
-          description: "Stores corpora, studies, artifacts, evaluations, catalogs, and transfer outputs under explicit roots.",
+          title: "On-device inference",
+          description: "Exports trained models for a serverless ExecuTorch mobile demonstration backed by direct chain reads.",
         },
       ],
       status:
-        "Mature thesis/research pipeline, versioned 0.1.0, with broad pytest coverage and checked-in experiment specs. It is not presented as a production trading system.",
+        "Active public thesis/research project, versioned 0.1.0. The Python/HPC system and non-asset mobile implementation exist; final on-device model artifacts and device validation are still pending. It is not a production transaction service.",
       artifacts: [
-        "Architecture docs and ADRs",
-        "Benchmark SQLite results",
-        "Generated benchmark figures",
+        "Experiment programs and ADRs",
+        "Durable model and evaluation objects",
+        "ExecuTorch exporter and Expo app",
+      ],
+    },
+  },
+  {
+    title: "blockweaver",
+    directory: "blockweaver",
+    category: "systems",
+    summary: "Immutable, verifiable EVM block dataset acquisition.",
+    tech: ["Python", "Polars", "JSON-RPC"],
+    repo: "https://github.com/edoski/blockweaver",
+    detail: {
+      tagline: "Feature-selected EVM block datasets with verifiable provenance.",
+      overview: [
+        "Blockweaver downloads feature-selected EVM block ranges into immutable Parquet or CSV datasets. Chains and providers are configuration rather than code, and each successful request publishes one data file with one canonical manifest.",
+        "The tool is built for reproducible research inputs: it resolves block or time ranges against finalized chain state, resumes only exact request bindings, and separates chain and provider profiles from acquisition logic.",
+      ],
+      implementation: [
+        "A Typer CLI loads strict TOML configuration, aiohttp batches EVM JSON-RPC requests, and Polars builds typed tables through a closed feature catalog and bounded acquisition chunks.",
+        "Complete chunks are digest-bound before reuse. The assembled candidate is validated, synced, and atomically published without replacement; its manifest records schema, provenance, finality, verification samples, and a SHA-256 digest without secrets.",
+      ],
+      capabilities: [
+        {
+          title: "Configurable acquisition",
+          description: "Uses named chain and provider profiles to acquire finalized EVM history without embedding endpoints in code.",
+        },
+        {
+          title: "Feature-selected datasets",
+          description: "Coalesces requested block-header and fee-history features into typed Parquet or canonical CSV output.",
+        },
+        {
+          title: "Layered verification",
+          description: "Validates artifact integrity offline; optional RPC verification refreshes finality and checks ancestry and deterministic row samples.",
+        },
+        {
+          title: "Recoverable publication",
+          description: "Resumes validated checkpoints and atomically publishes immutable two-file artifacts without overwriting destinations.",
+        },
+      ],
+      status:
+        "Active public MIT-licensed Python CLI, versioned 0.2.0, with focused end-to-end coverage for acquisition, recovery, publication, and verification contracts.",
+      artifacts: [
+        "Canonical dataset manifests",
+        "Parquet and CSV block datasets",
+        "Machine-readable receipts",
       ],
     },
   },
@@ -173,39 +217,39 @@ const featuredProjectCatalog: Project[] = [
     title: "journal",
     directory: "journal",
     category: "systems",
-    summary: "Personal analytics journal pipeline.",
-    tech: ["Python", "Pydantic", "pytest", "Obsidian"],
+    summary: "Local-first automation for deterministic Obsidian analytics.",
+    tech: ["Python", "Obsidian", "SQLite", "Apple Shortcuts"],
     repo: "https://github.com/edoski/journal",
     detail: {
       tagline: "Local-first automation for Obsidian journal analytics.",
       overview: [
-        "journal-sync is a personal knowledge and life-tracking sync engine for a Markdown vault. It updates daily, weekly, monthly, quarterly, and yearly notes from Flow focus sessions, iCloud Shortcut payloads, reminders, goals, grades, media logs, and vault context.",
-        "The codebase emphasizes deterministic Markdown rendering, typed contracts, strict parsers, cache-backed adapters, and file-safe note updates. It is a CLI-backed automation tool rather than a web app.",
+        "journal-sync is local-first Python automation that turns Flow focus sessions and iCloud Shortcut payloads into deterministic daily, weekly, monthly, and yearly analytics inside an Obsidian vault.",
+        "It also maintains media and university-grade workflows. The codebase emphasizes strict parsers, stable Markdown rendering, atomic note updates, advisory locks, and recoverable validation or quarantine for external payloads.",
       ],
       implementation: [
-        "CLI commands dispatch into application services through runtime wiring. Ports define local integrations; adapters bind Flow SQLite, iCloud status JSON, Obsidian notes, schedules, reminders, goals, media scans, and JSON caches.",
-        "Domain modules parse source notes, compute metrics and windows, reconcile goals, then render stable Markdown tables, text charts, and summary blocks back into the vault.",
+        "CLI commands dispatch daily and period sync through application services. Focused adapters read Flow SQLite, iCloud status JSON, schedules, media sources, and Obsidian Markdown.",
+        "Domain modules compute metrics and reporting windows, then render stable frontmatter, tables, text charts, trends, and moving averages back into the vault through file-safe publication.",
       ],
       capabilities: [
         {
           title: "Daily sync",
-          description: "Combines focus sessions, shortcut status, schedule rules, reminders, goals, and vault state.",
+          description: "Combines Flow sessions, schedule rules, training, and sleep data into Obsidian metrics and frontmatter.",
         },
         {
           title: "Period reports",
-          description: "Builds week, month, quarter, and year summaries with deltas, targets, moving averages, and text charts.",
+          description: "Builds weekly, monthly, and yearly Markdown reports with deterministic tables, trends, and moving averages.",
         },
         {
-          title: "Goal reconciliation",
-          description: "Carries active goals through daily and period notes while preserving local Markdown structure.",
+          title: "Media workflows",
+          description: "Scans books and podcast series, regenerates series indexes, and imports Kindle annotations.",
         },
         {
-          title: "Media and grades",
-          description: "Imports Obsidian media, Kindle annotations, and university grade projections into dedicated notes.",
+          title: "Safe local operation",
+          description: "Protects note updates with atomic writes, advisory locks, and recoverable external-payload validation.",
         },
       ],
       status:
-        "Internal automation tool, versioned 0.0.0, with extensive tests, snapshot baselines, import rules, mutation tooling, and type/lint configuration.",
+        "Active public personal automation, packaged as journal-sync with a standard-library-only runtime and focused test, snapshot, import-boundary, and mutation coverage.",
       artifacts: [
         "Shortcut status contract docs",
         "Grade sync docs",
@@ -218,7 +262,7 @@ const featuredProjectCatalog: Project[] = [
     directory: "sweng-notes",
     category: "web",
     summary: "Real-time collaborative note editor.",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Liveblocks", "Convex"],
+    tech: ["Next.js", "Convex", "Liveblocks", "TipTap"],
     repo: "https://github.com/edoski/sweng-notes",
     demo: "https://sweng-notes.vercel.app",
     detail: {
@@ -263,7 +307,7 @@ const featuredProjectCatalog: Project[] = [
     directory: "stackoverflow-survey-2025-analysis",
     category: "ai",
     summary: "AI trust analysis from Stack Overflow's 2025 survey.",
-    tech: ["Python", "scikit-learn", "pandas", "statsmodels", "seaborn"],
+    tech: ["Python", "scikit-learn", "statsmodels"],
     repo: "https://github.com/edoski/stackoverflow-survey-2025-analysis",
     detail: {
       tagline: "Statistical ML analysis of AI trust and compensation in the 2025 developer survey.",
@@ -311,7 +355,7 @@ const projectIndexCatalog: Project[] = [
     directory: "portfolio",
     category: "web",
     summary: "Developer portfolio with a terminal-minimal interface.",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Three.js"],
+    tech: ["Next.js", "Tailwind CSS", "Three.js"],
     repo: "https://github.com/edoski/portfolio",
     demo: "https://edoski.com",
     detail: {
@@ -356,7 +400,7 @@ const projectIndexCatalog: Project[] = [
     directory: "bostarter",
     category: "web",
     summary: "Kickstarter-like platform for managing projects.",
-    tech: ["PHP", "MySQL", "MongoDB", "Docker", "Apache"],
+    tech: ["PHP", "MySQL", "Docker"],
     repo: "https://github.com/edoski/bostarter",
     detail: {
       tagline: "Dockerized PHP/MySQL crowdfunding platform for software and hardware projects.",
@@ -400,7 +444,7 @@ const projectIndexCatalog: Project[] = [
     directory: "pubsub",
     category: "systems",
     summary: "Terminal publish-subscribe protocol for text messages.",
-    tech: ["Java", "Sockets", "Multithreaded", "ExecutorService"],
+    tech: ["Java", "Sockets", "ExecutorService"],
     repo: "https://github.com/edoski/pubsub",
     detail: {
       tagline: "Terminal publish-subscribe protocol over Java sockets.",
