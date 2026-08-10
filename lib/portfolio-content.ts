@@ -258,6 +258,54 @@ const featuredProjectCatalog: Project[] = [
     },
   },
   {
+    title: "servatus",
+    directory: "servatus",
+    category: "systems",
+    summary: "Resumable Slurm work and atomic publication.",
+    tech: ["Python", "Slurm", "OpenSSH", "Apptainer"],
+    repo: "https://github.com/edoski/servatus",
+    detail: {
+      tagline: "Run resumable work through Slurm and atomically publish validated outputs.",
+      overview: [
+        "Servatus is zero-runtime-dependency Python infrastructure for resumable application work. Campaign submits immutable ordered tasks to Slurm through native OpenSSH and Apptainer, while Workspace preserves private work and atomically publishes application-validated outputs.",
+        "Resilience is concentrated at distributed submission and POSIX publication. Durable intent and receipt state prevents silent duplicate submission; identity locks and no-replace commits prevent concurrent corruption or overwrite. Applications retain task meaning, schemas, validation, and completion decisions.",
+      ],
+      implementation: [
+        "Campaign freezes task order, arguments, and payload digests; plans balanced homogeneous allocations with exact CPU, memory, and GPU resources; renders quote-safe Slurm scripts; then records intent before submission and receipts after acceptance.",
+        "Workspace binds hidden state to an application destination and opaque identity. Draft assembles same-filesystem files, syncs content, and uses a kernel-enforced no-replace rename to expose one absent-or-complete immutable directory.",
+      ],
+      capabilities: [
+        {
+          title: "Durable Slurm campaigns",
+          description: "Packs ordered tasks into exact resource allocations and executes them through native OpenSSH, Slurm, and Apptainer.",
+        },
+        {
+          title: "Submission recovery",
+          description: "Uses durable intents and receipts, explicit retries, and bounded ambiguity resolution to avoid silent duplicate work.",
+        },
+        {
+          title: "Resumable workspaces",
+          description: "Preserves private checkpoints across failures while binding each workspace to one opaque request identity.",
+        },
+        {
+          title: "Atomic publication",
+          description: "Syncs and commits application-validated outputs without exposing partial or overwritten destinations.",
+        },
+      ],
+      status:
+        "Active public MIT-licensed 0.1.0 Python package on PyPI for Linux and macOS. It provides one concrete OpenSSH, Slurm, Apptainer, and POSIX implementation without becoming a workflow engine or owning application completion logic.",
+      artifacts: [
+        "Typed zero-dependency Python package",
+        "Campaign plans, intents, and receipts",
+        "Context glossary and ADRs",
+      ],
+    },
+  },
+]
+
+const projectIndexCatalog: Project[] = [
+  ...featuredProjectCatalog,
+  {
     title: "sweng-notes",
     directory: "sweng-notes",
     category: "web",
@@ -302,10 +350,6 @@ const featuredProjectCatalog: Project[] = [
       ],
     },
   },
-]
-
-const projectIndexCatalog: Project[] = [
-  ...featuredProjectCatalog,
   {
     title: "stackoverflow-survey-2025-analysis",
     directory: "stackoverflow-survey-2025-analysis",
