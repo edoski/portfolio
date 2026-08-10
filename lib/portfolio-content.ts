@@ -161,7 +161,7 @@ const featuredProjectCatalog: Project[] = [
         },
       ],
       status:
-        "Active public thesis/research project, versioned 0.1.0. The Python/HPC system and non-asset mobile implementation exist; final on-device model artifacts and device validation are still pending. It is not a production transaction service.",
+        "Active public thesis/research project, versioned 0.1.0, with a complete Python/HPC system and a validated three-chain Expo/ExecuTorch on-device demo. It is not a production transaction service.",
       artifacts: [
         "Experiment programs and ADRs",
         "Durable model and evaluation objects",
@@ -174,22 +174,22 @@ const featuredProjectCatalog: Project[] = [
     directory: "blockweaver",
     category: "systems",
     summary: "Immutable, verifiable EVM block dataset acquisition.",
-    tech: ["Python", "Polars", "JSON-RPC"],
+    tech: ["Python", "Polars", "JSON-RPC", "BigQuery"],
     repo: "https://github.com/edoski/blockweaver",
     detail: {
       tagline: "Feature-selected EVM block datasets with verifiable provenance.",
       overview: [
-        "Blockweaver downloads feature-selected EVM block ranges into immutable Parquet or CSV datasets. Chains and providers are configuration rather than code, and each successful request publishes one data file with one canonical manifest.",
-        "The tool is built for reproducible research inputs: it resolves block or time ranges against finalized chain state, resumes only exact request bindings, and separates chain and provider profiles from acquisition logic.",
+        "Blockweaver downloads feature-selected EVM block ranges through JSON-RPC or Google BigQuery into immutable Parquet or CSV datasets. Chains, sources, and providers are configuration rather than code, and each successful request publishes one data file with one canonical manifest.",
+        "The tool is built for reproducible research inputs: it resolves block or time ranges against finalized chain state, resumes only exact request bindings, and keeps source-specific acquisition behind one artifact contract.",
       ],
       implementation: [
-        "A Typer CLI loads strict TOML configuration, aiohttp batches EVM JSON-RPC requests, and Polars builds typed tables through a closed feature catalog and bounded acquisition chunks.",
+        "A Typer CLI loads strict TOML configuration. aiohttp batches EVM JSON-RPC requests; the optional BigQuery source discovers compatible schemas, enforces a dry-run byte cap, and streams bounded pages; Polars builds the same typed tables for either source.",
         "Complete chunks are digest-bound before reuse. The assembled candidate is validated, synced, and atomically published without replacement; its manifest records schema, provenance, finality, verification samples, and a SHA-256 digest without secrets.",
       ],
       capabilities: [
         {
           title: "Configurable acquisition",
-          description: "Uses named chain and provider profiles to acquire finalized EVM history without embedding endpoints in code.",
+          description: "Uses named chain, source, and provider profiles to acquire finalized EVM history through JSON-RPC or optional Google BigQuery.",
         },
         {
           title: "Feature-selected datasets",
@@ -197,7 +197,7 @@ const featuredProjectCatalog: Project[] = [
         },
         {
           title: "Layered verification",
-          description: "Validates artifact integrity offline; optional RPC verification refreshes finality and checks ancestry and deterministic row samples.",
+          description: "Validates artifact integrity offline; RPC verification refreshes finality and checks ancestry and deterministic row samples, and independently verifies BigQuery acquisitions before publication.",
         },
         {
           title: "Recoverable publication",
