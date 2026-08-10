@@ -129,7 +129,7 @@ const featuredProjectCatalog: Project[] = [
     title: "kairos",
     directory: "kairos",
     category: "ai",
-    summary: "Causal deep learning for low-fee blockchain transaction timing.",
+    summary: "Deep learning for low-fee transaction timing.",
     tech: ["Python", "PyTorch", "Lightning", "ExecuTorch"],
     repo: "https://github.com/edoski/kairos",
     detail: {
@@ -217,7 +217,7 @@ const featuredProjectCatalog: Project[] = [
     title: "journal",
     directory: "journal",
     category: "systems",
-    summary: "Local-first automation for deterministic Obsidian analytics.",
+    summary: "Local-first Obsidian analytics automation.",
     tech: ["Python", "Obsidian", "SQLite", "Apple Shortcuts"],
     repo: "https://github.com/edoski/journal",
     detail: {
@@ -302,6 +302,10 @@ const featuredProjectCatalog: Project[] = [
       ],
     },
   },
+]
+
+const projectIndexCatalog: Project[] = [
+  ...featuredProjectCatalog,
   {
     title: "stackoverflow-survey-2025-analysis",
     directory: "stackoverflow-survey-2025-analysis",
@@ -346,10 +350,6 @@ const featuredProjectCatalog: Project[] = [
       ],
     },
   },
-]
-
-const projectIndexCatalog: Project[] = [
-  ...featuredProjectCatalog,
   {
     title: "portfolio",
     directory: "portfolio",
