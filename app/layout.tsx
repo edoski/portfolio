@@ -3,7 +3,6 @@ import { IBM_Plex_Mono } from 'next/font/google'
 import localFont from 'next/font/local'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
 import { HashScrollRestorer } from '@/components/smooth-scroll-link'
 import './globals.css'
@@ -67,7 +66,6 @@ export default function RootLayout({
         <div className="site-shell flex min-h-screen flex-col bg-background text-foreground">
           <Navbar />
           <div className="flex-1">{children}</div>
-          <Footer />
         </div>
         <Analytics />
         <SpeedInsights />
