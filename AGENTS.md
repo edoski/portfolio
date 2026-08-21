@@ -10,13 +10,13 @@ Domain vocabulary lives in `CONTEXT.md`. Use those terms when discussing archite
 
 ## Development Commands
 
-- `pnpm dev` - Start development server at http://localhost:3000
-- `pnpm build` - Create production build (TypeScript errors are ignored during builds per `next.config.mjs`)
-- `pnpm start` - Start production server
-- `pnpm lint` - Run ESLint checks
-- `pnpm exec tsc --noEmit` - Type-check without emitting files
+- `npm run dev` - Start development server at http://localhost:3000
+- `npm run build` - Create production build (TypeScript errors are ignored during builds per `next.config.mjs`)
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint checks
+- `npm run typecheck` - Type-check without emitting files
 
-Do not run `pnpm dev` manually. Assume the user already has it running; if it is not, ask them to start it.
+Do not run `npm run dev` manually. Assume the user already has it running; if it is not, ask them to start it.
 
 ## Architecture & Structure
 
@@ -79,7 +79,7 @@ Avoid reintroducing the deleted ambient/scroll/text effect stack: WebGL terminal
 
 Core:
 
-- Next.js 16.2.4
+- Next.js 16.3.2
 - React 19.2.5
 - TypeScript 6.x
 
@@ -102,16 +102,16 @@ Do not add Font Awesome separately; `react-icons` is already installed. Do not a
 Use:
 
 ```bash
-pnpm dlx shadcn@latest add [component-name]
+npx shadcn@latest add [component-name]
 ```
 
 This places components in `components/ui/` following `components.json`.
 
 ## Build Configuration Notes
 
-- TypeScript errors do not block `pnpm build` because `typescript.ignoreBuildErrors` is enabled.
-- Always run `pnpm exec tsc --noEmit` or `./node_modules/.bin/tsc --noEmit` when validating changes.
-- ESLint runs separately via `pnpm lint`.
+- TypeScript errors do not block `npm run build` because `typescript.ignoreBuildErrors` is enabled.
+- Always run `npm run typecheck` when validating changes.
+- ESLint runs separately via `npm run lint`.
 
 ## Code Style
 
