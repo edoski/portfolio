@@ -68,7 +68,7 @@ export const education = [
 export const experience = {
   role: "Research Intern",
   organization: "Department of Computer Science and Engineering (DISI), University of Bologna",
-  period: "Apr–Aug 2026",
+  period: "Apr–Sep 2026",
 } as const
 
 export const publications = [
