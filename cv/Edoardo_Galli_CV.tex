@@ -1,6 +1,6 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 
-\usepackage[a4paper,margin=1.35cm]{geometry}
+\usepackage[a4paper,margin=1.45cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -10,6 +10,7 @@
 \usepackage{hyperref}
 \usepackage{titlesec}
 \usepackage{microtype}
+\usepackage{fontawesome5}
 
 \definecolor{text}{HTML}{171717}
 \definecolor{muted}{HTML}{606060}
@@ -21,19 +22,21 @@
   urlcolor=accent,
   linkcolor=accent
 }
+\urlstyle{same}
 
 \pagenumbering{gobble}
 \renewcommand{\familydefault}{\sfdefault}
 \setlength{\parindent}{0pt}
 \setlength{\tabcolsep}{0pt}
 \setlength{\emergencystretch}{2em}
-\setlist[itemize]{leftmargin=1.2em, topsep=3pt, itemsep=2.5pt, parsep=0pt}
+\linespread{1.01}
+\setlist[itemize]{leftmargin=1.15em, topsep=2.5pt, itemsep=2pt, parsep=0pt, partopsep=0pt}
 
 \titleformat{\section}
   {\large\bfseries\color{text}}
   {}{0pt}{}
-  [\vspace{-2pt}{\color{rule}\titlerule}]
-\titlespacing*{\section}{0pt}{10pt}{5pt}
+  [\vspace{3pt}{\color{rule}\titlerule}]
+\titlespacing*{\section}{0pt}{13pt}{9pt}
 
 \newcommand{\contactsep}{\quad{\color{muted}|}\quad}
 \newcommand{\link}[2]{\href{#1}{#2}}
@@ -43,27 +46,35 @@
   {\color{muted}#3}\hfill{\color{muted}#4}
 }
 
-\newcommand{\projectentry}[4]{%
-  \textbf{#1}\hfill\link{#2}{Repository}\\
+\newcommand{\experienceentry}[4]{%
+  \textbf{#1}\hfill{\color{muted}#2}\\[-1pt]
+  {\color{muted}#3}\hfill{\small\color{muted}#4}
+}
+
+\newcommand{\projectentry}[5]{%
+  \textbf{#1}\hspace{4pt}\link{#2}{\raisebox{-0.5pt}{\faGithub}}\\
   {\color{muted}#3}\\[-1pt]
-  {\small\color{muted}#4}
+  {\small\color{muted}#4}\\[-2pt]
+  {#5}
 }
 
-\newcommand{\languageentry}[2]{%
-  \textbf{#1}{\color{muted}, #2}\\
+\newcommand{\researchentry}[3]{%
+  \textbf{#1}\\[-1pt]
+  {\small #2}\\[-1pt]
+  {\small\color{muted}#3}
 }
 
-\newcommand{\projectgap}{\vspace{5pt}}
+\newcommand{\entrygap}{\vspace{5pt}}
 
 \begin{document}
 \color{text}
 
 {\LARGE\bfseries Edoardo Galli}\\[2pt]
-{\large Computer Science student}\\[6pt]
+{\large Computer Science Graduate}\\[6pt]
 {\small
 Bologna, Italy
 \contactsep
-\link{mailto:edoski.dev@gmail.com}{edoski.dev@gmail.com}
+\link{mailto:edoardo.galli3@studio.unibo.it}{edoardo.galli3@studio.unibo.it}
 \contactsep
 \link{https://edoski.com}{edoski.com}
 \contactsep
@@ -72,75 +83,65 @@ Bologna, Italy
 \link{https://www.linkedin.com/in/edoardo-galli-5074321b9}{LinkedIn}
 }
 
-\section{Profile}
-Computer Science student at the University of Bologna, completing a B.Sc. in Information Science for Management and starting the M.Sc. in Artificial Intelligence in September 2026. Focused on deep learning, AI systems, and typed, reproducible software for data-intensive workflows.
+\vspace{9pt}
+Computer Science graduate pursuing an M.Sc. in Artificial Intelligence at the University of Bologna, focused on deep learning and reproducible, data-intensive AI systems.
 
 \section{Education}
-\educationentry{M.Sc. Artificial Intelligence}{Starts Sep 2026}{University of Bologna}{}
+\educationentry{M.Sc. Artificial Intelligence}{Sep 2026--Present}{University of Bologna}{}
 
 \vspace{4pt}
-\educationentry{B.Sc. Information Science for Management}{2021--2026}{University of Bologna}{GPA 28/30}
+\educationentry{B.Sc. Information Science for Management}{Sep 2021--Sep 2026}{University of Bologna}{GPA 28/30}
 
-\vspace{4pt}
-\educationentry{International Baccalaureate Diploma}{2017--2021}{International School of Bologna}{Bilingual Diploma}
-
-\section{Selected Projects}
-\projectentry
-  {spice}
-  {https://github.com/edoski/spice}
-  {Temporal fee-decision deep learning pipeline}
-  {Python, PyTorch, Optuna, Polars, Pydantic, web3.py}
+\section{Experience}
+\experienceentry
+  {Research Intern}
+  {Apr--Aug 2026}
+  {Department of Computer Science and Engineering (DISI), University of Bologna}
+  {}
 \begin{itemize}
-  \item Built an end-to-end thesis pipeline that turns EVM block history into temporal supervised learning datasets.
-  \item Compared LSTM, Transformer, and hybrid model families through reproducible Optuna-driven experiments.
+  \item Conducted deep learning research on short-horizon transaction timing across EVM blockchains under Prof. Federico Montori and Dr. Ivan Zyrianoff.
+  \item Designed reproducible experiments comparing LSTM, Transformer, and hybrid architectures.
+  \item Developed KAIROS end to end, from data pipelines and HPC training to economic evaluation and on-device inference.
 \end{itemize}
-\projectgap
+
+\section{Publications}
+\researchentry
+  {KAIROS: A Predictive Framework for Cost Optimization in Blockchain Environments}
+  {I. Zyrianoff, \textbf{E. Galli}, A. Esposito, L. Gigli, M. Di Felice, and F. Montori}
+  {IEEE Consumer Communications \& Networking Conference (CCNC), 2027.}
+
+\section{Projects}
+\projectentry
+  {KAIROS}
+  {https://github.com/edoski/kairos}
+  {Deep learning system for blockchain transaction timing}
+  {Python, PyTorch, Polars, Pydantic, ExecuTorch}
+  {Built a reproducible Python/HPC pipeline for temporal model training, evaluation, and on-device inference.}
+\entrygap
 
 \projectentry
-  {journal}
+  {Journal}
   {https://github.com/edoski/journal}
   {Personal analytics journal pipeline}
   {Python, Pydantic, pytest, Obsidian}
-\begin{itemize}
-  \item Built an automation system syncing Flow focus data, goals, reminders, and daily metrics into Obsidian.
-  \item Used typed contracts and protocol ports to keep external integrations explicit and testable.
-\end{itemize}
-\projectgap
+  {Automated Flow focus data, goals, reminders, and period metrics into a typed Obsidian workflow.}
+\entrygap
 
 \projectentry
-  {sweng-notes}
-  {https://github.com/edoski/sweng-notes}
-  {Real-time collaborative note editor}
-  {Next.js, React, TypeScript, Tailwind CSS, Liveblocks, Convex}
-\begin{itemize}
-  \item Delivered a shared writing workspace with live presence and typed React surfaces.
-  \item Separated durable Convex document state from Liveblocks collaboration state.
-\end{itemize}
-\projectgap
-
-\projectentry
-  {stackoverflow-survey-2025-analysis}
+  {Stack Overflow Developer Survey 2025}
   {https://github.com/edoski/stackoverflow-survey-2025-analysis}
-  {AI trust analysis from the Stack Overflow 2025 Developer Survey}
+  {Developer trust in AI tools}
   {Python, scikit-learn, pandas, statsmodels, seaborn}
-\begin{itemize}
-  \item Modelled developer trust in AI tools with leakage-safe survey preprocessing.
-  \item Trained interpretable logistic regression and SVM baselines with GridSearchCV.
-\end{itemize}
+  {Modelled developer trust using leakage-safe preprocessing and interpretable statistical and ML methods.}
 
-\section{Technical Skills}
-\renewcommand{\arraystretch}{1.22}
-\begin{tabularx}{\textwidth}{@{}p{2.9cm}X@{}}
-\textbf{AI / ML} & PyTorch, scikit-learn, Optuna, pandas, Polars, statsmodels \\
-\textbf{Programming} & Python, TypeScript, Java, PHP, SQL \\
-\textbf{Web} & React, Next.js, Tailwind CSS, shadcn/ui \\
-\textbf{Backend} & Pydantic, Convex, MySQL, MongoDB, REST \\
-\textbf{Tooling} & Git, Docker, pytest, Bash, Vercel \\
+\section{Skills}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{@{}p{3.2cm}X@{}}
+\textbf{AI / ML} & PyTorch, PyTorch Lightning, scikit-learn, ExecuTorch \\
+\textbf{Data} & Polars, pandas \\
+\textbf{Systems / HPC} & Slurm, Apptainer, Docker, Git \\
+\textbf{Programming} & Python, TypeScript, Java, SQL \\
+\textbf{Languages} & English (native, IELTS Academic 8.5), Italian (native) \\
 \end{tabularx}
-
-\section{Languages}
-\languageentry{English}{native, IELTS Academic 8.5}
-\languageentry{Italian}{native}
-\languageentry{Spanish}{basic}
 
 \end{document}

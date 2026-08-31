@@ -5,7 +5,12 @@ import { TerminalActionLink } from "@/components/terminal-action-link"
 import { TerminalCue } from "@/components/terminal-cue"
 import { TracedRuleBlock } from "@/components/traced-rule-block"
 import { TracedRuleText } from "@/components/traced-rule-text"
-import { education, profile } from "@/lib/portfolio-content"
+import {
+  education,
+  experience,
+  profile,
+  publications,
+} from "@/lib/portfolio-content"
 import { terminalActionLinkClassName } from "@/lib/terminal-action-link"
 import { cn } from "@/lib/utils"
 
@@ -58,6 +63,48 @@ export function TerminalHero() {
                         <em className="traced-rule-row-copy not-italic">
                           {item.institution}
                         </em>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </TracedRuleBlock>
+
+              <TracedRuleBlock className="font-mono text-sm leading-7">
+                <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
+                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6">
+                    experience
+                  </p>
+                  <div className="min-w-0">
+                    <strong className="traced-rule-emphasis">
+                      {experience.role}{" "}
+                      <span className="traced-rule-row-copy font-normal">
+                        ({experience.period})
+                      </span>
+                    </strong>
+                    <p className="traced-rule-row-copy leading-6">
+                      {experience.organization}
+                    </p>
+                  </div>
+                </div>
+              </TracedRuleBlock>
+
+              <TracedRuleBlock className="font-mono text-sm leading-7">
+                <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
+                  <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6">
+                    publications
+                  </p>
+                  <ul className="space-y-3">
+                    {publications.map((publication) => (
+                      <li key={publication.title} className="traced-rule-row">
+                        <strong className="traced-rule-emphasis block">
+                          {publication.title}
+                        </strong>
+                        <span className="traced-rule-row-copy block leading-6">
+                          {publication.authors}
+                        </span>
+                        <span className="traced-rule-row-copy block leading-6">
+                          {publication.venue}.
+                        </span>
                       </li>
                     ))}
                   </ul>

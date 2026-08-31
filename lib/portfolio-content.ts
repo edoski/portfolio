@@ -63,9 +63,19 @@ export const education = [
     title: "B.Sc. Information Science for Management",
     institution: "University of Bologna",
   },
+] as const
+
+export const experience = {
+  role: "Research Intern",
+  organization: "Department of Computer Science and Engineering (DISI), University of Bologna",
+  period: "Apr–Aug 2026",
+} as const
+
+export const publications = [
   {
-    title: "International Baccalaureate Diploma",
-    institution: "International School of Bologna",
+    title: "KAIROS: A Predictive Framework for Cost Optimization in Blockchain Environments",
+    authors: "I. Zyrianoff, E. Galli, A. Esposito, L. Gigli, M. Di Felice, and F. Montori",
+    venue: "IEEE Consumer Communications & Networking Conference (CCNC), 2027",
   },
 ] as const
 
@@ -81,10 +91,8 @@ export const contactDetails = [
     segments: [
       { text: "open to ", emphasis: false },
       { text: "ML/AI", emphasis: true },
-      { text: " engineering ", emphasis: false },
-      { text: "internships", emphasis: true },
-      { text: " and ", emphasis: false },
-      { text: "junior", emphasis: true },
+      { text: " engineering and ", emphasis: false },
+      { text: "research", emphasis: true },
       { text: " roles.", emphasis: false },
     ],
   },
