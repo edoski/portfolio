@@ -36,7 +36,7 @@
   {\large\bfseries\color{text}}
   {}{0pt}{}
   [\vspace{3pt}{\color{rule}\titlerule}]
-\titlespacing*{\section}{0pt}{13pt}{9pt}
+\titlespacing*{\section}{0pt}{11pt}{7pt}
 
 \newcommand{\contactsep}{\quad{\color{muted}|}\quad}
 \newcommand{\link}[2]{\href{#1}{#2}}
@@ -64,7 +64,7 @@
   {\small\color{muted}#3}
 }
 
-\newcommand{\entrygap}{\vspace{5pt}}
+\newcommand{\entrygap}{\vspace{4pt}}
 
 \begin{document}
 \color{text}
@@ -90,9 +90,16 @@ Computer Science graduate pursuing an M.Sc. in Artificial Intelligence at the Un
 \educationentry{M.Sc. Artificial Intelligence}{Sep 2026--Present}{University of Bologna}{}
 
 \vspace{4pt}
-\educationentry{B.Sc. Information Science for Management}{Sep 2021--Sep 2026}{University of Bologna}{GPA 28/30}
+\educationentry{B.Sc. Information Science for Management}{Sep 2021--Sep 2026}{University of Bologna}{Final grade: 109/110}
 
 \section{Experience}
+\experienceentry
+  {Software Engineer}
+  {Oct 2026--Present}
+  {Amoreg}
+  {}
+\entrygap
+
 \experienceentry
   {Research Intern}
   {Apr--Sep 2026}
@@ -120,26 +127,28 @@ Computer Science graduate pursuing an M.Sc. in Artificial Intelligence at the Un
 \entrygap
 
 \projectentry
+  {Servatus}
+  {https://github.com/edoski/servatus}
+  {Resumable Slurm campaigns with atomic output publication}
+  {Python, Slurm, OpenSSH, Apptainer, POSIX}
+  {Published a zero-dependency PyPI package with durable submission receipts and no-replace atomic commits.}
+\entrygap
+
+\projectentry
   {Journal}
   {https://github.com/edoski/journal}
   {Personal analytics journal pipeline}
   {Python, Pydantic, pytest, Obsidian}
   {Automated Flow focus data, goals, reminders, and period metrics into a typed Obsidian workflow.}
-\entrygap
-
-\projectentry
-  {Stack Overflow Developer Survey 2025}
-  {https://github.com/edoski/stackoverflow-survey-2025-analysis}
-  {Developer trust in AI tools}
-  {Python, scikit-learn, pandas, statsmodels, seaborn}
-  {Modelled developer trust using leakage-safe preprocessing and interpretable statistical and ML methods.}
 
 \section{Skills}
-\renewcommand{\arraystretch}{1.2}
+\renewcommand{\arraystretch}{1.1}
 \begin{tabularx}{\textwidth}{@{}p{3.2cm}X@{}}
-\textbf{AI / ML} & PyTorch, PyTorch Lightning, scikit-learn \\
-\textbf{Data} & Polars, pandas \\
-\textbf{Systems / HPC} & Slurm, Apptainer, Docker, Git \\
+\textbf{AI / ML} & Deep Learning, Time-Series Forecasting, LSTM, Transformers \\
+\textbf{ML Frameworks} & PyTorch, PyTorch Lightning, scikit-learn, ExecuTorch \\
+\textbf{Data} & Polars, pandas, Data Pipelines, ETL \\
+\textbf{Systems / HPC} & Linux, Bash, Slurm, Apptainer, Docker, Git \\
+\textbf{Web} & TypeScript, React, Next.js, Tailwind CSS \\
 \textbf{Programming} & Python, TypeScript, Java, SQL \\
 \textbf{Languages} & English (IELTS Academic 8.5), Italian (native) \\
 \end{tabularx}
