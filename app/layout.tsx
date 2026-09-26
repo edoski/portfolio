@@ -38,7 +38,7 @@ const iconVersion = '2026-05-05'
 
 export const metadata: Metadata = {
   title: "edo's portfolio",
-  description: "a terminal-minimal portfolio.",
+  description: "edo's portfolio",
   manifest: '/manifest.json',
   icons: {
     icon: [
