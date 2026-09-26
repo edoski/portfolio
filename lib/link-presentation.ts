@@ -29,7 +29,7 @@ export function getNavbarSocialLinks(links: PortfolioLink[]) {
 }
 
 export function getContactDisplayLabel(link: PortfolioLink) {
-  return link.label.toLowerCase()
+  return link.display ?? link.label.toLowerCase()
 }
 
 export function getAccessibleLinkLabel(link: PortfolioLink) {

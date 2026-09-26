@@ -24,21 +24,23 @@ Do not run `npm run dev` manually. Assume the user already has it running; if it
 
 `app/page.tsx` is the composition module. It renders these Portfolio Sections in order:
 
-1. `Navbar` - navigation with terminal/developer cues
-2. `TerminalHero` - Profile, ASCII Mark, biography, education, and contact action
-3. `ProjectsSection` - dense Project Card grid
-4. `ContactSection` - Contact Link grid
-5. `Footer` - minimal site footer
+1. `TerminalHero` - ASCII Mark plus two short Profile lines (`focus`, `now`) and the contact action
+2. `ExperienceSection` - Timeline Entry rows grouped into `work` and `education`
+3. `PublicationsSection` - Publication rows grouped by year
+4. `ProjectsSection` - dense Project Card grid
+5. `ContactSection` - location plus one Contact Link per row
+
+`Navbar` is rendered by `app/layout.tsx`. Label-column blocks (a lowercase key on the left, content on the right, illuminated Traced Rule on the far left) are built with `TracedRuleField`; sections that need per-row keys (contact) use `TracedRuleBlock` directly.
 
 ### Content Module
 
 Portfolio facts live in `lib/portfolio-content.ts`. Section modules should consume this module instead of owning URLs, project facts, contact facts, or sentinel values.
 
-Do not reintroduce scattered constants for Profile, Project, Social Link, Contact Link, or navigation content. The content module is the seam for portfolio facts.
+Do not reintroduce scattered constants for Profile, Project, Timeline Entry, Publication, Social Link, Contact Link, or navigation content. The content module is the seam for portfolio facts.
 
 ### Component Organization
 
-- `components/` - Portfolio Sections plus focused modules such as `ascii-mark`, `project-card`, `contact-link`, `tech-badge`, `tilt-icon-action`, and `terminal-cue`
+- `components/` - Portfolio Sections plus focused modules such as `ascii-mark`, `project-card`, `contact-link`, `tech-badge`, `tilt-icon-action`, `terminal-cue`, `traced-rule-block`, and `traced-rule-field`
 - `components/ui/` - shadcn/ui primitives currently used by the portfolio (`button`, `card`, `badge`)
 - `app/` - Next.js App Router pages, layout, manifest, and global CSS
 - `lib/` - shared utilities and portfolio content
@@ -51,6 +53,7 @@ Keep sections server-rendered unless they need browser-only behavior. Current cl
 - `components/ascii-mark.tsx` - dynamic browser-only wrapper for `ASCIIText`
 - `components/project-card.tsx` - Motion-based Project Card tilt
 - `components/contact-link.tsx` and `components/tilt-icon-action.tsx` - Motion-based tilt surfaces
+- `components/traced-rule-block.tsx` - pointer-following Traced Rule illumination (Motion values, RAF only while the pointer moves)
 - `components/project-back-link.tsx` and `components/smooth-scroll-link.tsx` - route/sessionStorage navigation helpers
 
 Avoid moving whole sections to `"use client"` for convenience.

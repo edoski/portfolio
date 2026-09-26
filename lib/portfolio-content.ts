@@ -5,6 +5,22 @@ export interface PortfolioLink {
   label: string
   href: string
   external?: boolean
+  display?: string
+}
+
+export interface TimelineEntry {
+  title: string
+  organization: string
+  period: string
+  note?: string
+}
+
+export interface Publication {
+  title: string
+  authors: string[]
+  venue: string
+  venueFull: string
+  year: string
 }
 
 export interface Project {
@@ -42,11 +58,18 @@ export const profile = {
   prompt: "edo@portfolio",
   asciiText: "edo.",
   location: "Bologna, Italy",
+  citationName: "E. Galli",
   summary: [
-    { text: "deep-learning", emphasis: true },
+    { text: "deep learning", emphasis: true },
     { text: " and ", emphasis: false },
     { text: "data-intensive AI systems", emphasis: true },
-    { text: "; studying ", emphasis: false },
+    { text: ".", emphasis: false },
+  ],
+  now: [
+    { text: "software engineer", emphasis: true },
+    { text: " at ", emphasis: false },
+    { text: "Amoreg", emphasis: true },
+    { text: "; M.Sc. ", emphasis: false },
     { text: "artificial intelligence", emphasis: true },
     { text: " at the ", emphasis: false },
     { text: "University of Bologna", emphasis: true },
@@ -54,30 +77,52 @@ export const profile = {
   ],
 } as const
 
-export const education = [
+export const experience: TimelineEntry[] = [
+  {
+    title: "Software Engineer",
+    organization: "Amoreg",
+    period: "Oct 2026 – now",
+  },
+  {
+    title: "Research Intern",
+    organization: "DISI, University of Bologna",
+    period: "Apr – Sep 2026",
+  },
+]
+
+export const education: TimelineEntry[] = [
   {
     title: "M.Sc. Artificial Intelligence",
-    institution: "University of Bologna",
+    organization: "University of Bologna",
+    period: "Sep 2026 – now",
   },
   {
     title: "B.Sc. Information Science for Management",
-    institution: "University of Bologna",
+    organization: "University of Bologna",
+    period: "Sep 2021 – Sep 2026",
+    note: "109/110",
   },
-] as const
+]
 
-export const experience = {
-  role: "Research Intern",
-  organization: "Department of Computer Science and Engineering (DISI), University of Bologna",
-  period: "Apr–Sep 2026",
-} as const
-
-export const publications = [
+export const publications: Publication[] = [
   {
     title: "KAIROS: A Predictive Framework for Cost Optimization in Blockchain Environments",
-    authors: "I. Zyrianoff, E. Galli, A. Esposito, L. Gigli, M. Di Felice, and F. Montori",
-    venue: "IEEE Consumer Communications & Networking Conference (CCNC), 2027",
+    authors: ["I. Zyrianoff", "E. Galli", "A. Esposito", "L. Gigli", "M. Di Felice", "F. Montori"],
+    venue: "IEEE CCNC",
+    venueFull: "IEEE Consumer Communications & Networking Conference",
+    year: "2027",
   },
-] as const
+]
+
+export function getPublicationsByYear() {
+  const years = [...new Set(publications.map((publication) => publication.year))]
+    .sort((a, b) => b.localeCompare(a))
+
+  return years.map((year) => ({
+    year,
+    publications: publications.filter((publication) => publication.year === year),
+  }))
+}
 
 export const navigation = [
   { label: "projects", href: "/projects", command: "cd ~/projects", external: false },
@@ -85,49 +130,32 @@ export const navigation = [
   { label: "resume", href: "/CV_Edoardo_Galli.pdf", command: "cat resume.pdf", external: true },
 ] as const
 
-export const contactDetails = [
-  {
-    label: "status",
-    segments: [
-      { text: "open to ", emphasis: false },
-      { text: "ML/AI", emphasis: true },
-      { text: " engineering and ", emphasis: false },
-      { text: "research", emphasis: true },
-      { text: " roles.", emphasis: false },
-    ],
-  },
-  {
-    label: "location",
-    segments: [
-      { text: "Bologna, Italy; ", emphasis: false },
-      { text: "remote-friendly", emphasis: true },
-      { text: ".", emphasis: false },
-    ],
-  },
-] as const
-
 export const contactLinks: PortfolioLink[] = [
   {
     kind: "github",
     label: "GitHub",
     href: "https://github.com/edoski",
+    display: "github.com/edoski",
     external: true,
   },
   {
     kind: "linkedin",
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/edoardo-galli-5074321b9/",
+    display: "in/edoardo-galli-5074321b9",
     external: true,
   },
   {
     kind: "email",
     label: "Email",
     href: "mailto:edoski.dev@gmail.com",
+    display: "edoski.dev@gmail.com",
   },
   {
     kind: "resume",
     label: "Resume",
     href: "/CV_Edoardo_Galli.pdf",
+    display: "CV_Edoardo_Galli.pdf",
     external: true,
   },
 ]

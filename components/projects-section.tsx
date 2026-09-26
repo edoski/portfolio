@@ -13,7 +13,7 @@ export function ProjectsSection() {
   const featuredProjects = getFeaturedProjects()
 
   return (
-    <section id="projects" className="px-6 pb-0 pt-6 md:pt-4 lg:px-8">
+    <section id="projects" className="px-6 pb-0 pt-12 md:pt-14 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
           <TerminalCue path="~/projects" command="ls --featured" />

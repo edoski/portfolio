@@ -29,7 +29,7 @@ export function ContactLink({ link }: ContactLinkProps) {
       title={accessibleLabel}
       style={style}
       {...tiltHandlers}
-      className="group relative inline-flex min-w-0 transform-gpu items-center justify-center gap-2.5 rounded-md py-0.5 font-mono text-sm leading-6 text-foreground/80 transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:text-base"
+      className="group relative inline-flex min-w-0 transform-gpu items-center justify-center gap-2.5 rounded-md py-0.5 font-mono text-sm leading-6 text-foreground/80 transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-4 focus-visible:ring-offset-background"
     >
       <span
         aria-hidden="true"
