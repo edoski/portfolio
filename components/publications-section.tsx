@@ -36,7 +36,7 @@ function PublicationRow({ publication }: { publication: Publication }) {
   return (
     <li className="traced-rule-row leading-6">
       <strong className="traced-rule-emphasis block">{publication.title}</strong>
-      <span className="traced-rule-row-copy block">
+      <span className="block">
         <span title={publication.venueFull}>{publication.venue}</span>
         <span aria-hidden="true" className="mx-2 text-muted-foreground/45">
           ·
@@ -45,7 +45,7 @@ function PublicationRow({ publication }: { publication: Publication }) {
           <Fragment key={author}>
             {index > 0 && ", "}
             {author === profile.citationName ? (
-              <strong className="traced-rule-emphasis">{author}</strong>
+              <strong className="font-semibold text-white">{author}</strong>
             ) : (
               author
             )}
