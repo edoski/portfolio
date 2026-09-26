@@ -171,12 +171,12 @@ const featuredProjectCatalog: Project[] = [
     detail: {
       tagline: "Learning when to execute blockchain transactions.",
       overview: [
-        "KAIROS learns from finalized EVM block history to choose a low-base-fee block within a fixed future horizon. It turns externally built corpora into causal temporal samples, compares sequence models, and evaluates their timing decisions with mean per-origin economic metrics.",
-        "The project extends the original SPICE temporal experiment into a thesis-grade research and execution system: typed experiment programs, HPO, Slurm campaigns, durable training and evaluation objects, and an Expo/ExecuTorch demo.",
+        "KAIROS learns from finalized EVM block history to choose a low-base-fee block within a fixed future horizon. It builds causal samples from Blockweaver datasets, compares sequence models on Ethereum, Polygon, and Avalanche, and scores their timing decisions with per-origin economic metrics.",
+        "The project extends the temporal experiment from SPICE and underpins the IEEE CCNC 2027 paper on KAIROS. Staged feature, context, HPO, and horizon studies run as Slurm GPU campaigns, and the selected models ship in an Expo/ExecuTorch demo.",
       ],
       implementation: [
-        "The Python pipeline loads canonical corpora, builds causal block features and historical windows, trains LSTM, Transformer, and Transformer-LSTM models with PyTorch Lightning, then selects candidates by economic optimality gap.",
-        "The mobile exporter converts selected models for ExecuTorch. The Expo app reads Ethereum, Polygon, and Avalanche directly through viem and runs inference on-device without a server fallback.",
+        "The Python pipeline resolves UUID-addressed Blockweaver datasets, builds causal block features and historical windows, and trains LSTM, Transformer, and Transformer-LSTM models with PyTorch Lightning. Candidates are selected by validation optimality gap, and held-out analysis adds a fixed-deadline rolling policy and time-clustered bootstrap intervals.",
+        "Servatus handles durable campaigns, atomic publication, and OpenSSH/Slurm/Apptainer submission. An isolated exporter converts twelve selected models to XNNPACK ExecuTorch programs with parity checks, and the Expo app runs them on-device over public RPC without a server fallback.",
       ],
       capabilities: [
         {
@@ -188,19 +188,19 @@ const featuredProjectCatalog: Project[] = [
           description: "Compares three model families that predict both a target block offset and its minimum base fee.",
         },
         {
-          title: "Economic evaluation",
-          description: "Selects and reports models with optimality gap, fee savings, and P50 fee-inclusive evaluation.",
+          title: "Held-out economic evaluation",
+          description: "Reports optimality gap and base-fee and P50 fee-inclusive savings with UTC-hour bootstrap intervals.",
         },
         {
           title: "On-device inference",
-          description: "Exports trained models for a serverless ExecuTorch mobile demonstration backed by direct chain reads.",
+          description: "Bundles twelve parity-checked models, three chains by four horizons, into a serverless Expo app.",
         },
       ],
       status:
-        "Active public thesis/research project, versioned 0.1.0, with a complete Python/HPC system and a validated three-chain Expo/ExecuTorch on-device demo. It is not a production transaction service.",
+        "Public MIT-licensed research code released as v1.0.0, with data and trained models archived on Zenodo. The mobile demo has run on an iOS Simulator build, not physical devices, and KAIROS is not a production transaction service.",
       artifacts: [
-        "Experiment programs and ADRs",
-        "Durable model and evaluation objects",
+        "Study, artifact, and evaluation objects",
+        "Zenodo data and model release",
         "ExecuTorch exporter and Expo app",
       ],
     },
@@ -215,12 +215,12 @@ const featuredProjectCatalog: Project[] = [
     detail: {
       tagline: "Feature-selected EVM block datasets with verifiable provenance.",
       overview: [
-        "Blockweaver downloads feature-selected EVM block ranges through JSON-RPC or Google BigQuery into immutable Parquet or CSV datasets. Chains, sources, and providers are configuration rather than code, and each successful request publishes one data file with one canonical manifest.",
-        "The tool is built for reproducible research inputs: it resolves block or time ranges against finalized chain state, resumes only exact request bindings, and keeps source-specific acquisition behind one artifact contract.",
+        "Blockweaver downloads feature-selected EVM block ranges through JSON-RPC or Google BigQuery into immutable, UUID-addressed Parquet or CSV datasets. Chains, sources, and providers are configuration rather than code, and each successful request publishes one data file with one canonical manifest.",
+        "The tool is built for reproducible research inputs: it resolves block or time ranges against finalized chain state, resumes only exact request bindings, and keeps source-specific acquisition behind one artifact contract. KAIROS loads its block corpora as Blockweaver datasets through the public loader.",
       ],
       implementation: [
         "A Typer CLI loads strict TOML configuration. aiohttp batches EVM JSON-RPC requests; the optional BigQuery source discovers compatible schemas, enforces a dry-run byte cap, and streams bounded pages; Polars builds the same typed tables for either source.",
-        "Complete chunks are digest-bound before reuse. The assembled candidate is validated, synced, and atomically published without replacement; its manifest records schema, provenance, finality, verification samples, and a SHA-256 digest without secrets.",
+        "Complete chunks are digest-bound before reuse. The assembled candidate is validated, synced, and atomically published without replacement; its manifest records schema, provenance, finality, verification samples, and a SHA-256 digest without secrets. A read-only Python loader applies the same strict validator as verify.",
       ],
       capabilities: [
         {
@@ -233,15 +233,15 @@ const featuredProjectCatalog: Project[] = [
         },
         {
           title: "Layered verification",
-          description: "Validates artifact integrity offline; RPC verification refreshes finality and checks ancestry and deterministic row samples, and independently verifies BigQuery acquisitions before publication.",
+          description: "Validates artifact integrity offline from the CLI or Python; RPC verification refreshes finality and checks ancestry and deterministic row samples, and independently verifies BigQuery acquisitions before publication.",
         },
         {
           title: "Recoverable publication",
-          description: "Resumes validated checkpoints and atomically publishes immutable two-file artifacts without overwriting destinations.",
+          description: "Resumes validated checkpoints and atomically publishes immutable two-file artifacts under their dataset UUID without overwriting destinations.",
         },
       ],
       status:
-        "Active public MIT-licensed Python CLI, versioned 0.2.0, with focused end-to-end coverage for acquisition, recovery, publication, and verification contracts.",
+        "Public MIT-licensed Python CLI and library, released as 0.3.4 on PyPI through Trusted Publishing, with over 100 CLI-level tests against fake JSON-RPC and BigQuery services in Linux and macOS CI.",
       artifacts: [
         "Canonical dataset manifests",
         "Parquet and CSV block datasets",
@@ -253,42 +253,42 @@ const featuredProjectCatalog: Project[] = [
     title: "journal",
     directory: "journal",
     category: "systems",
-    summary: "Local-first Obsidian analytics automation.",
-    tech: ["Python", "Obsidian", "SQLite"],
+    summary: "Obsidian journal automation and AI tutor memory.",
+    tech: ["Python", "Swift", "TypeScript", "Obsidian"],
     repo: "https://github.com/edoski/journal",
     detail: {
-      tagline: "Local-first automation for Obsidian journal analytics.",
+      tagline: "Local-first journal analytics and durable study memory for AI tutors.",
       overview: [
-        "journal-sync is local-first Python automation that turns Flow focus sessions and iCloud Shortcut payloads into deterministic daily, weekly, monthly, and yearly analytics inside an Obsidian vault.",
-        "It also maintains media and university-grade workflows. The codebase emphasizes strict parsers, stable Markdown rendering, atomic note updates, advisory locks, and recoverable validation or quarantine for external payloads.",
+        "Journal is local-first Python automation for an Obsidian vault. Its sync package turns Flow focus sessions and iCloud Shortcut payloads into deterministic daily, weekly, monthly, and yearly analytics, maintains media and university-grade workflows, and runs on schedule through a background macOS app.",
+        "Its learning package gives AI tutors in Pi, Claude, and Codex durable per-course memory. Each course directory owns a study workspace that separates learner evidence, revisable tutor knowledge, unfinished tasks, and a course route; planning reads recorded study time from the journal through one read-only interface.",
       ],
       implementation: [
-        "CLI commands dispatch daily and period sync through application services. Focused adapters read Flow SQLite, iCloud status JSON, schedules, media sources, and Obsidian Markdown.",
-        "Domain modules compute metrics and reporting windows, then render stable frontmatter, tables, text charts, trends, and moving averages back into the vault through file-safe publication.",
+        "Sync commands dispatch through application services over small ports. Adapters read Flow SQLite, iCloud status JSON, schedules, and Obsidian Markdown; writers render typed chart and table specs back through locked, atomic note publication. A Swift AppKit app bundles a signed Python runtime for LaunchAgents and Flow session prompts.",
+        "A standard-library Python agent CLI answers five read verbs with whole items packed into UTF-8 byte budgets, and publishes field patches under revision and digest checks, locks, and atomic replacement. One canonical skill owns the teaching workflow; a TypeScript Pi extension adds tools, quizzes, and live Obsidian lesson notes.",
       ],
       capabilities: [
         {
-          title: "Daily sync",
-          description: "Combines Flow sessions, schedule rules, training, and sleep data into Obsidian metrics and frontmatter.",
+          title: "Journal analytics",
+          description: "Builds daily, weekly, monthly, and yearly Obsidian reports from Flow sessions, schedules, training, sleep, and media.",
         },
         {
-          title: "Period reports",
-          description: "Builds weekly, monthly, and yearly Markdown reports with deterministic tables, trends, and moving averages.",
+          title: "Native macOS runtime",
+          description: "Runs scheduled sync plus Flow session titling, pause reminders, and undo previews from a signed background app.",
         },
         {
-          title: "Media workflows",
-          description: "Scans books and podcast series, regenerates series indexes, and imports Kindle annotations.",
+          title: "Revisable study memory",
+          description: "Records attempts as append-only evidence with linked corrections, kept apart from tutor knowledge, tasks, and preferences.",
         },
         {
-          title: "Safe local operation",
-          description: "Protects note updates with atomic writes, advisory locks, and recoverable external-payload validation.",
+          title: "Bounded retrieval",
+          description: "Resumes a course in one call, returning whole evidence and knowledge within byte budgets and listing every omission.",
         },
       ],
       status:
-        "Active public personal automation, packaged as journal-sync with a standard-library-only runtime and focused test, snapshot, import-boundary, and mutation coverage.",
+        "Active public personal project with a standard-library-only Python runtime, strict mypy, import contracts, rendering snapshots, and Python and Pi adapter tests. The learning subsystem stores study memory for agents; it has no vector store or numerical mastery model.",
       artifacts: [
-        "Shortcut status contract docs",
-        "Grade sync docs",
+        "Canonical tutor skill and references",
+        "Native-host acceptance protocol",
         "Snapshot render baselines",
       ],
     },
@@ -297,42 +297,42 @@ const featuredProjectCatalog: Project[] = [
     title: "servatus",
     directory: "servatus",
     category: "systems",
-    summary: "Resumable Slurm work and atomic publication.",
+    summary: "Resumable Slurm campaigns and atomic publication.",
     tech: ["Python", "Slurm", "OpenSSH", "Apptainer"],
     repo: "https://github.com/edoski/servatus",
     detail: {
-      tagline: "Run resumable work through Slurm and atomically publish validated outputs.",
+      tagline: "Plan, submit, and observe resumable Slurm campaigns, then atomically publish validated outputs.",
       overview: [
-        "Servatus is zero-runtime-dependency Python infrastructure for resumable application work. Campaign submits immutable ordered tasks to Slurm through native OpenSSH and Apptainer, while Workspace preserves private work and atomically publishes application-validated outputs.",
-        "Resilience is concentrated at distributed submission and POSIX publication. Durable intent and receipt state prevents silent duplicate submission; identity locks and no-replace commits prevent concurrent corruption or overwrite. Applications retain task meaning, schemas, validation, and completion decisions.",
+        "Servatus is a zero-dependency Python library and CLI for resumable application work. Campaign keeps an append-only roster of opaque tasks and its durable attempt history, submits reviewed plans to Slurm through native OpenSSH and Apptainer, and observes their scheduler state. Workspace retains private checkpoints and atomically publishes application-validated outputs.",
+        "Resilience is concentrated at submission, observation, and POSIX publication. Durable intents and receipts prevent silent duplicate submission, retries require explicit operator choices, and no-replace commits prevent concurrent corruption or overwrite. Applications retain task meaning, result schemas, validation, and completion decisions behind an opaque result probe.",
       ],
       implementation: [
-        "Campaign freezes task order, arguments, and payload digests; plans balanced homogeneous allocations with exact CPU, memory, and GPU resources; renders quote-safe Slurm scripts; then records intent before submission and receipts after acceptance.",
-        "Workspace binds hidden state to an application destination and opaque identity. Draft assembles same-filesystem files, syncs content, and uses a kernel-enforced no-replace rename to expose one absent-or-complete immutable directory.",
+        "Named profiles in SERVATUS.toml resolve a Slurm target and one homogeneous resource request. Planning collects scheduler and result evidence, packs eligible tasks into balanced single-node allocations with exact CPU, memory, and GPU totals, and binds the decision to a campaign revision and integrity digest; submission records intent before contacting Slurm and receipts after acceptance.",
+        "Inspection batches bounded squeue and sacct queries per original route, matches immutable allocation identities, and reports result readiness separately from quiescence. Workspace binds hidden state to an opaque identity, and drafts, file stages, and child workspaces commit through kernel no-replace renames that expose one absent-or-complete destination.",
       ],
       capabilities: [
         {
-          title: "Durable Slurm campaigns",
-          description: "Packs ordered tasks into exact resource allocations and executes them through native OpenSSH, Slurm, and Apptainer.",
+          title: "Profile-driven campaigns",
+          description: "Packs append-only task rosters into exact single-node allocations and runs them through OpenSSH, Slurm, and Apptainer.",
         },
         {
           title: "Submission recovery",
-          description: "Uses durable intents and receipts, explicit retries, and bounded ambiguity resolution to avoid silent duplicate work.",
+          description: "Records durable intents and receipts, reconciles ambiguous allocations by exact identity, and gates duplicate-risk retries.",
         },
         {
-          title: "Resumable workspaces",
-          description: "Preserves private checkpoints across failures while binding each workspace to one opaque request identity.",
+          title: "Bounded observation",
+          description: "Inspects queue and accounting evidence, reads bounded task logs, and exports revision-bound campaign views as JSON.",
         },
         {
           title: "Atomic publication",
-          description: "Syncs and commits application-validated outputs without exposing partial or overwritten destinations.",
+          description: "Retains resumable checkpoints and publishes directories, single files, and child results without partial or overwritten destinations.",
         },
       ],
       status:
-        "Active public MIT-licensed 0.1.0 Python package on PyPI for Linux and macOS. It provides one concrete OpenSSH, Slurm, Apptainer, and POSIX implementation without becoming a workflow engine or owning application completion logic.",
+        "Active public MIT-licensed alpha Python package for Linux and macOS, released as 0.11.0 on PyPI, with over 500 tests under strict Pyright in CI. It drives one concrete OpenSSH, Slurm, Apptainer, and POSIX lane without becoming a workflow engine, scheduler plugin, or experiment tracker.",
       artifacts: [
-        "Typed zero-dependency Python package",
-        "Campaign plans, intents, and receipts",
+        "Typed zero-dependency package and CLI",
+        "Schema-versioned campaign state and plans",
         "Context glossary and ADRs",
       ],
     },
@@ -441,12 +441,12 @@ const projectIndexCatalog: Project[] = [
     detail: {
       tagline: "Terminal-minimal developer portfolio with a focused ASCII signature mark.",
       overview: [
-        "This site presents my profile, education, projects, contact links, resume, repositories, and demos through a black-and-monochrome terminal-inspired interface.",
+        "This site presents my profile, experience, education, publications, projects, contact links, resume, repositories, and demos through a black-and-monochrome terminal-inspired interface.",
         "The design uses shell cues, dense project cards, shadcn/ui surfaces, and one orange Three.js ASCII mark as the signature visual. Portfolio facts live in a single typed content module so sections and project routes stay data-driven.",
       ],
       implementation: [
         "Next.js App Router composes server-rendered portfolio sections for the home page, static project index, and generated project detail pages.",
-        "Browser-only behavior is isolated into small client islands: ASCII rendering, pointer tilt cards, contact links, tech badges, and route/session navigation helpers.",
+        "Browser-only behavior is isolated into small client islands: ASCII rendering, pointer tilt cards, contact links, tech badges, pointer-traced label rules, and route/session navigation helpers.",
       ],
       capabilities: [
         {
