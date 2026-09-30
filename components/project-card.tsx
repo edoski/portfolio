@@ -136,7 +136,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </div>
           </div>
           <p className="min-h-10 text-sm leading-5 text-muted-foreground">
-            <span className="font-mono text-xs font-bold lowercase text-muted-foreground/85">
+            <span className="font-mono text-xs font-bold lowercase text-muted-foreground">
               {project.category}
             </span>
             <span className="mx-2 text-muted-foreground/45">|</span>

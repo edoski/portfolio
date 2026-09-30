@@ -38,7 +38,7 @@ function TimelineRow({ entry }: { entry: TimelineEntry }) {
         {entry.organization}
         {entry.note && <> · {entry.note}</>}
       </span>
-      <span className="traced-rule-row-copy order-3 md:order-2 md:whitespace-nowrap md:text-right lg:order-3">
+      <span className="traced-rule-row-meta order-3 md:order-2 md:whitespace-nowrap md:text-right lg:order-3">
         {entry.period}
       </span>
     </li>

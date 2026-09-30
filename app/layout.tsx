@@ -19,6 +19,16 @@ const jetBrainsMono = localFont({
       weight: '500',
       style: 'normal',
     },
+    {
+      path: '../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-600-normal.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2',
+      weight: '700',
+      style: 'normal',
+    },
   ],
   display: 'block',
   variable: '--font-jetbrains-mono',

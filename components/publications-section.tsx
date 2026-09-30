@@ -36,8 +36,10 @@ function PublicationRow({ publication }: { publication: Publication }) {
   return (
     <li className="traced-rule-row leading-6">
       <strong className="traced-rule-emphasis block">{publication.title}</strong>
-      <span className="block">
-        <span title={publication.venueFull}>{publication.venue}</span>
+      <span className="traced-rule-row-copy block">
+        <span title={publication.venueFull} className="traced-rule-row-meta">
+          {publication.venue}
+        </span>
         <span aria-hidden="true" className="mx-2 text-muted-foreground/45">
           ·
         </span>

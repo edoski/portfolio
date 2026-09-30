@@ -15,7 +15,7 @@ export function TracedRuleField({
   className,
 }: TracedRuleFieldProps) {
   return (
-    <TracedRuleBlock className={cn("font-mono text-sm leading-7", className)}>
+    <TracedRuleBlock className={cn("font-mono text-sm leading-6 md:leading-7", className)}>
       <div className="grid gap-2 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start md:gap-6">
         <p className="traced-rule-label inline-block pb-0.5 font-bold lowercase leading-6">
           {label}

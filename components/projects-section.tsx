@@ -19,7 +19,7 @@ export function ProjectsSection() {
           <TerminalCue path="~/projects" command="ls --featured" />
           <Link
             href="/projects"
-            className={`${terminalNavLinkClassName} ml-auto shrink-0`}
+            className={`${terminalNavLinkClassName} shrink-0 sm:ml-auto`}
           >
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             <span className={terminalNavLinkTextClassName}>view more.</span>
