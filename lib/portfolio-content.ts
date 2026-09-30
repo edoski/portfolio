@@ -254,16 +254,16 @@ const featuredProjectCatalog: Project[] = [
     directory: "journal",
     category: "systems",
     summary: "Obsidian journal automation and AI tutor memory.",
-    tech: ["Python", "Swift", "TypeScript", "Obsidian"],
+    tech: ["Python", "TypeScript", "Obsidian"],
     repo: "https://github.com/edoski/journal",
     detail: {
       tagline: "Local-first journal analytics and durable study memory for AI tutors.",
       overview: [
-        "Journal is local-first Python automation for an Obsidian vault. Its sync package turns Flow focus sessions and iCloud Shortcut payloads into deterministic daily, weekly, monthly, and yearly analytics, maintains media and university-grade workflows, and runs on schedule through a background macOS app.",
+        "Journal is local-first Python automation for an Obsidian vault. Its sync package turns Flow focus sessions and iCloud Shortcut payloads into deterministic daily, weekly, monthly, and yearly analytics, maintains media and university-grade workflows, and writes its results back into the vault as plain Markdown notes.",
         "Its learning package gives AI tutors in Pi, Claude, and Codex durable per-course memory. Each course directory owns a study workspace that separates learner evidence, revisable tutor knowledge, unfinished tasks, and a course route; planning reads recorded study time from the journal through one read-only interface.",
       ],
       implementation: [
-        "Sync commands dispatch through application services over small ports. Adapters read Flow SQLite, iCloud status JSON, schedules, and Obsidian Markdown; writers render typed chart and table specs back through locked, atomic note publication. A Swift AppKit app bundles a signed Python runtime for LaunchAgents and Flow session prompts.",
+        "Sync commands dispatch through application services over small ports. Adapters read Flow SQLite, iCloud status JSON, schedules, and Obsidian Markdown; writers render typed chart and table specs back through locked, atomic note publication.",
         "A standard-library Python agent CLI answers five read verbs with whole items packed into UTF-8 byte budgets, and publishes field patches under revision and digest checks, locks, and atomic replacement. One canonical skill owns the teaching workflow; a TypeScript Pi extension adds tools, quizzes, and live Obsidian lesson notes.",
       ],
       capabilities: [
@@ -272,8 +272,8 @@ const featuredProjectCatalog: Project[] = [
           description: "Builds daily, weekly, monthly, and yearly Obsidian reports from Flow sessions, schedules, training, sleep, and media.",
         },
         {
-          title: "Native macOS runtime",
-          description: "Runs scheduled sync plus Flow session titling, pause reminders, and undo previews from a signed background app.",
+          title: "Atomic note publication",
+          description: "Renders typed chart and table specs into Obsidian Markdown through locked, atomic writes that never leave a half-written note.",
         },
         {
           title: "Revisable study memory",
