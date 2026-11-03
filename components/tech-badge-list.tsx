@@ -1,21 +1,24 @@
+import type { TechBadgeSize } from "@/components/tech-badge"
 import { TechBadge } from "@/components/tech-badge"
 import { cn } from "@/lib/utils"
 
 interface TechBadgeListProps {
   tech: string[]
   className?: string
+  badgeSize?: TechBadgeSize
   badgeClassName?: string
 }
 
 export function TechBadgeList({
   tech,
   className,
+  badgeSize,
   badgeClassName,
 }: TechBadgeListProps) {
   return (
     <div className={cn("flex flex-wrap content-start gap-1.5", className)}>
       {tech.map((item) => (
-        <TechBadge key={item} className={badgeClassName}>
+        <TechBadge key={item} size={badgeSize} className={badgeClassName}>
           {item}
         </TechBadge>
       ))}

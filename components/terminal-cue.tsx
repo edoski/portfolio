@@ -15,7 +15,7 @@ export function TerminalCue({
   return (
     <p
       className={cn(
-        "terminal-cue inline-block font-mono text-[1.0625rem] leading-tight text-foreground",
+        "terminal-cue inline-block font-mono text-base leading-tight text-foreground",
         className
       )}
     >

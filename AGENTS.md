@@ -22,13 +22,15 @@ Do not run `npm run dev` manually. Assume the user already has it running; if it
 
 ### Page Composition
 
-`app/page.tsx` is the composition module. It renders these Portfolio Sections in order:
+`app/page.tsx` renders `HomePage` (`components/home/home-page.tsx`), the composition module. It renders these Portfolio Sections in order, all in `components/home/`:
 
-1. `TerminalHero` - ASCII Mark plus two short Profile lines (`focus`, `now`) and the contact action
-2. `ExperienceSection` - Timeline Entry rows grouped into `work` and `education`
+1. `TerminalHero` - `~ $ whoami` prompt, ASCII Mark, two short Profile lines (`focus`, `now`) and the contact action
+2. `ExperienceSection` - Timeline Entry rows (title and organization in aligned columns) grouped into `work` and `education`
 3. `PublicationsSection` - Publication rows grouped by year
-4. `ProjectsSection` - dense Project Card grid
-5. `ContactSection` - location plus one Contact Link per row
+4. `ProjectsSection` - Project Card grid (`density="comfortable"`)
+5. `ContactSection` - one Contact Link per row
+
+Every section below the hero is wrapped in `HomeSection`, which owns the page rhythm (96px between sections, 64px on mobile; 24px from the header to its content) and renders the `TerminalPathCue` header (`~/experience`), an `h2` that names the section. Section headers are bare paths, with no shell command.
 
 `Navbar` is rendered by `app/layout.tsx`. Label-column blocks (a lowercase key on the left, content on the right, illuminated Traced Rule on the far left) are built with `TracedRuleField`; sections that need per-row keys (contact) use `TracedRuleBlock` directly.
 
@@ -40,7 +42,8 @@ Do not reintroduce scattered constants for Profile, Project, Timeline Entry, Pub
 
 ### Component Organization
 
-- `components/` - Portfolio Sections plus focused modules such as `ascii-mark`, `project-card`, `contact-link`, `tech-badge`, `tilt-icon-action`, `terminal-cue`, `traced-rule-block`, and `traced-rule-field`
+- `components/home/` - the home page's Portfolio Sections and `HomeSection`
+- `components/` - focused modules such as `ascii-mark`, `project-card`, `contact-link`, `tech-badge`, `tilt-icon-action`, `terminal-cue`, `terminal-path-cue`, `traced-rule-block`, and `traced-rule-field`
 - `components/ui/` - shadcn/ui primitives currently used by the portfolio (`button`, `card`, `badge`)
 - `app/` - Next.js App Router pages, layout, manifest, and global CSS
 - `lib/` - shared utilities and portfolio content
