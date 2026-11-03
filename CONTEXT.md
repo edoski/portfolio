@@ -2,9 +2,9 @@
 
 ## Terms
 
-**Profile** — The personal introduction for Edoardo Galli: name, handle, location, a one-line `focus` (what the work is about), a one-line `now` (current role and study), and the primary call to action.
+**Profile** — The personal introduction for Edoardo Galli: name, handle, a one-line `focus` (what the work is about), a one-line `now` (current role and study), and the primary call to action.
 
-**Timeline Entry** — One dated row in the experience section: title, organization, period, and an optional note such as a final grade. Work and education entries share this shape.
+**Timeline Entry** — One row in the experience section: a title and an organization, shown in aligned columns without dates. Work and education entries share this shape.
 
 **Publication** — A paper with a title, ordered author list, short and full venue names, and year. Rendered as compact rows grouped by year, with the author matching the Profile's citation name emphasised.
 

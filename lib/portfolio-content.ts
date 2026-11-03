@@ -11,8 +11,6 @@ export interface PortfolioLink {
 export interface TimelineEntry {
   title: string
   organization: string
-  period: string
-  note?: string
 }
 
 export interface Publication {
@@ -57,7 +55,6 @@ export const profile = {
   handle: "edo",
   prompt: "edo@portfolio",
   asciiText: "edo.",
-  location: "Bologna, Italy",
   citationName: "E. Galli",
   summary: [
     { text: "deep learning", emphasis: true },
@@ -81,12 +78,10 @@ export const experience: TimelineEntry[] = [
   {
     title: "Software Engineer",
     organization: "Amoreg",
-    period: "Oct 2026 – now",
   },
   {
     title: "Research Intern",
-    organization: "DISI, University of Bologna",
-    period: "Apr – Sep 2026",
+    organization: "University of Bologna",
   },
 ]
 
@@ -94,13 +89,10 @@ export const education: TimelineEntry[] = [
   {
     title: "M.Sc. Artificial Intelligence",
     organization: "University of Bologna",
-    period: "Sep 2026 – now",
   },
   {
     title: "B.Sc. Information Science for Management",
     organization: "University of Bologna",
-    period: "Sep 2021 – Sep 2026",
-    note: "109/110",
   },
 ]
 

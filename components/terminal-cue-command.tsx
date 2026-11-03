@@ -2,14 +2,20 @@
 
 import { useEffect, useRef, useState } from "react"
 
+import { cn } from "@/lib/utils"
+
 const CURSOR_REVEAL_DELAY_MS = 250
 const CURSOR_BLINK_CYCLE_MS = 1000
 
 interface TerminalCueCommandProps {
   children: string
+  className?: string
 }
 
-export function TerminalCueCommand({ children }: TerminalCueCommandProps) {
+export function TerminalCueCommand({
+  children,
+  className,
+}: TerminalCueCommandProps) {
   const [isCursorActive, setIsCursorActive] = useState(false)
   const [isCursorVisible, setIsCursorVisible] = useState(false)
   const [cursorCycle, setCursorCycle] = useState(0)
@@ -75,7 +81,7 @@ export function TerminalCueCommand({ children }: TerminalCueCommandProps) {
 
   return (
     <span
-      className="terminal-cue-command text-foreground"
+      className={cn("terminal-cue-command text-foreground", className)}
       onPointerEnter={startCursor}
       onPointerLeave={stopCursor}
     >
