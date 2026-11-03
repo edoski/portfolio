@@ -1,156 +1,173 @@
-\documentclass[11pt,a4paper]{article}
+% Edoardo Galli, CV. One A4 page, built with LuaLaTeX:
+%   latexmk -lualatex -outdir=<build dir> <this file>
+%
+% Layout: a 3.6cm rail on the left holds dates, section headings and labels;
+% a 13.4cm content column holds everything else. The text block is the
+% content column, and \rail hangs its argument into the left margin, so the
+% PDF text keeps rail, title and bullets in reading order for each entry.
+%
+% Type system: Inter Regular and SemiBold only, three sizes (22pt name,
+% 10pt body, 9pt meta), three colours (ink, muted grey, one accent bar).
+% Every bullet is set in an unbreakable box: a bullet too long for its line
+% raises an overfull box warning instead of wrapping.
 
-\usepackage[a4paper,margin=1.45cm]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
+\documentclass[a4paper]{article}
+
+% 2cm page margin + 3.6cm rail on the left; 2cm on the right.
+\usepackage[a4paper, left=5.6cm, right=2cm, top=2.2cm, bottom=1.8cm]{geometry}
+\usepackage{fontspec}
 \usepackage{xcolor}
-\usepackage{enumitem}
-\usepackage{tabularx}
-\usepackage{hyperref}
-\usepackage{titlesec}
-\usepackage{microtype}
-\usepackage{fontawesome5}
-
-\definecolor{text}{HTML}{171717}
-\definecolor{muted}{HTML}{606060}
-\definecolor{rule}{HTML}{D8D8D8}
-\definecolor{accent}{HTML}{B45309}
+\usepackage[hidelinks]{hyperref}
 
 \hypersetup{
-  colorlinks=true,
-  urlcolor=accent,
-  linkcolor=accent
-}
-\urlstyle{same}
-
-\pagenumbering{gobble}
-\renewcommand{\familydefault}{\sfdefault}
-\setlength{\parindent}{0pt}
-\setlength{\tabcolsep}{0pt}
-\setlength{\emergencystretch}{2em}
-\linespread{1.01}
-\setlist[itemize]{leftmargin=1.15em, topsep=2.5pt, itemsep=2pt, parsep=0pt, partopsep=0pt}
-
-\titleformat{\section}
-  {\large\bfseries\color{text}}
-  {}{0pt}{}
-  [\vspace{3pt}{\color{rule}\titlerule}]
-\titlespacing*{\section}{0pt}{11pt}{7pt}
-
-\newcommand{\contactsep}{\quad{\color{muted}|}\quad}
-\newcommand{\link}[2]{\href{#1}{#2}}
-
-\newcommand{\educationentry}[4]{%
-  \textbf{#1}\hfill{\color{muted}#2}\\
-  {\color{muted}#3}\hfill{\color{muted}#4}
+  pdftitle  = {Edoardo Galli, CV},
+  pdfauthor = {Edoardo Galli},
 }
 
-\newcommand{\experienceentry}[4]{%
-  \textbf{#1}\hfill{\color{muted}#2}\\[-1pt]
-  {\color{muted}#3}\hfill{\small\color{muted}#4}
-}
+% ---------------------------------------------------------------- Colour --
 
-\newcommand{\projectentry}[5]{%
-  \textbf{#1}\hspace{4pt}\link{#2}{\raisebox{-0.5pt}{\faGithub}}\\
-  {\color{muted}#3}\\[-1pt]
-  {\small\color{muted}#4}\\[-2pt]
-  {#5}
-}
+\definecolor{ink}{HTML}{171717}    % all text and links
+\definecolor{muted}{HTML}{606060}  % dates, meta lines, bullets
+\definecolor{accent}{HTML}{E8A33D} % the bar above the name; never text
 
-\newcommand{\researchentry}[3]{%
-  \textbf{#1}\\[-1pt]
-  {\small #2}\\[-1pt]
-  {\small\color{muted}#3}
-}
+% ------------------------------------------------------------------ Type --
 
-\newcommand{\entrygap}{\vspace{4pt}}
+% LetterSpace is a percentage of the em: 1.0 = +10/1000 em.
+% Tabular figures stay in the rail: Inter's tnum also widens the hyphen.
+\defaultfontfeatures{
+  Extension    = .otf,
+  UprightFont  = *-Regular,
+  BoldFont     = *-SemiBold,
+  Numbers      = Lining,
+}
+\setmainfont{Inter}[LetterSpace = 1.0]                % body, +10/1000 em
+\newfontfamily\metafamily{Inter}[LetterSpace = 1.6]   % meta, +16/1000 em
+\newfontfamily\namefamily{Inter}[LetterSpace = -1.8]  % name, -18/1000 em
+
+\newcommand\namestyle{\namefamily\bfseries\fontsize{22pt}{24.2pt}\selectfont}
+\newcommand\bodystyle{\normalfont\fontsize{10pt}{13.5pt}\selectfont}
+\newcommand\metastyle{\metafamily\fontsize{9pt}{12pt}\selectfont}
+
+% ---------------------------------------------------------------- Layout --
+
+\newlength\railwidth   \setlength\railwidth{3.6cm}
+\newlength\sectiongap  \setlength\sectiongap{14pt}
+\newlength\headinggap  \setlength\headinggap{2pt}
+\newlength\entrygap    \setlength\entrygap{6pt}
+\newlength\bulletgap   \setlength\bulletgap{1pt}
+\newlength\bulletindent\setlength\bulletindent{10pt}
+\newlength\contactgap  \setlength\contactgap{1.2em}
+
+\pagestyle{empty}
+\setlength\parindent{0pt}
+\setlength\parskip{0pt}
+\frenchspacing
+\raggedright
+
+% \rail{<text>}: grey meta text set in the rail, left of the current line.
+\newcommand\rail[1]{%
+  \leavevmode\llap{\makebox[\railwidth][l]{%
+    \metastyle\addfontfeatures{Numbers = Tabular}\color{muted}#1}}}
+
+% \range{<from>}{<to>}: a date range, en dash between thin spaces.
+\newcommand\range[2]{#1\,–\,#2}
+
+% railed: paragraphs that start at the rail edge and may use the full 17cm,
+% for the header and the section headings.
+\newenvironment{railed}{\par\leftskip=-\railwidth}{\par}
+
+% \cvsection{<heading>}: a SemiBold heading in the rail, on its own line.
+\newif\ifsectionstart
+\newcommand\cvsection[1]{%
+  \par\vspace{\sectiongap}%
+  \begin{railed}\bfseries #1\end{railed}%
+  \nobreak\vspace{\headinggap}\sectionstarttrue}
+
+% \entry{<rail: dates>}{<title line>}; entries after the first in a section
+% sit \entrygap below the one before.
+\newcommand\entry[2]{%
+  \par\ifsectionstart\sectionstartfalse\else\addvspace{\entrygap}\fi
+  \rail{#1}#2\par}
+
+% \meta{<text>}: a grey 9pt line in the content column.
+\newcommand\meta[1]{{\metastyle\color{muted}#1\par}}
+
+% \point{<text>}: a one-line bullet; the grey dot sits on the content edge.
+\newcommand\point[1]{%
+  \par\addvspace{\bulletgap}%
+  \makebox[\bulletindent][l]{\color{muted}•}\mbox{#1}\par}
+
+% \skill{<label>}{<items>}: label in the rail, items in the content column.
+\newcommand\skill[2]{\par\addvspace{\bulletgap}\rail{#1}#2\par}
 
 \begin{document}
-\color{text}
+\bodystyle\color{ink}
 
-{\LARGE\bfseries Edoardo Galli}\\[2pt]
-{\large Computer Science Graduate}\\[6pt]
-{\small
-Bologna, Italy
-\contactsep
-\link{mailto:edoardo.galli3@studio.unibo.it}{edoardo.galli3@studio.unibo.it}
-\contactsep
-\link{https://edoski.com}{edoski.com}
-\contactsep
-\link{https://github.com/edoski}{github.com/edoski}
-\contactsep
-\link{https://www.linkedin.com/in/edoardo-galli-5074321b9}{LinkedIn}
-}
+% ---------------------------------------------------------------- Header --
 
-\vspace{9pt}
-Computer Science graduate pursuing an M.Sc. in Artificial Intelligence at the University of Bologna, focused on deep learning and reproducible, data-intensive AI systems.
+\begin{railed}
+  {\color{accent}\rule{1.2cm}{1.5pt}}\par\vspace{10pt}
+  {\namestyle Edoardo Galli\par}\vspace{3pt}
+  {\color{muted}Software engineer building AI agents, based in Bologna\par}
+  \vspace{5pt}
+  {\metastyle
+    \href{mailto:edoski.dev@gmail.com}{edoski.dev@gmail.com}\hspace{\contactgap}%
+    \href{https://edoski.com}{edoski.com}\hspace{\contactgap}%
+    \href{https://github.com/edoski}{github.com/edoski}\hspace{\contactgap}%
+    \href{https://www.linkedin.com/in/edoardo-galli-5074321b9}{linkedin.com/in/edoardo-galli-5074321b9}\par}
+\end{railed}
 
-\section{Education}
-\educationentry{M.Sc. Artificial Intelligence}{Sep 2026--Present}{University of Bologna}{}
+% ------------------------------------------------------------ Experience --
 
-\vspace{4pt}
-\educationentry{B.Sc. Information Science for Management}{Sep 2021--Sep 2026}{University of Bologna}{Final grade: 109/110}
+\cvsection{Experience}
 
-\section{Experience}
-\experienceentry
-  {Software Engineer}
-  {Oct 2026--Present}
-  {Amoreg}
-  {}
-\entrygap
+\entry{\range{Sep 2026}{Present}}{\textbf{Software Engineer}, Amoreg}
+\point{Lead development of Iris, an AI agent for safety-gated LinkedIn outreach}
+\point{Ship features on Amoreg's core product, an agentic compliance platform}
+\point{Build internal tooling, agent infrastructure and CI/CD for the team}
 
-\experienceentry
-  {Research Intern}
-  {Apr--Sep 2026}
-  {Department of Computer Science and Engineering (DISI), University of Bologna}
-  {}
-\begin{itemize}
-  \item Conducted deep learning research on short-horizon transaction timing across EVM blockchains under Prof. Federico Montori and Dr. Ivan Zyrianoff.
-  \item Designed reproducible experiments comparing LSTM, Transformer, and hybrid architectures.
-  \item Developed KAIROS end to end, from data pipelines and HPC training to economic evaluation and on-device inference.
-\end{itemize}
+\entry{\range{Apr}{Sep 2026}}{\textbf{Research Intern}, DISI, University of Bologna}
+\meta{Supervised by Prof. Federico Montori and Dr. Ivan Zyrianoff}
+\point{Researched deep learning for EVM transaction timing}
+\point{Built \href{https://github.com/edoski/kairos}{KAIROS} end to end: data pipelines, HPC training, on-device inference}
 
-\section{Publications}
-\researchentry
-  {KAIROS: A Predictive Framework for Cost Optimization in Blockchain Environments}
-  {I. Zyrianoff, \textbf{E. Galli}, A. Esposito, L. Gigli, M. Di Felice, and F. Montori}
-  {IEEE Consumer Communications \& Networking Conference (CCNC), 2027.}
+% ------------------------------------------------------------- Education --
 
-\section{Projects}
-\projectentry
-  {KAIROS}
-  {https://github.com/edoski/kairos}
-  {Deep learning system for blockchain transaction timing}
-  {Python, PyTorch, Polars, Pydantic, ExecuTorch}
-  {Built a reproducible Python/HPC pipeline for temporal model training, evaluation, and on-device inference.}
-\entrygap
+\cvsection{Education}
 
-\projectentry
-  {Servatus}
-  {https://github.com/edoski/servatus}
-  {Resumable Slurm campaigns with atomic output publication}
-  {Python, Slurm, OpenSSH, Apptainer, POSIX}
-  {Published a zero-dependency PyPI package with durable submission receipts and no-replace atomic commits.}
-\entrygap
+\entry{\range{Sep 2026}{Present}}{\textbf{M.Sc. Artificial Intelligence}, University of Bologna}
 
-\projectentry
-  {Journal}
-  {https://github.com/edoski/journal}
-  {Personal analytics journal pipeline}
-  {Python, Pydantic, pytest, Obsidian}
-  {Automated Flow focus data, goals, reminders, and period metrics into a typed Obsidian workflow.}
+\entry{\range{Sep 2021}{Oct 2026}}{\textbf{B.Sc. Information Science for Management}, University of Bologna}
+\meta{Final grade 108/110}
 
-\section{Skills}
-\renewcommand{\arraystretch}{1.1}
-\begin{tabularx}{\textwidth}{@{}p{3.2cm}X@{}}
-\textbf{AI / ML} & Deep Learning, Time-Series Forecasting, LSTM, Transformers \\
-\textbf{ML Frameworks} & PyTorch, PyTorch Lightning, scikit-learn, ExecuTorch \\
-\textbf{Data} & Polars, pandas, Data Pipelines, ETL \\
-\textbf{Systems / HPC} & Linux, Bash, Slurm, Apptainer, Docker, Git \\
-\textbf{Web} & TypeScript, React, Next.js, Tailwind CSS \\
-\textbf{Programming} & Python, TypeScript, Java, SQL \\
-\textbf{Languages} & English (IELTS Academic 8.5), Italian (native) \\
-\end{tabularx}
+% ----------------------------------------------------------- Publication --
+
+\cvsection{Publication}
+
+% The title is too long for one line; break it at the phrase boundary.
+\entry{2027}{\textbf{KAIROS: A Predictive Framework for Cost Optimization}\\
+  \textbf{in Blockchain Environments}}
+I. Zyrianoff, \textbf{E. Galli}, A. Esposito, L. Gigli, M. Di Felice and F. Montori\par
+\meta{IEEE Consumer Communications \& Networking Conference (CCNC 2027)}
+
+% -------------------------------------------------------------- Projects --
+
+\cvsection{Projects}
+
+\entry{}{\href{https://github.com/edoski/servatus}{\textbf{Servatus}}\hspace{\contactgap}Zero-dependency PyPI package for resumable Slurm campaigns}
+\meta{Python, Slurm, OpenSSH, Apptainer, POSIX}
+
+\entry{}{\href{https://github.com/edoski/journal}{\textbf{Journal}}\hspace{\contactgap}Obsidian journal analytics and durable memory for AI tutors}
+\meta{Python, TypeScript, Obsidian}
+
+% ---------------------------------------------------------------- Skills --
+
+\cvsection{Skills}
+
+\skill{AI agents}{Claude Agent SDK, MCP, Vercel AI SDK, model evaluation}
+\skill{Machine learning}{Deep learning, time series forecasting, PyTorch Lightning, ExecuTorch}
+\skill{Data and HPC}{Python, Polars, pandas, Slurm, Apptainer, Docker, Linux}
+\skill{Web}{TypeScript, React, Next.js, PostgreSQL, Tailwind CSS}
+\skill{Languages}{English (IELTS Academic 8.5), Italian (native)}
 
 \end{document}
