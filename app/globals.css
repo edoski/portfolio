@@ -235,6 +235,14 @@ html {
     transition: color 220ms ease;
 }
 
+.traced-rule-link {
+    text-decoration-line: underline;
+    text-decoration-color: rgb(255 255 255 / 0.25);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color 220ms ease;
+}
+
 .traced-rule-block:focus-within .traced-rule-label {
     color: #ffffff;
 }
@@ -289,6 +297,16 @@ html {
     .traced-rule-block .traced-rule-row-meta {
         color: #808080;
     }
+}
+
+/* After the row hover rules, so a hovered or focused link reads white over its row's hover grey. */
+.traced-rule-block .traced-rule-link:is(:hover, :focus-visible) {
+    text-decoration-color: #ffffff;
+}
+
+.traced-rule-block .traced-rule-row .traced-rule-link.traced-rule-row-meta:is(:hover, :focus-visible),
+.traced-rule-block .traced-rule-link:is(:hover, :focus-visible) > .traced-rule-emphasis {
+    color: #ffffff;
 }
 
 .terminal-action-link {

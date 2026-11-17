@@ -30,7 +30,13 @@ function TimelineRow({ entry }: { entry: TimelineEntry }) {
   return (
     <li className="traced-rule-row grid gap-1 lg:grid-cols-[24rem_minmax(0,1fr)] lg:gap-x-6 lg:gap-y-0">
       <strong className="traced-rule-emphasis">{entry.title}</strong>
-      <span className="traced-rule-row-meta">{entry.organization}</span>
+      {entry.href ? (
+        <a href={entry.href} target="_blank" rel="noopener noreferrer" className="traced-rule-link traced-rule-row-meta w-fit">
+          {entry.organization}
+        </a>
+      ) : (
+        <span className="traced-rule-row-meta">{entry.organization}</span>
+      )}
     </li>
   )
 }
