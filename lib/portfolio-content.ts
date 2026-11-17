@@ -11,7 +11,16 @@ export interface PortfolioLink {
 export interface TimelineEntry {
   title: string
   organization: string
+  href?: string
 }
+
+export interface TextSegment {
+  text: string
+  emphasis: boolean
+  href?: string
+}
+
+const amoregHref = "https://amoreg.com"
 
 export interface Publication {
   title: string
@@ -65,7 +74,7 @@ export const profile = {
   now: [
     { text: "software engineer", emphasis: true },
     { text: " at ", emphasis: false },
-    { text: "Amoreg", emphasis: true },
+    { text: "Amoreg", emphasis: true, href: amoregHref },
     { text: "; M.Sc. ", emphasis: false },
     { text: "artificial intelligence", emphasis: true },
     { text: " at the ", emphasis: false },
@@ -78,6 +87,7 @@ export const experience: TimelineEntry[] = [
   {
     title: "Software Engineer",
     organization: "Amoreg",
+    href: amoregHref,
   },
   {
     title: "Research Intern",
